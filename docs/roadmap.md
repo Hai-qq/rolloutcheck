@@ -12,6 +12,10 @@ experiment with an existing upstream assertion as the detection baseline.
 The v0.1.0a2 increment adds a single-sequence Transformers collector, bounded JSONL
 trace inspection and extraction, and a real Qwen3-0.6B MPS generation contrast
 with explicit EOS accounting. See [the observed case](observed-case.md).
+The v0.1.0a3 increment adds slime debug-callback collection, persistent capture-gap
+reporting and a served-turn count check. The unmodified slime HTTP adapter has
+been tested with scripted controls and actual local Qwen generation through a
+Transformers service. See [the integration](slime-integration.md).
 
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
 and small-model generation are established. The original large-model run and an
@@ -20,9 +24,10 @@ is an experimental artifact, not a declaration of full framework support.
 
 ## Next: verify usefulness in a framework workflow
 
-1. Integrate with one actual engine/adapter boundary that exports raw IDs and
-   stable turn identity. The current Transformers wrapper does not establish
-   compatibility with slime/SGLang's scheduler, batching or stop semantics.
+1. Run the slime collector against a real SGLang engine on an authorized NVIDIA
+   environment. The adapter callback and local HTTP path are verified; the live
+   engine, stop-token retention and concurrent ancestry remain unverified.
+   The current prerequisite is the RTX 4070 machine's OS and connection method.
 2. Obtain another authorized trajectory with a real debugging need, and compare
    the upstream logs/tests against trace extraction and portable evidence on
    that same case. Document which manual steps are actually removed.

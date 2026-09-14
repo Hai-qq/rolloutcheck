@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import math
 from pathlib import Path
 
 MAX_CASE_BYTES = 16 * 1024 * 1024
@@ -24,6 +25,13 @@ def _constant(value):
     raise CaseError(f"Non-finite JSON value: {value}")
 
 
+def _float(value):
+    number = float(value)
+    if not math.isfinite(number):
+        raise CaseError("Non-finite JSON number")
+    return number
+
+
 def load_case(path: str | Path) -> tuple[dict, str]:
     with Path(path).open("rb") as stream:
         raw = stream.read(MAX_CASE_BYTES + 1)
@@ -35,7 +43,9 @@ def parse_object(raw: bytes) -> dict:
     if len(raw) > MAX_CASE_BYTES:
         raise CaseError(f"Case exceeds {MAX_CASE_BYTES} bytes")
     try:
-        value = json.loads(raw, object_pairs_hook=_pairs, parse_constant=_constant)
+        value = json.loads(
+            raw, object_pairs_hook=_pairs, parse_constant=_constant, parse_float=_float
+        )
     except (ValueError, UnicodeError, RecursionError) as exc:
         raise CaseError(f"Invalid JSON: {exc}") from exc
     if not isinstance(value, dict):

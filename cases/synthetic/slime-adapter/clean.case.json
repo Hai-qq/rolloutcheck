@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "case_id": "transition-000001",
+  "evidence": {
+    "kind": "synthetic",
+    "description": "Transition extracted from declared generation records; labels are caller-supplied, not proof of authenticity.",
+    "trace_id": "slime-http-clean",
+    "previous_sequence": 0,
+    "next_sequence": 1,
+    "previous_termination": {
+      "upstream_finish_reason": "stop",
+      "eos_token_ids": [
+        9
+      ],
+      "terminal_eos_present": true,
+      "engine_stop_token_retention": "unverified"
+    },
+    "next_termination": {
+      "upstream_finish_reason": "stop",
+      "eos_token_ids": [
+        9
+      ],
+      "terminal_eos_present": true,
+      "engine_stop_token_retention": "unverified"
+    },
+    "previous_metadata": {
+      "capture_point": "slime.BaseAdapter.debug_callback TurnRecord",
+      "collector_version": "0.1.0a3",
+      "integration_reference_revision": "4c193f1f37509cca70f0e88807a9305b70f63f4e",
+      "reference_is_runtime_attestation": false,
+      "output_ids_source": "TurnRecord.output_ids; extracted from logprob tuple IDs",
+      "scope": "served adapter turn; engine and request completeness unverified"
+    },
+    "next_metadata": {
+      "capture_point": "slime.BaseAdapter.debug_callback TurnRecord",
+      "collector_version": "0.1.0a3",
+      "integration_reference_revision": "4c193f1f37509cca70f0e88807a9305b70f63f4e",
+      "reference_is_runtime_attestation": false,
+      "output_ids_source": "TurnRecord.output_ids; extracted from logprob tuple IDs",
+      "scope": "served adapter turn; engine and request completeness unverified"
+    },
+    "trace_sha256": "62b10b4e21375c8643feee804cfccf58b5dd137ebb3e5f1e80fb7d695cdf3f0e"
+  },
+  "contract": {
+    "version": "history-prefix/v1",
+    "mode": "append_only",
+    "history_policy": "preserved"
+  },
+  "previous": {
+    "session_id": "public-test-session",
+    "branch_id": "main",
+    "turn_id": "1",
+    "token_space": "synthetic",
+    "input_ids": [
+      1,
+      2
+    ],
+    "output_ids": [
+      3,
+      9
+    ]
+  },
+  "next": {
+    "session_id": "public-test-session",
+    "branch_id": "main",
+    "token_space": "synthetic",
+    "input_ids": [
+      1,
+      2,
+      3,
+      9,
+      4
+    ],
+    "previous_turn_id": "1"
+  },
+  "boundaries": []
+}

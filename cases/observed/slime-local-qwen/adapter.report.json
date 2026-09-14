@@ -1,0 +1,65 @@
+{
+  "report_version": 1,
+  "status": "FAIL",
+  "trace_sha256": "4d147027bf2505c537c91255b1c6158a3ea0d14e9a30a449104ba87bba4a79fe",
+  "trace_id": "slime-local-qwen",
+  "records": 2,
+  "roots": 1,
+  "transitions": 1,
+  "counts": {
+    "FAIL": 1
+  },
+  "reports": [
+    {
+      "report_version": 1,
+      "case_id": "transition-000001",
+      "check": "RC-HISTORY-DRIFT",
+      "evidence_kind": "observed_rollout",
+      "scope": "declared history-prefix contract only; not whole-training correctness",
+      "status": "FAIL",
+      "reason": "Next input violates the declared history-prefix contract",
+      "first_difference": {
+        "index": 32,
+        "region": "previous_output",
+        "expected_id": 151667,
+        "actual_id": 17,
+        "kind": "different_token",
+        "window_start": 28,
+        "expected_window": [
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          198,
+          32313,
+          11,
+          279
+        ],
+        "actual_window": [
+          198,
+          151644,
+          77091,
+          198,
+          17,
+          488,
+          220,
+          17,
+          16819
+        ]
+      },
+      "localization": {
+        "first_observed_interval": {
+          "after": "previous.input_ids + previous.output_ids",
+          "at_or_before": "next.input_ids"
+        },
+        "claim": "observed interval, not a proven root cause or causal link to final drift"
+      },
+      "expected_history_tokens": 208,
+      "next_input_tokens": 67,
+      "boundary_comparisons": [],
+      "evidence_gaps": []
+    }
+  ],
+  "scope": "Only explicit parent links within the same session/branch are checked; no transitions is INCONCLUSIVE, not PASS."
+}

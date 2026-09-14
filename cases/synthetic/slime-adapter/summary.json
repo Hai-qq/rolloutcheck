@@ -1,0 +1,32 @@
+{
+  "execution": "controlled_adapter_http",
+  "slime_revision": "4c193f1f37509cca70f0e88807a9305b70f63f4e",
+  "adapter_source": "unmodified verified snapshot",
+  "transport": "loopback aiohttp",
+  "model_server": "scripted test responses; not SGLang",
+  "tokenizer": "scripted",
+  "engine_generation": false,
+  "scenarios": [
+    {
+      "scenario": "clean",
+      "requests": 2,
+      "captured": 2,
+      "gaps": 0,
+      "status": "PASS"
+    },
+    {
+      "scenario": "drift",
+      "requests": 2,
+      "captured": 2,
+      "gaps": 0,
+      "status": "FAIL"
+    },
+    {
+      "scenario": "missing-context",
+      "requests": 2,
+      "captured": 1,
+      "gaps": 1,
+      "status": "INCONCLUSIVE"
+    }
+  ]
+}

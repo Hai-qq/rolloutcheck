@@ -8,10 +8,12 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early prototype · v0.1.0a2.** The offline core has zero runtime dependencies.
+**Early prototype · v0.1.0a3.** The offline core has zero runtime dependencies.
 An optional Transformers collector records actual input/output tensors. The repo
 includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
-trace captured locally on MPS; neither is a training run.
+trace captured locally on MPS. An opt-in slime debug callback has also been
+tested through its real HTTP adapter with a local Transformers service. This
+does not yet validate a real SGLang engine or a training run.
 
 ## Why
 
@@ -121,6 +123,18 @@ explicitly prepare the pinned tokenizer and 1.50 GB weights, then run
 `integrations/transformers/capture_qwen.py`. See [the exact commands and measured
 limits](docs/observed-case.md) and [collector API / trace format](docs/trace-capture.md).
 
+## Collect from a slime adapter
+
+Use `SlimeDebugCapture` with slime's existing `debug_callback`. Supply explicit
+turn/parent context from your controller and check the independently counted
+served turns at shutdown. Missing context or failed capture is recorded as a gap,
+so it cannot silently produce an aggregate PASS.
+
+The actual, pinned slime HTTP adapter has passed clean/drift/missing-context
+contract tests, plus a real local Qwen generation experiment. See [the integration
+API, evidence and exact limits](docs/slime-integration.md). Live SGLang validation
+remains a separate resource gate.
+
 ## What this adds today
 
 Existing tools already detect drift. In particular, slime's assertion reports the
@@ -139,12 +153,13 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ```sh
 uv sync --locked
 uv run --no-sync pytest -q
-uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/transformers
+uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/transformers
 uv build
 ```
 
 CI checks the core on Python 3.11–3.13, tests the optional collector with CPU
-tensors, and reruns the controlled conversion on Linux/Python 3.12. Full model
+tensors, exercises the real slime HTTP adapter with a scripted upstream, and
+reruns the controlled conversion on Linux/Python 3.12. Full model
 generation is a separate opt-in local experiment. See [the roadmap](docs/roadmap.md)
 for remaining validation gates.
 

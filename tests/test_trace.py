@@ -184,3 +184,53 @@ def test_committed_observed_traces_match_reports_and_cases():
         assert report["status"] == status
         assert len(cases) == 1
         assert cases[0]["evidence"]["kind"] == "observed_rollout"
+
+
+def test_gap_never_hides_existing_failure_and_keeps_sequence_order(tmp_path):
+    path = tmp_path / "gap.jsonl"
+    with TraceRecorder(path, trace_id="t", evidence_kind="synthetic") as writer:
+        writer.record_gap("before first generation")
+        record(writer)
+        record(writer, "2", "1", [99])
+    report, cases = inspect_trace(path)
+    assert report["status"] == "FAIL" and report["records"] == 3
+    assert report["counts"] == {"FAIL": 1} and len(cases) == 1
+    assert cases[0]["case_id"] == "transition-000002"
+
+
+@pytest.mark.parametrize("reason", [None, "", [], True])
+def test_invalid_capture_gap_rejected(tmp_path, reason):
+    path = tmp_path / "bad-gap.jsonl"
+    with TraceRecorder(path, trace_id="t", evidence_kind="synthetic") as writer:
+        with pytest.raises(CaseError):
+            writer.record_gap(reason)
+        record(writer)
+    assert inspect_trace(path)[0]["records"] == 1
+
+
+def test_overflowing_json_numbers_are_rejected_in_trace_metadata(tmp_path):
+    path = make_trace(tmp_path)
+    path.write_bytes(path.read_bytes().replace(b'"metadata": {}', b'"metadata": {"x": 1e999}'))
+    with pytest.raises(CaseError, match="Non-finite"):
+        inspect_trace(path)
+
+
+def test_committed_slime_cases_match_live_adapter_and_engine_capture():
+    root = Path(__file__).resolve().parents[1]
+    directory = root / "cases/observed/slime-local-qwen"
+    report, cases = inspect_trace(directory / "adapter.trace.jsonl")
+    assert report == json.loads((directory / "adapter.report.json").read_text())
+    assert cases == [json.loads((directory / "adapter.case.json").read_text())]
+    records = [
+        json.loads(line) for line in (directory / "adapter.trace.jsonl").read_text().splitlines()
+    ]
+    engine = json.loads((directory / "engine-observations.json").read_text())
+    assert report["status"] == "FAIL" and len(engine) == len(records) == 2
+    for captured, generated in zip(records, engine, strict=True):
+        assert captured["input_ids"] == generated["input_ids"]
+        assert captured["output_ids"] == generated["output_ids"]
+    directory = root / "cases/synthetic/slime-adapter"
+    for mode, status in [("clean", "PASS"), ("drift", "FAIL"), ("missing-context", "INCONCLUSIVE")]:
+        report, _ = inspect_trace(directory / f"{mode}.trace.jsonl")
+        assert report == json.loads((directory / f"{mode}.report.json").read_text())
+        assert report["status"] == status

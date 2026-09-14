@@ -16,9 +16,22 @@ MAX_TRACE_BYTES = 64 * 1024 * 1024
 def validate_record(record):
     if not isinstance(record, dict) or type(record.get("trace_version")) is not int:
         raise CaseError("Trace record requires integer trace_version")
-    if record["trace_version"] != 1 or record.get("record_type") != "generation":
+    if record["trace_version"] != 1 or record.get("record_type") not in (
+        "generation",
+        "capture_gap",
+    ):
         raise CaseError("Unsupported trace version or record type")
-    for key in ("trace_id", "session_id", "branch_id", "turn_id", "token_space"):
+    if not isinstance(record.get("trace_id"), str) or not record["trace_id"]:
+        raise CaseError("Trace trace_id must be a nonempty string")
+    if record.get("evidence_kind") not in EVIDENCE_KINDS:
+        raise CaseError("Trace evidence_kind is required")
+    if type(record.get("sequence")) is not int or record["sequence"] < 0:
+        raise CaseError("Trace sequence must be a nonnegative integer")
+    if record["record_type"] == "capture_gap":
+        if not isinstance(record.get("reason"), str) or not record["reason"]:
+            raise CaseError("Capture gap requires a nonempty reason")
+        return
+    for key in ("session_id", "branch_id", "turn_id", "token_space"):
         if not isinstance(record.get(key), str) or not record[key]:
             raise CaseError(f"Trace {key} must be a nonempty string")
     if "parent_turn_id" not in record:
@@ -28,10 +41,6 @@ def validate_record(record):
         raise CaseError("parent_turn_id must be a nonempty string or null")
     if parent == record["turn_id"]:
         raise CaseError("A turn cannot be its own parent")
-    if record.get("evidence_kind") not in EVIDENCE_KINDS:
-        raise CaseError("Trace evidence_kind is required")
-    if type(record.get("sequence")) is not int or record["sequence"] < 0:
-        raise CaseError("Trace sequence must be a nonnegative integer")
     for key in ("input_ids", "output_ids"):
         _ids(record.get(key), f"trace.{key}")
     if not record["output_ids"]:
@@ -96,6 +105,7 @@ class TraceRecorder:
         self.trace_id, self.evidence_kind = trace_id, evidence_kind
         self._seen = set()
         self._size = 0
+        self._sequence = 0
 
     def record(
         self,
@@ -117,7 +127,7 @@ class TraceRecorder:
                 "trace_version": 1,
                 "record_type": "generation",
                 "trace_id": self.trace_id,
-                "sequence": len(self._seen),
+                "sequence": self._sequence,
                 "evidence_kind": self.evidence_kind,
                 "session_id": session_id,
                 "branch_id": branch_id,
@@ -132,9 +142,24 @@ class TraceRecorder:
                 "boundaries": boundaries if boundaries is not None else [],
             }
         )
+        self._write_record(record, key=(session_id, branch_id, turn_id))
+
+    def record_gap(self, reason):
+        """Persist a collection omission so an otherwise clean trace cannot report PASS."""
+        self._write_record(
+            {
+                "trace_version": 1,
+                "record_type": "capture_gap",
+                "trace_id": self.trace_id,
+                "sequence": self._sequence,
+                "evidence_kind": self.evidence_kind,
+                "reason": reason,
+            }
+        )
+
+    def _write_record(self, record, key=None):
         validate_record(record)
-        key = (session_id, branch_id, turn_id)
-        if key in self._seen:
+        if key is not None and key in self._seen:
             raise CaseError("Duplicate turn identity in trace")
         try:
             raw = json.dumps(record, ensure_ascii=False, allow_nan=False).encode() + b"\n"
@@ -145,7 +170,9 @@ class TraceRecorder:
             raise CaseError("Trace exceeds size limit; start a new trace")
         self._stream.write(raw)
         self._stream.flush()
-        self._seen.add(key)
+        if key is not None:
+            self._seen.add(key)
+        self._sequence += 1
         self._size += len(raw)
 
     def close(self):
@@ -169,6 +196,8 @@ def inspect_trace(path):
     seen, cases, reports = {}, [], []
     trace_id = evidence_kind = None
     roots = 0
+    gaps = []
+    record_count = 0
     for index, line in enumerate(raw.splitlines()):
         record = parse_object(line)
         validate_record(record)
@@ -178,6 +207,10 @@ def inspect_trace(path):
             trace_id, evidence_kind = record["trace_id"], record["evidence_kind"]
         if record["trace_id"] != trace_id or record["evidence_kind"] != evidence_kind:
             raise CaseError("Trace identity and evidence kind must remain consistent")
+        record_count += 1
+        if record["record_type"] == "capture_gap":
+            gaps.append({"sequence": index, "reason": record["reason"]})
+            continue
         key = (record["session_id"], record["branch_id"], record["turn_id"])
         if key in seen:
             raise CaseError("Duplicate turn identity in trace")
@@ -198,12 +231,15 @@ def inspect_trace(path):
         (s for s in ("FAIL", "INCONCLUSIVE", "NOT_APPLICABLE", "PASS") if counts.get(s)),
         "INCONCLUSIVE",
     )
+    if gaps and status != "FAIL":
+        status = "INCONCLUSIVE"
     return {
+        **({"capture_gaps": gaps} if gaps else {}),
         "report_version": 1,
         "status": status,
         "trace_sha256": digest,
         "trace_id": trace_id,
-        "records": len(seen),
+        "records": record_count,
         "roots": roots,
         "transitions": len(reports),
         "counts": counts,

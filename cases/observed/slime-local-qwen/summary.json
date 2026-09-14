@@ -1,0 +1,29 @@
+{
+  "execution": "real_slime_adapter_with_transformers_service",
+  "slime_revision": "4c193f1f37509cca70f0e88807a9305b70f63f4e",
+  "adapter_source": "unmodified verified snapshot",
+  "model": "Qwen/Qwen3-0.6B",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "environment": {
+    "python": "3.12.12",
+    "torch": "2.10.0",
+    "transformers": "4.57.6",
+    "device": "mps",
+    "system": "Darwin",
+    "machine": "arm64",
+    "dtype": "float32",
+    "attention_implementation": "eager"
+  },
+  "decoding": "greedy",
+  "engine_generation": true,
+  "sglang_execution": false,
+  "status": "FAIL",
+  "captured": 2,
+  "gaps": 0,
+  "scope": "Real adapter over loopback HTTP plus real Transformers generation; service emulates /generate fields. Not SGLang scheduler/stop-semantics validation.",
+  "logprobs": "Computed from generation scores; no training correctness claim",
+  "engine_ids_equal_adapter_capture": true,
+  "training_experiment": false
+}

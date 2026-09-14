@@ -1,0 +1,59 @@
+{
+  "repository": "https://github.com/THUDM/slime",
+  "revision": "4c193f1f37509cca70f0e88807a9305b70f63f4e",
+  "purpose": "Unmodified source snapshot for real adapter HTTP contract verification; scripted model server",
+  "files": {
+    "slime/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "slime/agent/__init__.py": {
+      "sha256": "db8ee13dd4891e4b93237ed440d69be2d063986f5bcb20cbe9fcfd6b2ed83a82",
+      "size": 37
+    },
+    "slime/agent/adapters/__init__.py": {
+      "sha256": "bb11e40d81542a26b4a4824df683cb6ea9145c74ce8deec328982e34da8f2150",
+      "size": 271
+    },
+    "slime/utils/__init__.py": {
+      "sha256": "5043a8723e70046ef3298939bf3f45c11dabfdf15599dcd7519900edf83e332f",
+      "size": 38
+    },
+    "LICENSE": {
+      "sha256": "bf917707c1e0ffdfe653d63aebc188a48f738f3faad9acc188c346d3618694af",
+      "size": 11337
+    },
+    "slime/agent/adapters/common.py": {
+      "sha256": "723d7157bed506da695113d167c5b9854571ce61fda8965fd451afffe90335a7",
+      "size": 21143
+    },
+    "slime/agent/adapters/openai.py": {
+      "sha256": "e68af264a6ab6436298091a3374d61bc75f128610402c0f5ae201e1a01133af0",
+      "size": 14500
+    },
+    "slime/agent/parsing.py": {
+      "sha256": "2c29ed7718fbdbdf88fecd160f528eec22c88e253fc3c3788e271433ffd13b33",
+      "size": 4058
+    },
+    "slime/agent/trajectory.py": {
+      "sha256": "6dbb7bec446d81fa0542a4c954d458b4a11edab6776b45a63bc33bca08dd0469",
+      "size": 21078
+    },
+    "slime/utils/types.py": {
+      "sha256": "0e8aca6bc49dcba30975a5a325e210cd450fbb25b3c0c79c107a27986692816b",
+      "size": 20359
+    },
+    "slime/utils/misc.py": {
+      "sha256": "837fc194b2bd1d99b74329d5b527476bf6f53c3205262f4623fdb23e46bf8747",
+      "size": 4222
+    },
+    "slime/utils/http_utils.py": {
+      "sha256": "a79dfc6203a4280130c68885554448bc35125263f596ce4b79a79308df0a4257",
+      "size": 10354
+    },
+    "slime/agent/adapters/anthropic.py": {
+      "sha256": "66ef380a3fc2ee8e582041ac8948857eea5e8a24ff5e9816a51320abedbd8980",
+      "size": 13633
+    }
+  }
+}

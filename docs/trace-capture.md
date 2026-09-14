@@ -1,6 +1,7 @@
 # Raw-token trace capture v1
 
-A trace is a local UTF-8 JSONL file with one completed generation per line.
+A trace is a local UTF-8 JSONL file. Each line is a completed generation or an
+explicit `capture_gap` event (supported since v0.1.0a3).
 It lets the checker extract parent/child transitions without manually building
 case objects. This is an experimental format, not a universal trace standard.
 
@@ -82,7 +83,7 @@ PyTorch; only invoking `generate_recorded` does.
 
 ## Records and transition semantics
 
-Each record has:
+Each generation record has:
 
 - `trace_version: 1`, `record_type: generation`, a nonempty `trace_id` and
   contiguous integer `sequence` starting at zero.
@@ -105,8 +106,17 @@ INCONCLUSIVE transitions. Duplicate turn identities are errors. Roots are counte
 but not compared; an empty or root-only trace is INCONCLUSIVE. This checks declared
 links, not whether all real requests were captured or all roots were labeled correctly.
 
-The aggregate status uses FAIL, INCONCLUSIVE, NOT_APPLICABLE, then PASS precedence,
-with all per-status counts retained. A failing pair remains actionable even if
+A `capture_gap` record contains `trace_version: 1`, `record_type: capture_gap`,
+`trace_id`, `sequence`, `evidence_kind` and a nonempty `reason`; it has no token
+arrays or inferred ancestry. `TraceRecorder.record_gap(reason)` writes one.
+Gaps share the contiguous sequence counter and are listed in report `capture_gaps`.
+`records` counts all lines, while `transitions` and `counts` describe generation
+pairs only. Any gap prevents aggregate PASS, even if all captured pairs pass.
+An earlier reader that does not understand gap events returns ERROR.
+
+Without capture gaps, aggregate status uses FAIL, INCONCLUSIVE, NOT_APPLICABLE,
+then PASS precedence, with all per-transition status counts retained. With gaps,
+the aggregate is FAIL if any pair fails, otherwise INCONCLUSIVE. A failing pair remains actionable even if
 another pair lacks evidence. Malformed data anywhere makes the whole read ERROR.
 
 Limits: 64 MiB per trace, 16 MiB per record. Duplicate keys, non-finite values,

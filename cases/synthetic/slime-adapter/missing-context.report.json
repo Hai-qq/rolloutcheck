@@ -1,0 +1,18 @@
+{
+  "capture_gaps": [
+    {
+      "sequence": 1,
+      "reason": "turn_context_missing"
+    }
+  ],
+  "report_version": 1,
+  "status": "INCONCLUSIVE",
+  "trace_sha256": "37653852d6f7dbf924a5cf624665de5f518628dd616d43e83e84e7941c67a781",
+  "trace_id": "slime-http-missing-context",
+  "records": 2,
+  "roots": 1,
+  "transitions": 0,
+  "counts": {},
+  "reports": [],
+  "scope": "Only explicit parent links within the same session/branch are checked; no transitions is INCONCLUSIVE, not PASS."
+}

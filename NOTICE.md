@@ -30,3 +30,15 @@ Controlled conversion responses are hand-authored public fixtures. The separate
 public, hand-authored prompts. They do not contain
 the original issue author's rollout data, and no upstream performance numbers
 are presented as RolloutCheck measurements.
+
+The optional slime HTTP integration tests download an unmodified source subset
+at commit `4c193f1f37509cca70f0e88807a9305b70f63f4e`. The file digests and sizes
+are pinned in `integrations/slime/adapter-source.lock.json`; the preparation tool
+includes upstream LICENSE in the local snapshot. These downloaded source files
+are not bundled in the repository or wheel. This main-branch reference is distinct
+from the earlier reasoning-preservation PR excerpt.
+
+`cases/synthetic/slime-adapter` contains scripted HTTP controls.
+`cases/observed/slime-local-qwen` contains actual locally generated Qwen output
+served through the real slime adapter by a Transformers protocol surrogate;
+it is not an observed SGLang run.
