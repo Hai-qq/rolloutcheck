@@ -1,0 +1,54 @@
+{
+  "experiment": "slime-qwen3-controlled-transform",
+  "execution": "transform_reproduced",
+  "scope": "unmodified upstream function excerpts, not full adapter or original issue run",
+  "upstream_fix_attribution": "THUDM/slime PR #2287 by zy20031230",
+  "failure_status": "FAIL",
+  "control_status": "PASS",
+  "existing_upstream_assertion": "non-append-only agent prompt: previous_tokens=41 prompt_tokens=43 common_prefix=27",
+  "incremental_value": "structured evidence and export; practical advantage not yet validated",
+  "first_difference": {
+    "index": 27,
+    "region": "previous_output",
+    "expected_id": 151667,
+    "actual_id": 19,
+    "kind": "different_token",
+    "window_start": 23,
+    "expected_window": [
+      198,
+      151644,
+      77091,
+      198,
+      151667,
+      198,
+      11613,
+      5519,
+      1378
+    ],
+    "actual_window": [
+      198,
+      151644,
+      77091,
+      198,
+      19,
+      13,
+      151645,
+      198,
+      151644
+    ]
+  },
+  "previous_input_tokens": 27,
+  "frozen_output_tokens": 14,
+  "failure_next_input_tokens": 43,
+  "control_next_input_tokens": 53,
+  "template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "environment": {
+    "python": "3.12.12",
+    "transformers": "4.57.6",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "model_sampling": false,
+  "training_experiment": false,
+  "external_adoption": false
+}

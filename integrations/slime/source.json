@@ -1,0 +1,9 @@
+{
+  "repository": "https://github.com/THUDM/slime",
+  "commit": "885a09e852e5272d497936370707cc604830f805",
+  "path": "slime/agent/adapters/common.py",
+  "source_sha256": "5e90b954ae6bede247aa0ee3135deede0ad99ea4c54b5c4e635b24946399fc15",
+  "excerpt_sha256": "27740de4f2e25f1fc5faebd8cd87771c5090ab4d6686351babce6b14f133cd71",
+  "issue": "https://github.com/THUDM/slime/issues/2288",
+  "pull_request": "https://github.com/THUDM/slime/pull/2287"
+}

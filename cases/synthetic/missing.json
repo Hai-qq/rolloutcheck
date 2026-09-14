@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "case_id": "synthetic-missing",
+  "evidence": {
+    "kind": "synthetic",
+    "description": "Small hand-written integer IDs; not model output."
+  },
+  "contract": {
+    "version": "history-prefix/v1",
+    "mode": "append_only",
+    "history_policy": "preserved"
+  },
+  "previous": {
+    "session_id": "demo",
+    "branch_id": "main",
+    "turn_id": "turn-1",
+    "token_space": "synthetic/v1",
+    "input_ids": [
+      10,
+      11
+    ]
+  },
+  "next": {
+    "session_id": "demo",
+    "branch_id": "main",
+    "previous_turn_id": "turn-1",
+    "token_space": "synthetic/v1",
+    "input_ids": [
+      10,
+      11,
+      99,
+      21,
+      30
+    ]
+  }
+}

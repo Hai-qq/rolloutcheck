@@ -1,0 +1,33 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.8.22'
+      - run: uv sync --locked --python ${{ matrix.python }}
+      - run: uv run --no-sync pytest -q
+      - run: uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py
+      - run: uv build
+  controlled-conversion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.8.22'
+      - run: uv sync --locked --extra qwen --python 3.12
+      - run: uv run --no-sync python integrations/slime/prepare_assets.py .cache/qwen3-0.6b
+      - run: uv run --no-sync python integrations/slime/reproduce.py --assets .cache/qwen3-0.6b --output artifacts/qwen3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: controlled-conversion-evidence
+          path: artifacts/qwen3/

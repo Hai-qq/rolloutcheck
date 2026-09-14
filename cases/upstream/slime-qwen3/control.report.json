@@ -1,0 +1,19 @@
+{
+  "report_version": 1,
+  "case_id": "slime-qwen3-controlled-history-rerender-canonical-continuation",
+  "check": "RC-HISTORY-DRIFT",
+  "evidence_kind": "controlled_upstream_transform",
+  "scope": "declared history-prefix contract only; not whole-training correctness",
+  "status": "PASS",
+  "reason": "Next input preserves the complete declared history",
+  "expected_history_tokens": 41,
+  "next_input_tokens": 53,
+  "boundary_comparisons": [
+    {
+      "name": "canonical_continuation",
+      "origin": "captured",
+      "first_difference": null
+    }
+  ],
+  "evidence_gaps": []
+}

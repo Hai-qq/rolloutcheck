@@ -1,0 +1,56 @@
+{
+  "report_version": 1,
+  "case_id": "slime-qwen3-controlled-history-rerender",
+  "check": "RC-HISTORY-DRIFT",
+  "evidence_kind": "controlled_upstream_transform",
+  "scope": "declared history-prefix contract only; not whole-training correctness",
+  "status": "FAIL",
+  "reason": "Next input violates the declared history-prefix contract",
+  "first_difference": {
+    "index": 27,
+    "region": "previous_output",
+    "expected_id": 151667,
+    "actual_id": 19,
+    "kind": "different_token",
+    "window_start": 23,
+    "expected_window": [
+      198,
+      151644,
+      77091,
+      198,
+      151667,
+      198,
+      11613,
+      5519,
+      1378
+    ],
+    "actual_window": [
+      198,
+      151644,
+      77091,
+      198,
+      19,
+      13,
+      151645,
+      198,
+      151644
+    ]
+  },
+  "localization": {
+    "first_observed_interval": {
+      "after": "previous.input_ids + previous.output_ids",
+      "at_or_before": "full_history_rerender"
+    },
+    "claim": "observed interval, not a proven root cause or causal link to final drift"
+  },
+  "expected_history_tokens": 41,
+  "next_input_tokens": 43,
+  "boundary_comparisons": [
+    {
+      "name": "full_history_rerender",
+      "origin": "captured",
+      "first_difference": 27
+    }
+  ],
+  "evidence_gaps": []
+}
