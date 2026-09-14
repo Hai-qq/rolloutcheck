@@ -1,0 +1,100 @@
+{
+  "pid": 407,
+  "started_at": "2026-09-14T07:56:38.691031+00:00",
+  "command": [
+    "/home/rolloutcheck/engine/bin/python",
+    "-m",
+    "sglang.launch_server",
+    "--model-path",
+    "/home/rolloutcheck/models/qwen3-0.6b",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "30000",
+    "--dtype",
+    "bfloat16",
+    "--context-length",
+    "4096",
+    "--mem-fraction-static",
+    "0.5",
+    "--attention-backend",
+    "triton",
+    "--sampling-backend",
+    "pytorch",
+    "--disable-cuda-graph",
+    "--max-running-requests",
+    "1",
+    "--random-seed",
+    "0",
+    "--disable-overlap-schedule"
+  ],
+  "environment_overrides": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "CUDA_VISIBLE_DEVICES": "0",
+    "CUDA_HOME": "/home/rolloutcheck/cuda-12.8",
+    "LD_LIBRARY_PATH": "/home/rolloutcheck/cuda-12.8/lib64:"
+  },
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "packages": {
+    "sglang": "0.5.9",
+    "torch": "2.9.1",
+    "transformers": "4.57.1",
+    "sgl-kernel": "0.3.21",
+    "flashinfer-python": "0.6.3",
+    "tokenizers": "0.22.2",
+    "aiohttp": "3.14.3",
+    "httpx": "0.28.1"
+  },
+  "cuda_compiler": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0",
+  "cuda_components": [
+    {
+      "component": "cuda_nvcc",
+      "relative_path": "cuda_nvcc/linux-x86_64/cuda_nvcc-linux-x86_64-12.8.93-archive.tar.xz",
+      "sha256": "9961b3484b6b71314063709a4f9529654f96782ad39e72bf1e00f070db8210d3",
+      "md5": "5d7d11d3c8713fe8f19a2228b2b2b4bf",
+      "size": "79015464",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/linux-x86_64/cuda_nvcc-linux-x86_64-12.8.93-archive.tar.xz"
+    },
+    {
+      "component": "cuda_cudart",
+      "relative_path": "cuda_cudart/linux-x86_64/cuda_cudart-linux-x86_64-12.8.90-archive.tar.xz",
+      "sha256": "8d566b5fe745c46842dc16945cf36686227536decd2302c372be86da37faca68",
+      "md5": "4c374fabd7d36cac110ada9aea3c0743",
+      "size": "1354240",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-x86_64/cuda_cudart-linux-x86_64-12.8.90-archive.tar.xz"
+    },
+    {
+      "component": "cuda_cccl",
+      "relative_path": "cuda_cccl/linux-x86_64/cuda_cccl-linux-x86_64-12.8.90-archive.tar.xz",
+      "sha256": "0740e9e01e4f15e17c5ab8d68bba4f8ec0eb6b84edccba4ac45112d2d2174e4b",
+      "md5": "97f6ad8c8717cc555974d03483200f43",
+      "size": "928524",
+      "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-x86_64/cuda_cccl-linux-x86_64-12.8.90-archive.tar.xz"
+    }
+  ],
+  "python": "3.12.3",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 4070 SUPER",
+  "driver": "610.60",
+  "source_sha256": {
+    "src/rolloutcheck/__init__.py": "ebabf35eb8946f58c657f64b4a9580aaeb46f8855018ec2d806b1de0bf21ee13",
+    "src/rolloutcheck/case.py": "6f6712487c8503361ec8f683e0fcb87e228e0d0a72d8a581a1d85f1ad80af7b2",
+    "src/rolloutcheck/cli.py": "5ae96d507f823ddf8aad517743739c7f6518fab57f7ebf5b6b00ed67739911aa",
+    "src/rolloutcheck/history.py": "299e9abfa0a040dbd23de413b8e0e0ead41fc1e0d10ca5a7a1512fd0c014c060",
+    "src/rolloutcheck/sglang_response.py": "bdfe719139cef32f99c076518dab2ba5b633f51b5cdaf1b6373bf40325086c36",
+    "src/rolloutcheck/slime_capture.py": "b67dde454fcda74ffbad7b10a8d015e6ee8f5ef5501900570f5333cdbd323d8c",
+    "src/rolloutcheck/trace.py": "6d42b4eac618567627120f5f5b1025328fa6c7732d25a4e234f0298181bb4bf7",
+    "src/rolloutcheck/transformers_capture.py": "fd900bc8d8ef7917124e0900c817e5b73781022234b48f7b8249d52fad973d26",
+    "integrations/slime/verify_sglang.py": "5f433ddcc620c967eb42068b93298e55e8ad0c478603c8df9ff0becfb121ccc7",
+    "integrations/slime/prepare_adapter.py": "68d30cc5bc5beb75a597a1ae57ef53aeaa4c1d744be6d4cd54a04b556164a572",
+    "integrations/slime/prepare_assets.py": "20ad4890e5ccbc3bcc9f7c6a49d07538e53b3b1ba99f81222bf02dc74a2dd63a"
+  },
+  "path_prefix": [
+    "/home/rolloutcheck/engine/bin",
+    "/home/rolloutcheck/cuda-12.8/bin"
+  ],
+  "server_stopped_after_capture": true
+}

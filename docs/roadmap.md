@@ -16,6 +16,10 @@ The v0.1.0a3 increment adds slime debug-callback collection, persistent capture-
 reporting and a served-turn count check. The unmodified slime HTTP adapter has
 been tested with scripted controls and actual local Qwen generation through a
 Transformers service. See [the integration](slime-integration.md).
+The v0.1.0a4 increment adds bounded native-response validation and an opt-in
+SGLang runner. A real RTX 4070 SUPER / WSL2 run captures six requests, verifies
+wire/callback ID equality and records stop-token retention. See
+[the native evidence and limits](native-sglang.md).
 
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
 and small-model generation are established. The original large-model run and an
@@ -24,16 +28,15 @@ is an experimental artifact, not a declaration of full framework support.
 
 ## Next: verify usefulness in a framework workflow
 
-1. Run the slime collector against a real SGLang engine on an authorized NVIDIA
-   environment. The adapter callback and local HTTP path are verified; the live
-   engine, stop-token retention and concurrent ancestry remain unverified.
-   The current prerequisite is the RTX 4070 machine's OS and connection method.
+1. Extend beyond the verified sequential SGLang 0.5.9 / Qwen3-0.6B configuration
+   only when a concrete workflow requires it. Concurrent ancestry and other
+   adapters/backends remain unverified; GPU access is now available.
 2. Obtain another authorized trajectory with a real debugging need, and compare
    the upstream logs/tests against trace extraction and portable evidence on
    that same case. Document which manual steps are actually removed.
 3. Measure collector-on versus collector-off overhead on a fixed workload before
    making a performance claim. The current four-call timing record is not that
-   benchmark. Verify CUDA/4070 execution separately if the target path requires it.
+   benchmark. The native run establishes CUDA execution, not collector overhead.
 4. Add conversion replay or shrinking only when a captured case needs it;
    inspecting saved IDs is explicitly witness-only.
 

@@ -1,0 +1,83 @@
+{
+  "label": "length",
+  "request": {
+    "input_ids": [
+      151644,
+      8948,
+      198,
+      2610,
+      525,
+      264,
+      10950,
+      17847,
+      13,
+      151645,
+      198,
+      151644,
+      872,
+      198,
+      3838,
+      374,
+      220,
+      17,
+      488,
+      220,
+      17,
+      30,
+      20678,
+      264,
+      9814,
+      16148,
+      13,
+      151645,
+      198,
+      151644,
+      77091,
+      198
+    ],
+    "return_logprob": true,
+    "sampling_params": {
+      "temperature": 0,
+      "top_p": 1,
+      "top_k": -1,
+      "max_new_tokens": 1,
+      "skip_special_tokens": false,
+      "ignore_eos": true
+    }
+  },
+  "response": {
+    "text": "<think>",
+    "output_ids": [
+      151667
+    ],
+    "meta_info": {
+      "id": "3ae7e0b8bed746069344178bba94b304",
+      "finish_reason": {
+        "type": "length",
+        "length": 1
+      },
+      "prompt_tokens": 32,
+      "weight_version": "default",
+      "total_retractions": 0,
+      "input_token_logprobs": [
+        [
+          null,
+          198,
+          null
+        ]
+      ],
+      "output_token_logprobs": [
+        [
+          -0.0002227773511549458,
+          151667,
+          null
+        ]
+      ],
+      "completion_tokens": 1,
+      "cached_tokens": 31,
+      "cached_tokens_details": null,
+      "e2e_latency": 0.02299785614013672,
+      "response_sent_to_client_ts": 1789372684.599572
+    }
+  }
+}

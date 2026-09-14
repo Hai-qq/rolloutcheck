@@ -6,8 +6,8 @@ installed. The inspected source is pinned to
 [`4c193f1f37509cca70f0e88807a9305b70f63f4e`](https://github.com/THUDM/slime/blob/4c193f1f37509cca70f0e88807a9305b70f63f4e/slime/agent/adapters/common.py).
 
 The callback integration has been exercised with the unmodified OpenAI adapter
-and real loopback HTTP in two settings: a scripted server, and a local
-Transformers/Qwen3-0.6B service. Neither setting runs SGLang. The Anthropic adapter
+and real loopback HTTP with a scripted server, a local Transformers/Qwen3-0.6B
+service, and [native SGLang on CUDA](native-sglang.md). The Anthropic adapter
 shares the base callback but its HTTP route has not been tested here.
 
 ## Attach explicitly
@@ -82,8 +82,9 @@ response with zero output IDs creates a gap rather than a fabricated generation.
 `TurnRecord.output_ids` comes from the token-ID fields in the upstream response's
 logprob tuples. We copy these IDs unchanged. `finish_reason: stop` does not prove
 that EOS was returned. Configured EOS IDs allow reporting whether a final EOS is
-present; SGLang's actual stop-token retention remains unverified until a live
-engine test. No logprob, mask or training correctness is inferred from PASS.
+present; [native probes](native-sglang.md#stop-token-behavior-in-this-configuration)
+record stop-token retention for one SGLang configuration. The generic callback
+does not attest that behavior. No logprob, mask or training correctness is inferred from PASS.
 The integration reference revision in each record is a compatibility reference,
 not authentication of the installed runtime.
 
@@ -145,16 +146,44 @@ The original template removes historical reasoning in this setup. This is a
 local observation of the known class of history drift; no new upstream bug,
 full SGLang compatibility, training benefit or external adoption is claimed.
 
-## Next resource gate
+## Capture a native SGLang endpoint
 
-The remaining engine validation needs a usable NVIDIA environment and a real
-SGLang process. Confirm the RTX 4070 machine's OS (native Linux or Windows/WSL2),
-GPU/driver state and authorized connection method before choosing installation
-commands. No rented machine, paid service or shared network setting is needed
-for the completed tests above.
+`integrations/slime/verify_sglang.py` drives an operator-managed native `/generate`
+endpoint through the same pinned, unmodified slime OpenAI adapter. It accepts an
+explicit loopback HTTP address only, refuses redirects, and bounds response size.
+It does not install or launch SGLang, or authenticate the process behind a port.
+Keep the engine environment separate from the pinned client dependencies below:
 
-For that run, retain the exact engine version/launch options, tokenizer and model
-revisions, raw `/generate` token fields, stop/EOS behavior and independently counted
-served turns. Exercise both a successful transition and a deliberate mismatch,
-then compare the captured trace with the live engine records. Engine versions,
-stop trimming and concurrency cannot be certified by the current surrogate service.
+```sh
+uv sync --locked --extra generation --extra slime-adapter
+uv run --no-sync python integrations/slime/verify_sglang.py \
+  --source .cache/slime-adapter --assets .cache/qwen3-0.6b \
+  --sglang-url http://127.0.0.1:30000 --output artifacts/slime-sglang
+```
+
+Prepare the verified tokenizer and source subset as above, and serve the pinned
+Qwen3-0.6B weights before running this command. The output directory must be new.
+Record the actual engine/client package versions, launch command, GPU, weight
+digest and model revision independently. A successful endpoint response alone is
+not evidence of the server's identity.
+
+The runner performs six requests: two adapter turns, one constructed append-only
+control, and three native length/stop probes. It saves each complete wire response
+before field validation, compares callback IDs with the wire fields, and requires
+the first adapter generation to finish rather than exhaust its token budget.
+`output_token_logprobs` must contain finite scores and integer token IDs consistent
+with prompt/completion counts. If top-level output IDs are also returned, they
+must agree. Missing IDs are never reconstructed from text.
+
+The positive control reuses the first observed generation and explicitly appends
+a suffix to its retained IDs; it is not the upstream canonical-continuation fix.
+The one-token mutation is performed offline and labeled synthetic. The stop probes
+record text, returned IDs and finish reasons with trimming enabled/disabled;
+`no_stop_trim` behavior must be read from these observations, not presumed.
+Traces remain sequential and do not establish general concurrent ancestry or
+training correctness. Wire files contain public test prompts and generated text,
+in addition to the narrower token-only callback trace.
+
+CI runs `integrations/slime/test_live_runner.py` against six scripted HTTP responses,
+including a response split across transport chunks. This validates the runner's
+capture path and controls without claiming a SGLang or GPU execution.

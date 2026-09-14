@@ -8,12 +8,13 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early prototype · v0.1.0a3.** The offline core has zero runtime dependencies.
+**Early prototype · v0.1.0a4.** The offline core has zero runtime dependencies.
 An optional Transformers collector records actual input/output tensors. The repo
 includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
 trace captured locally on MPS. An opt-in slime debug callback has also been
-tested through its real HTTP adapter with a local Transformers service. This
-does not yet validate a real SGLang engine or a training run.
+tested through its real HTTP adapter with a local Transformers service and a
+[native SGLang/CUDA experiment](docs/native-sglang.md) on an RTX 4070 SUPER.
+This validates one sequential engine configuration, not a training run.
 
 ## Why
 
@@ -132,8 +133,12 @@ so it cannot silently produce an aggregate PASS.
 
 The actual, pinned slime HTTP adapter has passed clean/drift/missing-context
 contract tests, plus a real local Qwen generation experiment. See [the integration
-API, evidence and exact limits](docs/slime-integration.md). Live SGLang validation
-remains a separate resource gate.
+API, evidence and exact limits](docs/slime-integration.md). An opt-in
+[`verify_sglang.py`](integrations/slime/verify_sglang.py) runner captures a native
+loopback endpoint, compares wire IDs with callback records, and saves stop/length
+probes. Its scripted CI test does not replace a live engine experiment.
+The committed [native CUDA evidence](docs/native-sglang.md) includes six real
+requests, matching wire/callback IDs, and stop-token trimming probes.
 
 ## What this adds today
 
@@ -153,7 +158,7 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ```sh
 uv sync --locked
 uv run --no-sync pytest -q
-uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/transformers
+uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/transformers
 uv build
 ```
 
