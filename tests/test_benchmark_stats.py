@@ -1,4 +1,6 @@
 import copy
+import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -102,3 +104,28 @@ def test_saved_schedule_requires_warmup_and_recorded_random_order():
     for changed in [rows[2:], list(reversed(rows)), rows[:-1]]:
         with pytest.raises(ValueError, match="schedule"):
             validate_schedule(changed, protocol)
+
+
+def test_native_saved_benchmark_recomputes_with_complete_trace_evidence():
+    root = Path(__file__).resolve().parents[1]
+    directory = root / "cases/observed/slime-sglang-overhead"
+    # Exercise the offline entrypoint: it validates the schedule, trace hashes,
+    # completed capture and token alignment before recomputing statistics.
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(root / "integrations/slime/benchmark_capture.py"),
+            "--summarize",
+            str(directory),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    summary = json.loads(result.stdout)
+    assert summary == json.loads((directory / "summary.json").read_text())
+    assert summary["pairs"] == 20 and summary["measured_requests"] == 80
+    rows = [json.loads(line) for line in (directory / "trials.jsonl").read_text().splitlines()]
+    assert len(rows) == 44
+    assert all(row["trace_status"] == "FAIL" for row in rows if row["mode"] == "on")

@@ -1,0 +1,28 @@
+{
+  "status": "COMPARABLE",
+  "pairs": 20,
+  "measured_requests": 80,
+  "identical_work_within_pairs": true,
+  "elapsed_seconds": {
+    "on_median": 2.8799365530000145,
+    "off_median": 2.7974125724999936,
+    "on_mean": 2.689611736950001,
+    "off_mean": 2.7359464035999976
+  },
+  "paired_delta_seconds": {
+    "mean": -0.046334666649996595,
+    "median": 0.06494085350000489,
+    "mean_bootstrap_95_percent_interval": [
+      -0.26682258081875254,
+      0.16540264456000375
+    ]
+  },
+  "paired_mean_delta_percent_of_off_mean": -1.69355169344797,
+  "callback_seconds": {
+    "median": 0.00021826750000997208,
+    "p95": 0.00024267279999463655
+  },
+  "finalize_seconds_median": 3.332549999868206e-05,
+  "uncertainty": "Paired bootstrap of mean differences, 10000 resamples. Small repeated workload; interval does not cover systematic noise or generalize to training.",
+  "interpretation": "A negative wall-time difference alone does not establish a speedup. Callback timings include two timer reads per invocation; no timer subtraction."
+}

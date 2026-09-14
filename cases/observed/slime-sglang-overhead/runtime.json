@@ -1,0 +1,38 @@
+{
+  "started_at": "2026-09-14T09:03:34.562838+00:00",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "packages": {
+    "sglang": "0.5.9",
+    "torch": "2.9.1",
+    "transformers": "4.57.1",
+    "aiohttp": "3.14.3",
+    "httpx": "0.28.1"
+  },
+  "model_weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "runner_sha256": "59693f57729464780051a350df1b837ed36f39bb7ec6aa5847ea9412b7e91d53",
+  "source_base_commit": "7efea8ee340559e60333f8cda491b9aa9d14c51b",
+  "command": [
+    "/home/rolloutcheck/engine/bin/python",
+    "/home/rolloutcheck/benchmarks/capture-overhead-v1/integrations/slime/benchmark_capture.py",
+    "--source",
+    "/home/rolloutcheck/src/rolloutcheck/.cache/slime-adapter",
+    "--assets",
+    "/home/rolloutcheck/models/qwen3-0.6b",
+    "--sglang-url",
+    "http://127.0.0.1:30000",
+    "--pairs",
+    "20",
+    "--warmup-pairs",
+    "2",
+    "--seed",
+    "0",
+    "--output",
+    "/home/rolloutcheck/benchmarks/capture-overhead-v1/results"
+  ],
+  "filesystem": "ext2/ext3",
+  "gpu": "name, driver_version, memory.total [MiB], memory.free [MiB], utilization.gpu [%]\nNVIDIA GeForce RTX 4070 SUPER, 610.60, 12282 MiB, 5090 MiB, 1 %",
+  "completed_at": "2026-09-14T09:05:38.357938+00:00",
+  "returncode": 0
+}

@@ -1,0 +1,99 @@
+{
+  "benchmark_version": 1,
+  "rolloutcheck_version": "0.1.0a6",
+  "pairs": 20,
+  "warmup_pairs": 2,
+  "seed": 0,
+  "order": [
+    [
+      "off",
+      "on"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "off",
+      "on"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "off",
+      "on"
+    ]
+  ],
+  "evidence_kind": "observed_rollout",
+  "max_new_tokens": [
+    512,
+    16
+  ],
+  "slime_revision": "4c193f1f37509cca70f0e88807a9305b70f63f4e",
+  "timing_scope": "Two sequential adapter HTTP requests, session open/drain, and (on arm) trace creation, callback, completion and close. Server/client setup and post-run validation excluded. Both arms observe wire payloads in memory.",
+  "cache_policy": "No cache flush; repeated public prompts with warmup. Server settings are operator-managed and must be recorded separately.",
+  "identity": "Endpoint identity and runtime are not authenticated by this runner.",
+  "runner_sha256": "59693f57729464780051a350df1b837ed36f39bb7ec6aa5847ea9412b7e91d53"
+}

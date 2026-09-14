@@ -86,13 +86,71 @@ account for systematic cache, thermal, desktop activity or order effects.
 
 ## Validation boundary
 
+### Native RTX 4070 SUPER run, 2026-09-14
+
+The [captured run](../cases/observed/slime-sglang-overhead) contains the protocol,
+all 44 trial records, 22 on-arm v2 traces, recomputable statistics, engine/client
+logs, GPU telemetry and runtime/source manifests. The transferred archive was
+verified as SHA256 `796c170ce6c10fd87e04a3a36dcd41d17ab859e37f8afef86b7f1ecd727d006b`.
+The saved summary was reproduced on macOS after transfer.
+
+Runtime: RTX 4070 SUPER (12,282 MiB), Windows driver 610.60, WSL2/Linux,
+Python 3.12.3, SGLang 0.5.9, PyTorch 2.9.1, Transformers 4.57.1 and the pinned
+Qwen3-0.6B weights. Traces were written inside the local WSL filesystem (`stat`
+reports `ext2/ext3`), not a Windows-mounted or network directory. The runner and
+source hashes match commit `7efea8ee340559e60333f8cda491b9aa9d14c51b`.
+The launch command is retained in `sglang-launch.json`.
+
+All 20 measured on/off pairs had identical work. Every trial had 32 input / 145
+output tokens in the first request and 71 input / 16 output tokens in the second.
+The first generation ended with EOS; the second was length-limited. The 8 warmup
+requests are excluded from the following statistics:
+
+| Measurement | Observed result |
+|---|---:|
+| Measured pairs / requests | 20 / 80 |
+| Collector callback median / p95 | 0.218 / 0.243 ms per call |
+| Finalization median | 0.033 ms per two-turn trial |
+| Two-turn duration median, off / on | 2.797 / 2.880 s |
+| Two-turn duration mean, off / on | 2.736 / 2.690 s |
+| Paired mean on-minus-off duration | −46.3 ms (−1.69% of off mean) |
+| Paired mean difference, bootstrap 95% interval | −266.8 to +165.4 ms |
+
+**The total duration measurement does not resolve the added end-to-end cost.**
+The interval crosses zero and is much wider than the directly timed callback.
+The paired median difference is +64.9 ms while the paired mean is negative.
+Grouping the retained rows by order gives mean differences of −264.0 ms for the
+10 on-first pairs and +171.3 ms for the 10 off-first pairs. These observations show
+substantial timing variability/order dependence; they do not establish its cause,
+zero overhead, or a collector-induced speedup. The directly timed callback is a
+narrow local measurement, not the entire observer effect or training throughput.
+
+Every on-arm trace is complete and still reports **FAIL** for the previously
+observed history-prefix drift. Benchmark **COMPARABLE** means the workloads match
+and the comparison can be computed; it does not turn that diagnostic into PASS.
+This run measures the known failing adapter path, not a repaired training pipeline.
+
+Before launch, three GPU samples reported 0% utilization and over 10,700 MiB free.
+This was a Windows desktop GPU, not an exclusively reserved research server.
+The owned model service was stopped after collection; the port was checked closed
+and 10,915 MiB was free. See `preflight.json`, `gpu-telemetry.csv` and `after.json`.
+
+To check these exact saved samples without a GPU:
+
+```sh
+uv run --no-sync python integrations/slime/benchmark_capture.py \
+  --summarize cases/observed/slime-sglang-overhead
+```
+
+### Automated checks and remaining scope
+
 CI tests balanced scheduling, warmup exclusion, known paired statistics, malformed
 samples, incomplete schedules and mismatched workloads. Its HTTP test runs the
 real pinned adapter against scripted responses, checks on-arm traces, and
 recomputes the saved statistics. **CI timings are not GPU performance evidence.**
 
-The earlier native experiment established wire/callback consistency and stop-token
-behavior, not collector overhead. A native timing result needs a separate actual
-run with this protocol and its recorded runtime. It cannot establish overhead for
+The earlier six-request native experiment established wire/callback consistency
+and stop-token behavior. The separate timing run above adds a narrow callback-cost
+measurement and exposes the uncertainty in total elapsed time. It cannot establish overhead for
 large models, long contexts, many concurrent sessions, other filesystems or full
 training jobs.

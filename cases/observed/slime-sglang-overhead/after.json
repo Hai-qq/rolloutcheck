@@ -1,0 +1,5 @@
+{
+  "engine_stopped": true,
+  "loopback_port_closed": true,
+  "gpu": "name, memory.total [MiB], memory.free [MiB], utilization.gpu [%]\nNVIDIA GeForce RTX 4070 SUPER, 12282 MiB, 10915 MiB, 1 %"
+}

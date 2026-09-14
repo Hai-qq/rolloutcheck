@@ -48,13 +48,13 @@ adding a version does not close these gates.
 2. Obtain another authorized trajectory with a real debugging need, and compare
    the upstream logs/tests against trace extraction and portable evidence on
    that same case. Document which manual steps are actually removed.
-3. Measure collector-on versus collector-off overhead on a fixed workload before
-   making a performance claim. The current four-call timing record is not that
-   benchmark. The native run establishes CUDA execution, not collector overhead.
-   The [paired benchmark runner](collector-overhead.md) now implements balanced
-   randomized order, warmup exclusion, identical-token checks, raw sample retention
-   and offline recomputation. Its scripted HTTP test passes; a native timing result
-   remains a separate validation step.
+3. Extend performance evidence when an actual integration requires it. The first
+   [native paired benchmark](collector-overhead.md#native-rtx-4070-super-run-2026-09-14)
+   now retains 20 measured pairs / 80 requests, identical token workloads and
+   offline-reproducible statistics. Callback median is 0.218 ms on that short,
+   repeated workload; the total-duration difference is unresolved amid timing
+   variability. This does not establish zero overhead, long-context scaling or
+   training throughput. The runner also has a scripted HTTP contract test in CI.
 4. Add conversion replay or shrinking only when a captured case needs it;
    inspecting saved IDs is explicitly witness-only.
 

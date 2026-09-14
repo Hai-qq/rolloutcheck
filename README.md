@@ -159,6 +159,9 @@ To measure the collector cost on your own idle local engine, use the
 [paired on/off benchmark](docs/collector-overhead.md). It retains warmups and raw
 samples, checks identical work within pairs, and supports offline recomputation.
 Its scripted CI test does not establish native GPU overhead.
+The [separate native run](docs/collector-overhead.md#native-rtx-4070-super-run-2026-09-14)
+retains 20 measured pairs / 80 requests: callback median 0.218 ms on this short
+workload, with total-duration differences unresolved amid timing variability.
 
 ## What this adds today
 

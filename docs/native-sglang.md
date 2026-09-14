@@ -108,5 +108,7 @@ The capture predates the alpha version increment and retains collector version
 0.1.0a3; source hashes identify the code that ran. Captured files were not relabeled.
 
 This closes the first native-engine resource gate for one sequential configuration.
-Concurrent ancestry, other adapters/backends, collector overhead, full training
-correctness and independent developer use remain unvalidated.
+The separate [paired timing experiment](collector-overhead.md) measures the callback
+on this short workload, while leaving the total-duration effect unresolved.
+Concurrent ancestry, other adapters/backends, general collector overhead, full
+training correctness and independent developer use remain unvalidated.
