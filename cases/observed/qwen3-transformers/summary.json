@@ -1,0 +1,75 @@
+{
+  "execution": "observed_model_generation",
+  "decoding": "greedy",
+  "scope": "actual Transformers generation; not a complete slime/SGLang deployment",
+  "device": "mps",
+  "environment": {
+    "python": "3.12.12",
+    "torch": "2.10.0",
+    "transformers": "4.57.6",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "model": {
+    "model": "Qwen/Qwen3-0.6B",
+    "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "transformers_version": "4.57.6",
+    "dtype": "float32",
+    "attention_implementation": "eager",
+    "template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "experiment": "deliberate history re-render versus upstream canonical continuation",
+    "source_issue": "https://github.com/THUDM/slime/issues/2288",
+    "scope": "actual Transformers generation; not a complete slime/SGLang deployment"
+  },
+  "measurements": [
+    {
+      "mode": "rerender",
+      "turn": 1,
+      "generation_seconds": 5.806939542060718,
+      "capture_seconds": 0.00104975001886487,
+      "input_tokens": 32,
+      "output_tokens": 176,
+      "stop_reason": "eos"
+    },
+    {
+      "mode": "rerender",
+      "turn": 2,
+      "generation_seconds": 0.3958474170649424,
+      "capture_seconds": 0.0007255000527948141,
+      "input_tokens": 66,
+      "output_tokens": 16,
+      "stop_reason": "length"
+    },
+    {
+      "mode": "canonical",
+      "turn": 1,
+      "generation_seconds": 4.239794458029792,
+      "capture_seconds": 0.0007512921001762152,
+      "input_tokens": 32,
+      "output_tokens": 176,
+      "stop_reason": "eos"
+    },
+    {
+      "mode": "canonical",
+      "turn": 2,
+      "generation_seconds": 0.6178833750309423,
+      "capture_seconds": 0.0009614579612389207,
+      "input_tokens": 223,
+      "output_tokens": 16,
+      "stop_reason": "length"
+    }
+  ],
+  "upstream_baseline": {
+    "rerender": {
+      "status": "FAIL",
+      "message": "non-append-only agent prompt: previous_tokens=208 prompt_tokens=66 common_prefix=32"
+    },
+    "canonical": {
+      "status": "PASS"
+    }
+  },
+  "capture_timing_scope": "Host copies, validation and JSONL flush; excludes rendering; single run, not a before/after overhead benchmark",
+  "training_experiment": false,
+  "external_adoption": false
+}

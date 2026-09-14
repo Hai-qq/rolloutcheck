@@ -20,8 +20,13 @@ The optional experiment downloads Qwen/Qwen3-0.6B tokenizer/configuration files
 at revision `c1899de289a04d12100db370d81485cdf75e47ca`, plus the model repository's
 Apache-2.0 LICENSE. Asset files are not bundled in this Git repository or wheel.
 The explicit preparation command verifies each file against
-`integrations/slime/assets.lock.json`. It never downloads model weights.
+`integrations/slime/assets.lock.json`. That tokenizer preparation command never downloads model weights.
+The separate opt-in `integrations/transformers/prepare_model.py` downloads the
+model safetensors file at the same revision and verifies its pinned size and
+SHA-256. Weights are also excluded from the repository and wheel.
 
-The experimental messages are hand-authored public fixtures. They do not contain
+Controlled conversion responses are hand-authored public fixtures. The separate
+`cases/observed/qwen3-transformers` records contain actual local model output for
+public, hand-authored prompts. They do not contain
 the original issue author's rollout data, and no upstream performance numbers
 are presented as RolloutCheck measurements.

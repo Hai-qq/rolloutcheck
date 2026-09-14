@@ -8,9 +8,10 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early prototype · v0.1.0a1.** The core runs on CPU with zero runtime dependencies.
-A pinned Qwen/slime conversion experiment is included. It uses a real tokenizer
-with hand-authored response content; it is not a model sampling or training run.
+**Early prototype · v0.1.0a2.** The offline core has zero runtime dependencies.
+An optional Transformers collector records actual input/output tensors. The repo
+includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
+trace captured locally on MPS; neither is a training run.
 
 ## Why
 
@@ -99,6 +100,27 @@ It checks both failure and the upstream fix, writes cases/reports, and returns 0
 only when the declared fail/pass contrast succeeds. See the
 [measured case and limits](docs/first-case.md) and [third-party attribution](NOTICE.md).
 
+## Inspect a real generation trace
+
+No model download is needed to check the committed records:
+
+```sh
+uv run --no-sync rolloutcheck inspect-trace \
+  cases/observed/qwen3-transformers/rerender.trace.jsonl
+uv run --no-sync rolloutcheck inspect-trace \
+  cases/observed/qwen3-transformers/canonical.trace.jsonl
+```
+
+The first command exits 1: the next request loses the expected prefix at token 32.
+The second exits 0: all 208 retained history tokens are preserved. Both sessions
+contain actual model output, including terminal EOS, and actual second-call input.
+Use `--cases-dir NEW_DIRECTORY` to extract standalone cases from a trace.
+
+To generate new evidence locally, install the optional `generation` extra,
+explicitly prepare the pinned tokenizer and 1.50 GB weights, then run
+`integrations/transformers/capture_qwen.py`. See [the exact commands and measured
+limits](docs/observed-case.md) and [collector API / trace format](docs/trace-capture.md).
+
 ## What this adds today
 
 Existing tools already detect drift. In particular, slime's assertion reports the
@@ -107,7 +129,8 @@ RolloutCheck currently packages **explicit applicability states, structured
 boundary evidence, provenance labels, and portable evidence export** around this
 task. Its practical advantage over existing workflows has **not yet been validated**.
 
-It does not currently provide live framework hooks, automatic shrinking, general
+The collector currently supports one unpadded decoder-only Transformers sequence.
+It does not provide full slime/SGLang integration, automatic shrinking, general
 conversion execution, model replay, or automatic fixes. The included conversion
 case is small; no artificial padding is used to manufacture a shrink-rate result.
 
@@ -116,12 +139,14 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ```sh
 uv sync --locked
 uv run --no-sync pytest -q
-uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py
+uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/transformers
 uv build
 ```
 
-CI checks the core on Python 3.11–3.13 and reruns the controlled conversion on
-Linux/Python 3.12. See [the roadmap](docs/roadmap.md) for remaining validation gates.
+CI checks the core on Python 3.11–3.13, tests the optional collector with CPU
+tensors, and reruns the controlled conversion on Linux/Python 3.12. Full model
+generation is a separate opt-in local experiment. See [the roadmap](docs/roadmap.md)
+for remaining validation gates.
 
 If you maintain a rollout adapter, feedback on where you can capture raw token IDs
 and what makes your current reproduction workflow difficult is especially useful.

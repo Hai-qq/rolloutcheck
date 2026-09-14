@@ -1,7 +1,8 @@
 # Case format v1
 
 This is an experimental internal interchange format, not a universal trace standard.
-Only one JSON object per file is supported. JSONL is not yet supported.
+A case file contains one JSON object. Multi-turn JSONL generation records use
+the separate [trace format and collector](trace-capture.md).
 See the four complete examples in [cases/synthetic](../cases/synthetic).
 
 ## Required evidence
@@ -43,8 +44,9 @@ decoded text as actual sampled IDs. `observed_rollout` is appropriate only when
 all three token arrays come from a real sampling path. A trace with missing raw
 IDs cannot be upgraded by rendering its messages later.
 
-The first release accepts already-exported cases. It does not intercept live
-SGLang traffic or automatically install hooks in slime.
+The optional [Transformers collector](trace-capture.md) records raw generation
+tensors and extracts cases from JSONL. It does not intercept live SGLang traffic
+or automatically install hooks in slime.
 
 ## Optional boundaries
 

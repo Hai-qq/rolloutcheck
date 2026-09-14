@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rolloutcheck"
-version = "0.1.0a1"
+version = "0.1.0a2"
 description = "Offline history-token contract checks and reproducible conversion cases for LLM rollouts."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -14,6 +14,7 @@ dependencies = []
 
 [project.optional-dependencies]
 qwen = ["transformers==4.57.6", "jinja2==3.1.6"]
+generation = ["torch==2.10.0", "transformers==4.57.6", "jinja2==3.1.6"]
 
 [dependency-groups]
 dev = ["pytest>=8,<9", "ruff>=0.12,<1", "build>=1.2,<2"]

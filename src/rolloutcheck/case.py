@@ -27,6 +27,11 @@ def _constant(value):
 def load_case(path: str | Path) -> tuple[dict, str]:
     with Path(path).open("rb") as stream:
         raw = stream.read(MAX_CASE_BYTES + 1)
+    return parse_object(raw), hashlib.sha256(raw).hexdigest()
+
+
+def parse_object(raw: bytes) -> dict:
+    """Parse one bounded object, shared by case files and individual trace lines."""
     if len(raw) > MAX_CASE_BYTES:
         raise CaseError(f"Case exceeds {MAX_CASE_BYTES} bytes")
     try:
@@ -35,4 +40,4 @@ def load_case(path: str | Path) -> tuple[dict, str]:
         raise CaseError(f"Invalid JSON: {exc}") from exc
     if not isinstance(value, dict):
         raise CaseError("Case must be a JSON object")
-    return value, hashlib.sha256(raw).hexdigest()
+    return value

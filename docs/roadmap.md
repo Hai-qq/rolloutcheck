@@ -9,23 +9,28 @@ Implemented: bounded JSON loading, explicit applicability/continuity checks,
 history-prefix comparison, captured-versus-derived boundary reporting,
 witness-only evidence export, and one repeatable upstream-helper conversion
 experiment with an existing upstream assertion as the detection baseline.
+The v0.1.0a2 increment adds a single-sequence Transformers collector, bounded JSONL
+trace inspection and extraction, and a real Qwen3-0.6B MPS generation contrast
+with explicit EOS accounting. See [the observed case](observed-case.md).
 
-**P0 is partially validated**: local conversion feasibility and fail/pass controls
-are established. The original large-model run and an independent practical
-advantage are not established. P1's offline core is implemented. This public alpha
+**P0 is partially validated**: local conversion feasibility, fail/pass controls
+and small-model generation are established. The original large-model run and an
+independent practical advantage are not established. P1's offline core is implemented. This public alpha
 is an experimental artifact, not a declaration of full framework support.
 
-## Next: real collection and a portable regression workflow
+## Next: verify usefulness in a framework workflow
 
-1. Identify one supported engine/adapter boundary that exports all required raw
-   IDs and stable turn identity without manually reconstructing messages.
-2. Capture a real small-model trajectory with explicit stop/EOS semantics.
-   Record OS, GPU/VRAM, runtime versions, and collection overhead before claiming
-   compatibility. CPU-controlled cases remain a separate evidence category.
-3. Build a thin, opt-in collector for that verified path; establish before/after
-   snapshots and an independently reproducible regression artifact.
-4. Compare the actual upstream logs/tests and the new workflow on the same case.
-   Find out which manual steps remain and whether RolloutCheck removes any.
+1. Integrate with one actual engine/adapter boundary that exports raw IDs and
+   stable turn identity. The current Transformers wrapper does not establish
+   compatibility with slime/SGLang's scheduler, batching or stop semantics.
+2. Obtain another authorized trajectory with a real debugging need, and compare
+   the upstream logs/tests against trace extraction and portable evidence on
+   that same case. Document which manual steps are actually removed.
+3. Measure collector-on versus collector-off overhead on a fixed workload before
+   making a performance claim. The current four-call timing record is not that
+   benchmark. Verify CUDA/4070 execution separately if the target path requires it.
+4. Add conversion replay or shrinking only when a captured case needs it;
+   inspecting saved IDs is explicitly witness-only.
 
 ## Then: independent use
 
