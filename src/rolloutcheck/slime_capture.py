@@ -107,7 +107,10 @@ class SlimeDebugCapture:
             ) from None
 
     def raise_if_failed(self, *, expected_turns):
-        """Call after adapter requests drain, before accepting or publishing a trace."""
+        """After requests drain, check coverage and finalize a version 2 recorder.
+
+        Version 1 recorders retain the legacy in-memory health check only.
+        """
         if type(expected_turns) is not int or expected_turns < 0:
             raise CaseError("expected_turns must be the controller's nonnegative served-turn count")
         if self.invocations != expected_turns:
@@ -117,3 +120,5 @@ class SlimeDebugCapture:
                 f"slime capture incomplete: {self.failed} capture error(s); "
                 f"gap persistence failed={self.persistence_failed}"
             )
+        if self.recorder.trace_version == 2:
+            self.recorder.finalize(expected_generations=expected_turns)

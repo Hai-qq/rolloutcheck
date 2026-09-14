@@ -24,7 +24,7 @@ async def run_scenario(output, mode, adapter_class):
     from aiohttp.test_utils import TestClient, TestServer
 
     first_input = [1, 2]
-    second_input = [1, 2, 3, 9, 4] if mode != "drift" else [1, 2, 88]
+    second_input = [1, 2, 88] if mode in ("drift", "unchecked-drift") else [1, 2, 3, 9, 4]
     inputs = [first_input, second_input]
     outputs = [[3, 9], [5, 9]]
     requests = []
@@ -95,14 +95,14 @@ async def run_scenario(output, mode, adapter_class):
                     data = await response.json()
                     messages += [data["choices"][0]["message"], {"role": "user", "content": "next"}]
             await adapter.shutdown_session(raw_sid)
-            if mode == "missing-context":
+            if mode in ("missing-context", "count-mismatch"):
                 try:
-                    callback.raise_if_failed(expected_turns=2)
+                    callback.raise_if_failed(expected_turns=3 if mode == "count-mismatch" else 2)
                 except CaseError:
                     pass
                 else:
-                    raise AssertionError("Missing context must fail the collection health check")
-            else:
+                    raise AssertionError("Missing capture must fail the collection health check")
+            elif not mode.startswith("unchecked-"):
                 callback.raise_if_failed(expected_turns=2)
     assert len(requests) == 2
     assert raw_sid not in path.read_text()
@@ -113,8 +113,16 @@ async def run_scenario(output, mode, adapter_class):
             assert record["input_ids"] == requests[index]["input_ids"]
             assert record["output_ids"] == outputs[index]
     report, cases = inspect_trace(path)
-    expected = {"clean": "PASS", "drift": "FAIL", "missing-context": "INCONCLUSIVE"}[mode]
+    expected = {
+        "clean": "PASS", "drift": "FAIL", "missing-context": "INCONCLUSIVE",
+        "unchecked-clean": "INCONCLUSIVE", "unchecked-drift": "FAIL",
+        "count-mismatch": "INCONCLUSIVE",
+    }[mode]
     assert report["status"] == expected
+    expected_completion = "complete" if mode in ("clean", "drift") else "missing"
+    assert report["capture_completion"]["state"] == expected_completion
+    if mode == "unchecked-clean":
+        assert report["counts"] == {"PASS": 1} and "capture_gaps" not in report
     (output / f"{mode}.report.json").write_text(json.dumps(report, indent=2) + "\n")
     if cases:
         (output / f"{mode}.case.json").write_text(json.dumps(cases[0], indent=2) + "\n")
@@ -124,6 +132,7 @@ async def run_scenario(output, mode, adapter_class):
         "captured": callback.captured,
         "gaps": callback.failed,
         "status": report["status"],
+        "completion": report["capture_completion"]["state"],
     }
 
 
@@ -143,7 +152,10 @@ def main():
     assert Path(common.__file__).resolve() == source / "slime/agent/adapters/common.py"
     results = [
         asyncio.run(run_scenario(args.output, mode, OpenAIAdapter))
-        for mode in ("clean", "drift", "missing-context")
+        for mode in (
+            "clean", "drift", "missing-context", "unchecked-clean", "unchecked-drift",
+            "count-mismatch",
+        )
     ]
     summary = {
         "execution": "controlled_adapter_http",

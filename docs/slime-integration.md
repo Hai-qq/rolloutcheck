@@ -74,6 +74,15 @@ If disk writes fail, the trace cannot reliably record its own error; the sticky
 in-memory health check still rejects the run. It does not validate a count that
 the controller supplied incorrectly.
 
+Since v0.1.0a6, the default v2 recorder is finalized by a successful
+`raise_if_failed(expected_turns=...)`. Call it exactly once after draining all
+requests and before closing the writer. Omitting it leaves a visible missing
+completion state, even when the captured pairs pass and no callback reported a
+gap. A FAIL remains actionable. Late callbacks after finalization are rejected;
+the footer covers the declared completed capture, not future requests. Explicit
+`trace_version=1` recorders retain the legacy health check without a footer.
+See [migration and fault-injection checks](trace-completion.md).
+
 The callback runs after response flush and before trajectory-manager recording.
 It covers served adapter turns, not requests rejected before generation, client
 cancellations, all engine requests, or training samples. An upstream context-budget
@@ -107,11 +116,16 @@ adapter, starts it on loopback, and sends two HTTP requests for each scenario:
 | Clean prefix | 2 | 0 | PASS |
 | Changed prefix | 2 | 0 | FAIL |
 | Missing turn context | 1 | 1 | INCONCLUSIVE |
+| Clean prefix, omitted health check | 2 | 0 | INCONCLUSIVE; completion missing |
+| Changed prefix, omitted health check | 2 | 0 | FAIL; completion missing |
+| Declared three served turns, only two callbacks | 2 | 1 | INCONCLUSIVE |
 
 The tokenizer and model responses are scripted in this contract test. The
 committed [synthetic evidence](../cases/synthetic/slime-adapter) is labeled accordingly.
 CI runs this path with CPU PyTorch, without downloading model weights. The runner
-returns 0 only if all three expected outcomes and the ID comparisons hold.
+returns 0 only if all six expected outcomes, completion states and ID comparisons hold.
+The committed snapshots predate v2; current CI artifacts include the six-scenario
+lifecycle check using newly captured v2 traces.
 
 ## Real Qwen through the actual adapter
 

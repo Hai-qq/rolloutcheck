@@ -1,7 +1,8 @@
-# Raw-token trace capture v1
+# Raw-token trace capture
 
 A trace is a local UTF-8 JSONL file. Each line is a completed generation or an
-explicit `capture_gap` event (supported since v0.1.0a3).
+explicit `capture_gap` event (supported since v0.1.0a3). New recorders use v2,
+which also requires a final `capture_complete` record (since v0.1.0a6).
 It lets the checker extract parent/child transitions without manually building
 case objects. This is an experimental format, not a universal trace standard.
 
@@ -51,6 +52,9 @@ with TraceRecorder("run.jsonl", trace_id="run-001", evidence_kind="observed_roll
         metadata={"model_revision": "your-pinned-revision"},
     )
     # Call again with the next actual input and parent_turn_id="1" to check a transition.
+    # This example makes one call. After all your requests drain, use the owner's
+    # independent expected count (2 if you add the second call above).
+    trace.finalize(expected_generations=1)
 ```
 
 The adapter snapshots the input tensor before `model.generate`, checks that the
@@ -85,10 +89,10 @@ PyTorch; only invoking `generate_recorded` does.
 
 Each generation record has:
 
-- `trace_version: 1`, `record_type: generation`, a nonempty `trace_id` and
+- `trace_version: 2` (or legacy `1`), `record_type: generation`, a nonempty `trace_id` and
   contiguous integer `sequence` starting at zero.
 - `evidence_kind`: `synthetic`, `controlled_upstream_transform` or `observed_rollout`.
-  Identity and evidence kind must remain consistent within a file. These labels
+  Version, identity and evidence kind must remain consistent within a file. These labels
   are declarations, not authenticated provenance.
 - Nonempty `session_id`, `branch_id`, `turn_id`, `token_space`; an explicit
   `parent_turn_id` string, or `null` for a root.
@@ -106,11 +110,12 @@ INCONCLUSIVE transitions. Duplicate turn identities are errors. Roots are counte
 but not compared; an empty or root-only trace is INCONCLUSIVE. This checks declared
 links, not whether all real requests were captured or all roots were labeled correctly.
 
-A `capture_gap` record contains `trace_version: 1`, `record_type: capture_gap`,
+A `capture_gap` record contains the file's `trace_version`, `record_type: capture_gap`,
 `trace_id`, `sequence`, `evidence_kind` and a nonempty `reason`; it has no token
 arrays or inferred ancestry. `TraceRecorder.record_gap(reason)` writes one.
 Gaps share the contiguous sequence counter and are listed in report `capture_gaps`.
-`records` counts all lines, while `transitions` and `counts` describe generation
+`records` counts generation and gap lines (excluding the v2 completion footer),
+while `transitions` and `counts` describe generation
 pairs only. Any gap prevents aggregate PASS, even if all captured pairs pass.
 An earlier reader that does not understand gap events returns ERROR.
 
@@ -118,6 +123,18 @@ Without capture gaps, aggregate status uses FAIL, INCONCLUSIVE, NOT_APPLICABLE,
 then PASS precedence, with all per-transition status counts retained. With gaps,
 the aggregate is FAIL if any pair fails, otherwise INCONCLUSIVE. A failing pair remains actionable even if
 another pair lacks evidence. Malformed data anywhere makes the whole read ERROR.
+
+For v2, missing completion also makes an otherwise non-failing trace INCONCLUSIVE.
+`close()` and context-manager exit only close the file. Call
+`finalize(expected_generations=...)` once after requests drain, with the owner's
+independent generation count; do not derive it from recorder counters. It seals
+the original record bytes and prevents further recording. A count mismatch
+persists a gap and raises. Completion never removes a gap or makes a root-only
+trace PASS. See [the exact footer format and migration](trace-completion.md).
+
+Legacy v1 traces retain their historical reports, with no completion attestation.
+Their PASS applies only to the saved prefix comparisons. Do not relabel them v2
+or attach a footer retrospectively to imply an old run was checked at shutdown.
 
 Limits: 64 MiB per trace, 16 MiB per record. Duplicate keys, non-finite values,
 blank lines, and a missing final newline are rejected. The writer creates a new

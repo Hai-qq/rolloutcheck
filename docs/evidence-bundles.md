@@ -14,6 +14,10 @@ The exporter reads one bounded snapshot, checks that snapshot and preserves thos
 exact bytes. It does not read a later version of a growing trace for the copy.
 Finish/drain the collector before exporting: an incomplete final JSONL record is
 an error, and a snapshot cannot include future records.
+For new v2 traces, finalize the recorder before exporting. An absent completion
+footer prevents aggregate PASS even if the last saved line is complete. The bundle
+preserves and rechecks that state; export never adds a footer on the collector's
+behalf. Legacy v1 PASS does not attest completion. See [capture lifecycle](trace-completion.md).
 
 ## Files and results
 

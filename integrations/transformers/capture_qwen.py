@@ -176,6 +176,7 @@ def run(assets, output, device, max_new_tokens):
                 ],
             )
             measurements.append({"mode": mode, "turn": 2, **measurement})
+            recorder.finalize(expected_generations=2)
         report, cases = inspect_trace(output / f"{mode}.trace.jsonl")
         if report["status"] != ("FAIL" if mode == "rerender" else "PASS"):
             raise AssertionError("Target fail/pass contrast was not observed")

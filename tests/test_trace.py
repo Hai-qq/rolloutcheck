@@ -30,8 +30,9 @@ def record(recorder, turn="1", parent=None, inputs=None, **kwargs):
 
 
 def make_trace(tmp_path, next_input=(1, 2, 3, 4, 8)):
+    # Preserve the original v1 parser regressions; v2 lifecycle has its own tests.
     path = tmp_path / "trace.jsonl"
-    with TraceRecorder(path, trace_id="t", evidence_kind="synthetic") as writer:
+    with TraceRecorder(path, trace_id="t", evidence_kind="synthetic", trace_version=1) as writer:
         record(writer)
         record(writer, "2", "1", list(next_input))
     return path

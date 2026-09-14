@@ -24,6 +24,11 @@ The v0.1.0a5 increment adds complete trace evidence bundles and offline bundle
 verification. A bundle keeps the original bytes and capture gaps, and its report
 is recomputed on verification. This removes manual source/report packaging from
 the saved-trace workflow; independent developer benefit still needs evaluation.
+The v0.1.0a6 increment closes a collector-lifecycle gap: new v2 traces require an
+explicit end record with an independently declared count and a digest of preceding
+bytes. Interrupted or unchecked traces cannot aggregate to PASS. The real slime
+HTTP adapter now has six controlled lifecycle scenarios, including omitted health
+checks. Legacy v1 evidence is preserved. See [the regression and migration](trace-completion.md).
 
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
 and small-model generation are established. The original large-model run and an
@@ -31,6 +36,11 @@ independent practical advantage are not established. P1's offline core is implem
 is an experimental artifact, not a declaration of full framework support.
 
 ## Next: verify usefulness in a framework workflow
+
+The next maturity gates are evidence-based: a usable controller integration,
+measured overhead on its actual workload, and another developer reproducing or
+using a diagnostic on their own authorized case. Passing the package tests or
+adding a version does not close these gates.
 
 1. Extend beyond the verified sequential SGLang 0.5.9 / Qwen3-0.6B configuration
    only when a concrete workflow requires it. Concurrent ancestry and other

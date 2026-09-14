@@ -51,6 +51,7 @@ jobs:
       # Scripted transport contract only: this step does not execute SGLang.
       - run: uv run --no-sync python integrations/slime/test_live_runner.py --source .cache/slime-adapter --output artifacts/live-runner-contract
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: slime-adapter-evidence
           path: |

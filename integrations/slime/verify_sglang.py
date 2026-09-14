@@ -145,6 +145,7 @@ async def run(
                 await adapter.shutdown_session(sid)
                 capture.raise_if_failed(expected_turns=2)
         records = [json.loads(line) for line in path.read_text().splitlines()]
+        records = [record for record in records if record["record_type"] == "generation"]
         for record, wire in zip(records, wires, strict=True):
             assert record["input_ids"] == wire["request"]["input_ids"]
             assert record["output_ids"] == response_ids(
@@ -208,6 +209,7 @@ async def run(
                         "control": "constructed prefix; root reuses first actual adapter generation"
                     },
                 )
+            writer.finalize(expected_generations=2)
         control_report, _ = inspect_trace(output / "control.trace.jsonl")
         assert control_report["status"] == "PASS"
         save(output / "control.report.json", control_report)

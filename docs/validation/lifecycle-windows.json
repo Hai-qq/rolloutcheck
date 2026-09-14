@@ -1,0 +1,92 @@
+{
+  "checked_at": "2026-09-14T08:38:51.160243+00:00",
+  "producer_platform": "macOS",
+  "consumer_platform": "Windows native Python (not WSL)",
+  "fresh_venv": true,
+  "install_used_no_index_and_no_deps": true,
+  "bundles_relocated_before_verification": true,
+  "handoff_archive_sha256": "a7b6f49f995f5b77403714c72d06c2368fd9e2deeef6448eb95f794885ed4eac",
+  "runtime": {
+    "python": "3.11.9",
+    "packages": {
+      "pip": "24.0",
+      "rolloutcheck": "0.1.0a6",
+      "setuptools": "65.5.0"
+    }
+  },
+  "checks": [
+    {
+      "bundle": "complete",
+      "exit_code": 0,
+      "status": "PASS",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "capture_completion": {
+        "state": "complete",
+        "generations": 2,
+        "expected_generations": 2,
+        "scope": "Caller-declared count and saved-byte integrity; not engine coverage or authenticity. Missing completion cannot aggregate to PASS."
+      },
+      "trace_sha256": "8dcb3a6749dd312c7fd57af5f49f24891b48da5044d39c7ac6ba5e9090a6e3ca"
+    },
+    {
+      "bundle": "unfinished",
+      "exit_code": 3,
+      "status": "INCONCLUSIVE",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "capture_completion": {
+        "state": "missing",
+        "generations": 2,
+        "expected_generations": null,
+        "scope": "Caller-declared count and saved-byte integrity; not engine coverage or authenticity. Missing completion cannot aggregate to PASS."
+      },
+      "trace_sha256": "572cb59d59be412727668f168804a0324684b4a828ac6fa2e202ef38c47733f7"
+    },
+    {
+      "bundle": "unfinished-drift",
+      "exit_code": 1,
+      "status": "FAIL",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "capture_completion": {
+        "state": "missing",
+        "generations": 2,
+        "expected_generations": null,
+        "scope": "Caller-declared count and saved-byte integrity; not engine coverage or authenticity. Missing completion cannot aggregate to PASS."
+      },
+      "trace_sha256": "1dfe41ac2860f62971277c831ce9afb6a423d00457a2762c9352c10233adcc6c"
+    },
+    {
+      "bundle": "legacy",
+      "exit_code": 0,
+      "status": "PASS",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "capture_completion": null,
+      "trace_sha256": "c3bc9b93cc7e8c61fb7b45189bd9679221c381b92b1c09807e703ebd95ccef38"
+    }
+  ],
+  "abrupt_process_exit": {
+    "process_exit_code": 17,
+    "checker_exit_code": 3,
+    "status": "INCONCLUSIVE",
+    "counts": {
+      "PASS": 1
+    },
+    "completion": "missing"
+  },
+  "model_or_gpu_used": false
+}

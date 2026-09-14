@@ -54,6 +54,7 @@ def test_adapter_slices_returned_sequence_retaining_eos(tmp_path):
         assert output == [8, 9] and stats["stop_reason"] == "eos"
         assert stats["capture_seconds"] >= 0
         call(Model(), writer, "2", "1", torch.tensor([[1, 2, *output, 5]]))
+        writer.finalize(expected_generations=2)
     report, cases = inspect_trace(path)
     assert report["status"] == "PASS"
     assert cases[0]["previous"]["output_ids"] == [8, 9]

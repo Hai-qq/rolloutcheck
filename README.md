@@ -8,13 +8,17 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early prototype · v0.1.0a5.** The offline core has zero runtime dependencies.
+**Early prototype · v0.1.0a6.** The offline core has zero runtime dependencies.
 An optional Transformers collector records actual input/output tensors. The repo
 includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
 trace captured locally on MPS. An opt-in slime debug callback has also been
 tested through its real HTTP adapter with a local Transformers service and a
 [native SGLang/CUDA experiment](docs/native-sglang.md) on an RTX 4070 SUPER.
 This validates one sequential engine configuration, not a training run.
+
+**New capture lifecycle:** newly recorded traces require an explicit completion
+check. A process interrupted between complete JSONL records cannot silently leave
+an aggregate PASS. See [the v2 migration and failure checks](docs/trace-completion.md).
 
 ## Why
 
@@ -173,7 +177,8 @@ uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integ
 uv build
 ```
 
-CI checks the core on Python 3.11–3.13, tests the optional collector with CPU
+CI checks the core on Linux/Python 3.11–3.13 and Windows/Python 3.12,
+tests the optional collector with CPU
 tensors, exercises the real slime HTTP adapter with a scripted upstream, and
 reruns the controlled conversion on Linux/Python 3.12. Full model
 generation is a separate opt-in local experiment. See [the roadmap](docs/roadmap.md)

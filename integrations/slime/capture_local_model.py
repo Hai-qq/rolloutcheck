@@ -196,6 +196,7 @@ async def capture(assets, source, output, device):
             await adapter.shutdown_session(sid)
             callback.raise_if_failed(expected_turns=2)
     records = [json.loads(line) for line in trace_path.read_text().splitlines()]
+    records = [record for record in records if record["record_type"] == "generation"]
     assert len(records) == len(observations) == callback.captured == 2
     for record, observation in zip(records, observations, strict=True):
         assert record["input_ids"] == observation["input_ids"]
