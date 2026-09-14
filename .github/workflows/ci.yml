@@ -19,7 +19,7 @@ jobs:
           version: '0.8.22'
       - run: uv sync --locked --python ${{ matrix.python }}
       - run: uv run --no-sync pytest -q
-      - run: uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/transformers
+      - run: uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/transformers
       - run: uv build
   controlled-conversion:
     runs-on: ubuntu-latest
@@ -50,6 +50,8 @@ jobs:
       - run: uv run --no-sync python integrations/slime/verify_adapter.py --source .cache/slime-adapter --output artifacts/slime-adapter
       # Scripted transport contract only: this step does not execute SGLang.
       - run: uv run --no-sync python integrations/slime/test_live_runner.py --source .cache/slime-adapter --output artifacts/live-runner-contract
+      - run: uv run --no-sync python integrations/slime/test_benchmark_runner.py --source .cache/slime-adapter --output artifacts/benchmark-contract
+      - run: uv run --no-sync python integrations/slime/benchmark_capture.py --summarize artifacts/benchmark-contract
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -57,3 +59,4 @@ jobs:
           path: |
             artifacts/slime-adapter/
             artifacts/live-runner-contract/
+            artifacts/benchmark-contract/

@@ -51,6 +51,10 @@ adding a version does not close these gates.
 3. Measure collector-on versus collector-off overhead on a fixed workload before
    making a performance claim. The current four-call timing record is not that
    benchmark. The native run establishes CUDA execution, not collector overhead.
+   The [paired benchmark runner](collector-overhead.md) now implements balanced
+   randomized order, warmup exclusion, identical-token checks, raw sample retention
+   and offline recomputation. Its scripted HTTP test passes; a native timing result
+   remains a separate validation step.
 4. Add conversion replay or shrinking only when a captured case needs it;
    inspecting saved IDs is explicitly witness-only.
 

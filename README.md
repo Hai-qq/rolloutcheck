@@ -155,6 +155,11 @@ probes. Its scripted CI test does not replace a live engine experiment.
 The committed [native CUDA evidence](docs/native-sglang.md) includes six real
 requests, matching wire/callback IDs, and stop-token trimming probes.
 
+To measure the collector cost on your own idle local engine, use the
+[paired on/off benchmark](docs/collector-overhead.md). It retains warmups and raw
+samples, checks identical work within pairs, and supports offline recomputation.
+Its scripted CI test does not establish native GPU overhead.
+
 ## What this adds today
 
 Existing tools already detect drift. In particular, slime's assertion reports the
@@ -173,7 +178,7 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ```sh
 uv sync --locked
 uv run --no-sync pytest -q
-uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/transformers
+uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/transformers
 uv build
 ```
 
