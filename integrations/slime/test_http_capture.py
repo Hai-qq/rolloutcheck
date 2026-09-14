@@ -101,6 +101,10 @@ async def verify(source, output):
     assert report["status"] == "PASS" and report["counts"] == {"PASS": 2}
     assert report["capture_completion"]["state"] == "complete"
     assert len(calls) == 4
+    diagnosis = (output / "diagnosis.txt").read_text()
+    assert diagnosis.startswith("RolloutCheck: PASS")
+    for alias in ("public-session-1", "public-session-2"):
+        assert f'Next:     session="{alias}" branch="main" turn="2"' in diagnosis
     # A client that never submits its declared workload must still leave an
     # independently verifiable incomplete artifact, even with zero generations.
     incomplete = output / "no-client"
@@ -116,6 +120,7 @@ async def verify(source, output):
         evidence_kind="synthetic",
     )
     assert code == 3
+    assert "Capture completion: missing" in (incomplete / "diagnosis.txt").read_text()
     incomplete_report = verify_evidence(incomplete / "evidence")
     assert incomplete_report["status"] == "INCONCLUSIVE"
     assert incomplete_report["capture_completion"]["state"] == "missing"

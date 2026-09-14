@@ -128,7 +128,11 @@ handler 2xx responses; it is not a delivery acknowledgment from the client.
 Streaming through either the body or `Accept: text/event-stream` is rejected.
 
 The output includes raw `trace.jsonl`, narrow independent engine observations in
-`wire.jsonl`, `receipt.json`, the aggregate `report.json`, and `evidence/`.
+`wire.jsonl`, `receipt.json`, the aggregate `report.json`, and `evidence/`. Since
+v0.1.0a8 it also writes `diagnosis.txt`, a bounded terminal summary with per-session
+parent/child identity. The same view is available with
+`rolloutcheck verify-evidence artifacts/http-run/evidence --format text`.
+The JSON and bundle formats remain unchanged.
 The wire file contains public session aliases, input/output IDs, sampling options
 and finish metadata, with no decoded text or request headers. The trace/wire
 limits are 64 MiB each; individual engine responses are bounded to 16 MiB.

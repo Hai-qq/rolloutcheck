@@ -1,0 +1,76 @@
+{
+  "checked_at": "2026-09-14T10:49:33.196540+00:00",
+  "consumer_platform": "Windows native Python (not WSL)",
+  "fresh_venv": true,
+  "offline_no_dependencies": true,
+  "bundles_relocated": true,
+  "stdout_encoding": "ascii:strict",
+  "archive_sha256": "095bfc6865691ea28aa827b0321e996609ea238f41fb4870ffeb6f685de8ed26",
+  "runtime": {
+    "python": "3.11.9",
+    "packages": {
+      "pip": "24.0",
+      "rolloutcheck": "0.1.0a8",
+      "setuptools": "65.5.0"
+    }
+  },
+  "checks": [
+    {
+      "input": "native",
+      "command": "verify-evidence",
+      "exit_code": 1,
+      "status": "FAIL",
+      "text_sha256": "dcf7f1fe05b7d4d6202725b525ebfd0a12f0ca412e1c86503f8da0e3846bda53"
+    },
+    {
+      "input": "incomplete",
+      "command": "verify-evidence",
+      "exit_code": 3,
+      "status": "INCONCLUSIVE",
+      "text_sha256": "b96e3362367879bb9db3e0d4b65e566211c8fa9a41609467b34153b4b4048bae"
+    },
+    {
+      "input": "pass.json",
+      "command": "inspect",
+      "exit_code": 0,
+      "status": "PASS",
+      "text_sha256": "e21abaad4d752cffad6fc2be9d775192c3fe322353b48a49c3cb9b1da32cdb85"
+    },
+    {
+      "input": "drift.json",
+      "command": "inspect",
+      "exit_code": 1,
+      "status": "FAIL",
+      "text_sha256": "a3f3f1fa1ca7b85a45ad33e2a2b753e7dd7f254ac94f7f36a269750b223435b5"
+    },
+    {
+      "input": "missing.json",
+      "command": "inspect",
+      "exit_code": 3,
+      "status": "INCONCLUSIVE",
+      "text_sha256": "4dde3466507a109868ef9c65ce2ede13715f4e32dc0fd3e0156b674f63c280e6"
+    },
+    {
+      "input": "rewrite.json",
+      "command": "inspect",
+      "exit_code": 4,
+      "status": "NOT_APPLICABLE",
+      "text_sha256": "e760da99ff0437e83c8ca986eb8ca12f258aa9ffcf2005c3325073a2defc50a0"
+    },
+    {
+      "input": "absent.json",
+      "command": "inspect",
+      "exit_code": 2,
+      "status": "ERROR",
+      "text_sha256": "ce4f29f917f2e508489cf3dccf63434382259b52dbfa53572b3716c5899943c3"
+    },
+    {
+      "input": "unicode.json",
+      "command": "inspect",
+      "exit_code": 1,
+      "status": "FAIL",
+      "text_sha256": "7ec18a5d02df21486f4645766885a8f03f4f3ef40ef0303dc51511589d745a30"
+    }
+  ],
+  "model_or_gpu_used": false
+}

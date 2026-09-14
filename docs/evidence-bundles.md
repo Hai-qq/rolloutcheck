@@ -46,6 +46,34 @@ bundle. Evidence labels remain caller-supplied. Use the producer's recorded
 RolloutCheck version when exact historical report compatibility is required.
 Pre-v0.1.0a5 exports have no manifest; re-export their source to use this command.
 
+## Terminal review
+
+Since v0.1.0a8, `rolloutcheck verify-evidence bundle --format text` shows the
+verified diagnostic with session, branch and turn identity. It uses the same
+bounded, hash-checked source snapshot used to recompute the report; it does not
+reread an unchecked source to obtain identity. Export commands accept the same
+flag. JSON is still the default and exported bundle bytes do not depend on the
+chosen stdout format. Historical bundles retain their original reports.
+
+Text details prioritize FAIL, INCONCLUSIVE, NOT_APPLICABLE, then PASS, retaining
+source order within each status. At most 20 transition details, 20 capture gaps,
+and 20 entries per boundary/missing-evidence list are shown. Omission counts are
+explicit; use JSON for all details. Names/reasons are escaped as ASCII JSON
+strings, with long fields capped at 160 characters and marked truncated, so
+terminal controls cannot redraw the screen or introduce forged output lines.
+No generated text or metadata blobs are decoded or dumped.
+
+Completion, integrity and the diagnostic status are separate. An interrupted
+trace can still contain an actionable FAIL; a complete capture can still have no
+comparable transitions. Legacy traces have no recorded completion attestation.
+Missing child IDs in standalone cases are displayed as `unknown`, never guessed.
+A reported conversion interval does not prove the cause of the failure.
+
+The [Windows validation receipt](validation/text-report-windows.json) records an
+offline wheel install into a fresh native Windows environment, relocated bundles,
+all five exit statuses, and Unicode/control-character rendering with strict ASCII
+stdout. This is saved-evidence validation; no GPU inference was rerun.
+
 ## Data and filesystem boundaries
 
 - The whole source trace is included, even other sessions and capture gaps.

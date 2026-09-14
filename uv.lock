@@ -1501,7 +1501,7 @@ wheels = [
 
 [[package]]
 name = "rolloutcheck"
-version = "0.1.0a7"
+version = "0.1.0a8"
 source = { editable = "." }
 
 [package.optional-dependencies]

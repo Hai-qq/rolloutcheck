@@ -141,9 +141,9 @@ def test_export_inspects_the_bytes_it_copies_not_a_second_source_read(tmp_path, 
     source.write_bytes(original)
     inspect = evidence.inspect_trace_bytes
 
-    def mutate_after_snapshot(raw):
+    def mutate_after_snapshot(raw, **kwargs):
         source.write_bytes(b"changed while inspecting")
-        return inspect(raw)
+        return inspect(raw, **kwargs)
 
     monkeypatch.setattr(evidence, "inspect_trace_bytes", mutate_after_snapshot)
     bundle = tmp_path / "bundle"

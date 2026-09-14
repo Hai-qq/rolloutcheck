@@ -243,13 +243,13 @@ class TraceRecorder:
         self.close()
 
 
-def inspect_trace(path):
+def inspect_trace(path, *, include_turn_ids=False):
     with Path(path).open("rb") as stream:
         raw = stream.read(MAX_TRACE_BYTES + 1)
-    return inspect_trace_bytes(raw)
+    return inspect_trace_bytes(raw, include_turn_ids=include_turn_ids)
 
 
-def inspect_trace_bytes(raw):
+def inspect_trace_bytes(raw, *, include_turn_ids=False):
     """Inspect one captured byte snapshot; export can preserve exactly these bytes."""
     if len(raw) > MAX_TRACE_BYTES:
         raise CaseError("Trace exceeds size limit")
@@ -302,6 +302,8 @@ def inspect_trace_bytes(raw):
             prior = seen.get((record["session_id"], record["branch_id"], parent), {})
             case = _make_case(prior, record, f"transition-{index:06d}")
             case["evidence"]["trace_sha256"] = digest
+            if include_turn_ids:
+                case["next"]["turn_id"] = record["turn_id"]
             result = inspect_case(case)
             cases.append(case)
             reports.append(result)

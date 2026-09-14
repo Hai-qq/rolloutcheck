@@ -93,14 +93,23 @@ def export_bundle(destination, *, kind, raw, report):
 
 
 def export_trace(source, destination):
+    return export_trace_details(source, destination)[0]
+
+
+def export_trace_details(source, destination):
+    """Export and return (report, cases) from the same bounded source snapshot."""
     raw = _read(Path(source), MAX_TRACE_BYTES, allow_symlink=True)
-    report, _ = inspect_trace_bytes(raw)
+    report, cases = inspect_trace_bytes(raw, include_turn_ids=True)
     export_bundle(destination, kind="trace", raw=raw, report=report)
-    return report
+    return report, cases
 
 
 def verify_evidence(directory):
-    """Check fixed filenames only, then recompute the report from the saved source."""
+    return verify_evidence_details(directory)[0]
+
+
+def verify_evidence_details(directory):
+    """Return (report, cases) from verified bytes; never reread source for identity."""
     directory = Path(directory)
     manifest = parse_object(_read(directory / "manifest.json", MAX_MANIFEST_BYTES))
     if (
@@ -146,9 +155,11 @@ def verify_evidence(directory):
         files[name] = raw
     raw = files[source_name]
     if is_trace:
-        report, _ = inspect_trace_bytes(raw)
+        report, cases = inspect_trace_bytes(raw, include_turn_ids=True)
     else:
-        report = dict(inspect_case(parse_object(raw)), case_sha256=hashlib.sha256(raw).hexdigest())
+        case = parse_object(raw)
+        report = dict(inspect_case(case), case_sha256=hashlib.sha256(raw).hexdigest())
+        cases = [case]
     saved_report = parse_object(files["report.json"])
     if _json_bytes(saved_report) != _json_bytes(report):
         raise CaseError("Saved report differs from recomputed source report")
@@ -159,4 +170,4 @@ def verify_evidence(directory):
             "kind": "witness_only",
             "authenticity": "not_established",
         },
-    }
+    }, cases

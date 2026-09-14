@@ -16,6 +16,11 @@ uv run --no-sync rolloutcheck inspect-trace \
 uv run --no-sync rolloutcheck inspect artifacts/extracted-rerender/transition-000001.json
 ```
 
+Add `--format text` to see failed sessions, declared parent/child IDs, token
+differences and capture completion directly. The default JSON reports and
+`--cases-dir` file contents remain unchanged by this display option. Text output
+limits details to 20 transitions and reports omissions; JSON retains all details.
+
 Both checks intentionally exit 1. A PASS trace exits 0; the other exit codes match
 single-case inspection. The export directory must be new. It contains standalone
 cases and the aggregate report, labeled `witness_only` in the command output.

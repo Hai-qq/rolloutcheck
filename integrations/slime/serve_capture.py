@@ -14,9 +14,10 @@ from verify_sglang import loopback_url, save
 
 from rolloutcheck.case import MAX_CASE_BYTES, CaseError, parse_object
 from rolloutcheck.cli import EXIT_CODES
-from rolloutcheck.evidence import export_trace
+from rolloutcheck.evidence import export_trace_details
 from rolloutcheck.sglang_response import response_ids
 from rolloutcheck.slime_http import ALIAS, SlimeHTTPCapture
+from rolloutcheck.text_report import render_text
 from rolloutcheck.trace import MAX_TRACE_BYTES, TraceRecorder
 
 
@@ -156,7 +157,8 @@ async def serve(
     finally:
         wire_stream.close()
     save(output / "receipt.json", receipt)
-    report = export_trace(path, output / "evidence")
+    report, cases = export_trace_details(path, output / "evidence")
+    (output / "diagnosis.txt").write_text(render_text(report, cases) + "\n", encoding="utf-8")
     save(output / "report.json", report)
     print(json.dumps({"status": report["status"], "capture": receipt}, indent=2), flush=True)
     return EXIT_CODES[report["status"]]

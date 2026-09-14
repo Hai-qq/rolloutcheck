@@ -35,6 +35,13 @@ HTTP client. Explicit metadata and task-local context support interleaved sessio
 shutdown checks and evidence export are automatic. A four-request native GPU run
 and an offline Windows handoff validate this path. See [the workflow](http-capture.md).
 
+The v0.1.0a8 increment removes manual case extraction from first-line terminal
+triage. Text views identify failed sessions/turns, token differences, incomplete
+capture and integrity status, using the same inspected/verified byte snapshot.
+The HTTP service writes `diagnosis.txt`; JSON and historical reports stay compatible.
+Saved GPU evidence, controlled lifecycle tests and a fresh Windows offline handoff
+validate this reporting path without claiming another native inference experiment.
+
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
 and small-model generation are established. The original large-model run and an
 independent practical advantage are not established. P1's offline core is implemented. This public alpha

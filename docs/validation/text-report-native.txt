@@ -1,0 +1,30 @@
+RolloutCheck: FAIL
+Trace: "http-capture"
+Records: 4; roots: 2; transitions: 2
+Results: FAIL=2
+Capture completion: complete; generations=4; expected=4
+Bundle integrity: verified; authenticity: not established.
+Source SHA256: "0dc2f61c69ef420238c7c94c842eb63972c5541e07a23f6bdcf3ca1498833901"
+
+FAIL  "transition-000002"
+  Previous: session="public-session-1" branch="main" turn="1"
+  Next:     session="public-session-1" branch="main" turn="2" declared_parent="1"
+  Reason: "Next input violates the declared history-prefix contract"
+  Evidence label: "observed_rollout"
+  First difference: token 32 (zero-based), previous_output; expected 151667, actual 17
+  Tokens: retained history 177; next input 71
+  Observed interval: after "previous.input_ids + previous.output_ids", at or before "next.input_ids"
+  This interval does not prove the cause of drift.
+
+FAIL  "transition-000003"
+  Previous: session="public-session-2" branch="main" turn="1"
+  Next:     session="public-session-2" branch="main" turn="2" declared_parent="1"
+  Reason: "Next input violates the declared history-prefix contract"
+  Evidence label: "observed_rollout"
+  First difference: token 32 (zero-based), previous_output; expected 151667, actual 17
+  Tokens: retained history 177; next input 71
+  Observed interval: after "previous.input_ids + previous.output_ids", at or before "next.input_ids"
+  This interval does not prove the cause of drift.
+
+Next: compare the retained IDs with captured conversion boundaries. Confirm whether history preservation is the intended contract.
+Scope: declared token-history contract only; no model replay, root-cause proof or whole-training correctness claim.

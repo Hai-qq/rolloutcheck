@@ -8,7 +8,7 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early alpha · v0.1.0a7.** The offline core has zero runtime dependencies.
+**Early alpha · v0.1.0a8.** The offline core has zero runtime dependencies.
 An optional Transformers collector records actual input/output tensors. The repo
 includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
 trace captured locally on MPS. An opt-in slime debug callback has also been
@@ -77,6 +77,37 @@ answer. The failing path drops historical reasoning during re-rendering.
 
 PASS does not establish correct log probabilities, masks, rewards, or training.
 See [the case format and capture guidance](docs/case-format.md).
+
+## Read a diagnostic
+
+Add `--format text` to any inspect, export or verify command for a terminal view:
+
+```sh
+uv run --no-sync rolloutcheck verify-evidence \
+  cases/observed/slime-http-cuda/evidence --format text
+```
+
+This rechecks the saved native capture without a GPU and deliberately exits 1.
+The view shows both failed sessions, their declared parent/child turns and the
+first differing token, alongside capture completion and bundle integrity:
+
+```text
+RolloutCheck: FAIL
+Results: FAIL=2
+Capture completion: complete; generations=4; expected=4
+Bundle integrity: verified; authenticity: not established.
+...
+  Previous: session="public-session-1" branch="main" turn="1"
+  Next:     session="public-session-1" branch="main" turn="2" declared_parent="1"
+  First difference: token 32 (zero-based), previous_output; expected 151667, actual 17
+```
+
+This is an excerpt. [The complete view](docs/validation/text-report-native.txt)
+includes the other session and diagnostic limits. JSON remains the default for
+scripts, with the same status, report fields and exit codes. Text mode prioritizes
+FAILs and limits detail to 20 transitions; counts include every transition and
+omissions are explicit. Capture gaps and missing completion stay visible even
+when a pair already FAILs. It never decodes token IDs or infers a missing turn ID.
 
 ## Export evidence
 
