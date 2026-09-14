@@ -19,6 +19,9 @@ FAILs at index 32. See [the workflow and interpretation](../../../docs/http-capt
   engine command and source snapshot hashes; the base commit precedes this feature.
   These are supporting records, not authenticated execution provenance.
 - `preflight.json`, `after.json`, and logs: idle-GPU checks and owned engine cleanup.
+  The engine log also includes a preceding four-request smoke run and health checks;
+  `runtime.json` timestamps identify the retained run. They are not additional
+  requests within this capture receipt.
 
 The source snapshot used alpha 7 code before documentation was finalized. Captured
 bytes and their original paths/receipts are preserved. The engine served one GPU
