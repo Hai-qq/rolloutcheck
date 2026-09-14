@@ -8,6 +8,7 @@ from pathlib import Path
 
 from . import __version__
 from .case import MAX_CASE_BYTES, CaseError, load_case
+from .evidence import export_bundle, export_trace, verify_evidence
 from .history import inspect_case
 from .trace import inspect_trace
 
@@ -19,17 +20,7 @@ def _export(source, destination, report):
         raw = stream.read(MAX_CASE_BYTES + 1)
     if hashlib.sha256(raw).hexdigest() != report["case_sha256"]:
         raise CaseError("Source changed after inspection; export aborted")
-    destination.mkdir(parents=True, exist_ok=False)
-    (destination / "case.json").write_bytes(raw)
-    (destination / "report.json").write_text(json.dumps(report, indent=2) + "\n")
-    (destination / "README.md").write_text(
-        "# RolloutCheck evidence bundle\n\n"
-        "Status: **witness_only**. This bundle rechecks recorded IDs; it does not "
-        "execute the original conversion or replay model sampling.\n\n"
-        f"With RolloutCheck {__version__} installed:\n\n"
-        "```sh\nrolloutcheck inspect case.json\n```\n\n"
-        "See report.json for the original case SHA-256. A hash is not proof of authenticity.\n"
-    )
+    export_bundle(destination, kind="case", raw=raw, report=report)
 
 
 def main(argv=None):
@@ -46,9 +37,22 @@ def main(argv=None):
     )
     export.add_argument("case", type=Path)
     export.add_argument("destination", type=Path)
+    export_trace_parser = sub.add_parser(
+        "export-trace-evidence",
+        help="Bundle a complete trace and its report, including capture gaps",
+    )
+    export_trace_parser.add_argument("trace", type=Path)
+    export_trace_parser.add_argument("destination", type=Path)
+    verify = sub.add_parser("verify-evidence", help="Verify bundle hashes and recompute its report")
+    verify.add_argument("directory", type=Path)
     args = parser.parse_args(argv)
     try:
-        if args.command == "inspect-trace":
+        if args.command == "verify-evidence":
+            report = verify_evidence(args.directory)
+        elif args.command == "export-trace-evidence":
+            report = export_trace(args.trace, args.destination)
+            report["export"] = {"kind": "witness_only", "directory": str(args.destination)}
+        elif args.command == "inspect-trace":
             report, cases = inspect_trace(args.trace)
             if args.cases_dir is not None:
                 args.cases_dir.mkdir(parents=True, exist_ok=False)

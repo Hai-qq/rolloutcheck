@@ -20,6 +20,10 @@ The v0.1.0a4 increment adds bounded native-response validation and an opt-in
 SGLang runner. A real RTX 4070 SUPER / WSL2 run captures six requests, verifies
 wire/callback ID equality and records stop-token retention. See
 [the native evidence and limits](native-sglang.md).
+The v0.1.0a5 increment adds complete trace evidence bundles and offline bundle
+verification. A bundle keeps the original bytes and capture gaps, and its report
+is recomputed on verification. This removes manual source/report packaging from
+the saved-trace workflow; independent developer benefit still needs evaluation.
 
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
 and small-model generation are established. The original large-model run and an

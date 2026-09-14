@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-09-14T08:18:23.689954+00:00",
+  "producer_platform": "macOS",
+  "consumer_platform": "Windows native Python (not WSL)",
+  "fresh_venv": true,
+  "install_used_no_index_and_no_deps": true,
+  "bundles_relocated_before_verification": true,
+  "handoff_archive_sha256": "3032182665f42e2d847e58ed591f0fc5ba57646acf7a2f5e90e72a413b6e0567",
+  "runtime": {
+    "python": "3.11.9",
+    "packages": {
+      "pip": "24.0",
+      "rolloutcheck": "0.1.0a5",
+      "setuptools": "65.5.0"
+    }
+  },
+  "checks": [
+    {
+      "bundle": "adapter",
+      "exit_code": 1,
+      "status": "FAIL",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "trace_sha256": "b82b2c24b853df7316bceed94025e9f8eea2c66d7946bcb2f3c82abcc9cd983a"
+    },
+    {
+      "bundle": "control",
+      "exit_code": 0,
+      "status": "PASS",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "trace_sha256": "c3bc9b93cc7e8c61fb7b45189bd9679221c381b92b1c09807e703ebd95ccef38"
+    }
+  ],
+  "model_or_gpu_used": false
+}

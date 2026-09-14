@@ -78,3 +78,6 @@ contain recoverable sensitive content: share only data you are authorized to dis
 It rechecks saved evidence; it does not execute the conversion that produced it.
 Existing destination directories are refused. Its exit code reflects the check
 status, so a successfully exported FAIL still exits with code 1.
+Since v0.1.0a5, exports include a versioned manifest and support
+`verify-evidence DIRECTORY`, which checks hashes and recomputes the saved report.
+See [evidence bundles](evidence-bundles.md) for trace exports and CI usage.

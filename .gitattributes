@@ -1,0 +1,2 @@
+# Captured bytes are hashed. Do not rewrite them to CRLF on Windows checkouts.
+cases/** -text

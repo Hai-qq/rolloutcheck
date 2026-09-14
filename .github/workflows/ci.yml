@@ -4,10 +4,14 @@ permissions:
   contents: read
 jobs:
   core:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python: ['3.11', '3.12', '3.13']
+        os: [ubuntu-latest]
+        include:
+          - python: '3.12'
+            os: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6

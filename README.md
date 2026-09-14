@@ -8,7 +8,7 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early prototype · v0.1.0a4.** The offline core has zero runtime dependencies.
+**Early prototype · v0.1.0a5.** The offline core has zero runtime dependencies.
 An optional Transformers collector records actual input/output tensors. The repo
 includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
 trace captured locally on MPS. An opt-in slime debug callback has also been
@@ -80,9 +80,20 @@ uv run --no-sync rolloutcheck export-evidence \
 ```
 
 The destination must be new. This also exits with code 1 for the intentional
-failure. The bundle preserves the case bytes, report, digest, and rerun command.
-It is explicitly **witness_only**: rechecking saved IDs does not rerun the original
-conversion. No input-supplied code is executed and no evidence is uploaded.
+failure. The bundle preserves the case bytes, report, manifest and rerun command.
+For a complete captured trace, including all sessions and capture gaps:
+
+```sh
+uv run --no-sync rolloutcheck export-trace-evidence \
+  cases/observed/slime-sglang-cuda/adapter.trace.jsonl artifacts/native-bundle
+uv run --no-sync rolloutcheck verify-evidence artifacts/native-bundle
+```
+
+Both commands exit 1 for this valid FAIL bundle. Verification checks file hashes
+and recomputes the report from the saved source; a modified report cannot silently
+override that result. This is **witness_only**: saved IDs are rechecked, without
+rerunning sampling or the original conversion. Nothing is executed from the
+bundle or uploaded. See [bundle limits and CI usage](docs/evidence-bundles.md).
 
 ## Reproduce the upstream conversion
 

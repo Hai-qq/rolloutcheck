@@ -188,6 +188,11 @@ class TraceRecorder:
 def inspect_trace(path):
     with Path(path).open("rb") as stream:
         raw = stream.read(MAX_TRACE_BYTES + 1)
+    return inspect_trace_bytes(raw)
+
+
+def inspect_trace_bytes(raw):
+    """Inspect one captured byte snapshot; export can preserve exactly these bytes."""
     if len(raw) > MAX_TRACE_BYTES:
         raise CaseError("Trace exceeds size limit")
     if raw and not raw.endswith(b"\n"):
