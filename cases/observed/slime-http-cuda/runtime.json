@@ -1,0 +1,46 @@
+{
+  "started_at": "2026-09-14T10:04:53.389133+00:00",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "packages": {
+    "sglang": "0.5.9",
+    "torch": "2.9.1",
+    "transformers": "4.57.1",
+    "aiohttp": "3.14.3",
+    "httpx": "0.28.1"
+  },
+  "model_weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "source_base_commit": "a61b416bab80e76ff7533083e73be125fe9e38a4",
+  "server_command": [
+    "/home/rolloutcheck/engine/bin/python",
+    "/home/rolloutcheck/experiments/http-capture-v2/integrations/slime/serve_capture.py",
+    "--source",
+    "/home/rolloutcheck/src/rolloutcheck/.cache/slime-adapter",
+    "--assets",
+    "/home/rolloutcheck/models/qwen3-0.6b",
+    "--sglang-url",
+    "http://127.0.0.1:30000",
+    "--output",
+    "/home/rolloutcheck/experiments/http-capture-v2/results",
+    "--requests",
+    "4",
+    "--port",
+    "31000",
+    "--timeout",
+    "180"
+  ],
+  "gpu": "name, driver_version, memory.total [MiB], memory.free [MiB], utilization.gpu [%]\nNVIDIA GeForce RTX 4070 SUPER, 610.60, 12282 MiB, 5076 MiB, 1 %",
+  "client_command": [
+    "/home/rolloutcheck/engine/bin/python",
+    "/home/rolloutcheck/experiments/http-capture-v2/integrations/slime/demo_client.py",
+    "--adapter-url",
+    "http://127.0.0.1:31000",
+    "--output",
+    "/home/rolloutcheck/experiments/http-capture-v2/results/client",
+    "--sessions",
+    "2"
+  ],
+  "client_returncode": 0,
+  "server_returncode": 1,
+  "completed_at": "2026-09-14T10:05:02.270222+00:00"
+}

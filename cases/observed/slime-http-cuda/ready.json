@@ -1,0 +1,5 @@
+{
+  "adapter_url": "http://127.0.0.1:31000",
+  "expected_requests": 4,
+  "scope": "Local opt-in capture; no authentication or training claim"
+}

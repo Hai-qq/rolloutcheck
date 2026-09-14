@@ -1,0 +1,121 @@
+{
+  "capture_completion": {
+    "state": "complete",
+    "generations": 4,
+    "expected_generations": 4,
+    "scope": "Caller-declared count and saved-byte integrity; not engine coverage or authenticity. Missing completion cannot aggregate to PASS."
+  },
+  "report_version": 1,
+  "status": "FAIL",
+  "trace_sha256": "0dc2f61c69ef420238c7c94c842eb63972c5541e07a23f6bdcf3ca1498833901",
+  "trace_id": "http-capture",
+  "records": 4,
+  "roots": 2,
+  "transitions": 2,
+  "counts": {
+    "FAIL": 2
+  },
+  "reports": [
+    {
+      "report_version": 1,
+      "case_id": "transition-000002",
+      "check": "RC-HISTORY-DRIFT",
+      "evidence_kind": "observed_rollout",
+      "scope": "declared history-prefix contract only; not whole-training correctness",
+      "status": "FAIL",
+      "reason": "Next input violates the declared history-prefix contract",
+      "first_difference": {
+        "index": 32,
+        "region": "previous_output",
+        "expected_id": 151667,
+        "actual_id": 17,
+        "kind": "different_token",
+        "window_start": 28,
+        "expected_window": [
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          198,
+          32313,
+          11,
+          279
+        ],
+        "actual_window": [
+          198,
+          151644,
+          77091,
+          198,
+          17,
+          488,
+          220,
+          17,
+          16819
+        ]
+      },
+      "localization": {
+        "first_observed_interval": {
+          "after": "previous.input_ids + previous.output_ids",
+          "at_or_before": "next.input_ids"
+        },
+        "claim": "observed interval, not a proven root cause or causal link to final drift"
+      },
+      "expected_history_tokens": 177,
+      "next_input_tokens": 71,
+      "boundary_comparisons": [],
+      "evidence_gaps": []
+    },
+    {
+      "report_version": 1,
+      "case_id": "transition-000003",
+      "check": "RC-HISTORY-DRIFT",
+      "evidence_kind": "observed_rollout",
+      "scope": "declared history-prefix contract only; not whole-training correctness",
+      "status": "FAIL",
+      "reason": "Next input violates the declared history-prefix contract",
+      "first_difference": {
+        "index": 32,
+        "region": "previous_output",
+        "expected_id": 151667,
+        "actual_id": 17,
+        "kind": "different_token",
+        "window_start": 28,
+        "expected_window": [
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          198,
+          32313,
+          11,
+          279
+        ],
+        "actual_window": [
+          198,
+          151644,
+          77091,
+          198,
+          17,
+          488,
+          220,
+          17,
+          16819
+        ]
+      },
+      "localization": {
+        "first_observed_interval": {
+          "after": "previous.input_ids + previous.output_ids",
+          "at_or_before": "next.input_ids"
+        },
+        "claim": "observed interval, not a proven root cause or causal link to final drift"
+      },
+      "expected_history_tokens": 177,
+      "next_input_tokens": 71,
+      "boundary_comparisons": [],
+      "evidence_gaps": []
+    }
+  ],
+  "scope": "Only explicit parent links within the same session/branch are checked; no transitions is INCONCLUSIVE, not PASS."
+}

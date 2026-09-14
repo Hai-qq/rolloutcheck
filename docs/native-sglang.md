@@ -110,5 +110,7 @@ The capture predates the alpha version increment and retains collector version
 This closes the first native-engine resource gate for one sequential configuration.
 The separate [paired timing experiment](collector-overhead.md) measures the callback
 on this short workload, while leaving the total-duration effect unresolved.
-Concurrent ancestry, other adapters/backends, general collector overhead, full
-training correctness and independent developer use remain unvalidated.
+A subsequent [independent-client workflow](http-capture.md) verifies explicit
+ancestry across two interleaved HTTP sessions, still with one GPU request at a time.
+General concurrency, other adapters/backends, full training correctness and
+independent developer use remain unvalidated.

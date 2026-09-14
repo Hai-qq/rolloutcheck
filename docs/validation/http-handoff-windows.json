@@ -1,0 +1,54 @@
+{
+  "checked_at": "2026-09-14T10:07:03.935131+00:00",
+  "producer_platform": "WSL2 native GPU for native; macOS scripted deadline for incomplete",
+  "consumer_platform": "Windows native Python (not WSL)",
+  "fresh_venv": true,
+  "install_used_no_index_and_no_deps": true,
+  "bundles_relocated_before_verification": true,
+  "handoff_archive_sha256": "288829ebb099574c309377a129aaabb3bba5bc9b4ab65ef49e9cc2a243bdaf83",
+  "runtime": {
+    "python": "3.11.9",
+    "packages": {
+      "pip": "24.0",
+      "rolloutcheck": "0.1.0a7",
+      "setuptools": "65.5.0"
+    }
+  },
+  "checks": [
+    {
+      "bundle": "native",
+      "exit_code": 1,
+      "status": "FAIL",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "capture_completion": {
+        "state": "complete",
+        "generations": 4,
+        "expected_generations": 4,
+        "scope": "Caller-declared count and saved-byte integrity; not engine coverage or authenticity. Missing completion cannot aggregate to PASS."
+      },
+      "trace_sha256": "0dc2f61c69ef420238c7c94c842eb63972c5541e07a23f6bdcf3ca1498833901"
+    },
+    {
+      "bundle": "incomplete",
+      "exit_code": 3,
+      "status": "INCONCLUSIVE",
+      "verification": {
+        "integrity": "verified",
+        "kind": "witness_only",
+        "authenticity": "not_established"
+      },
+      "capture_completion": {
+        "state": "missing",
+        "generations": 0,
+        "expected_generations": null,
+        "scope": "Caller-declared count and saved-byte integrity; not engine coverage or authenticity. Missing completion cannot aggregate to PASS."
+      },
+      "trace_sha256": "cc88683be00b628c3cc4f9833c782f8ff21253a5cf4f0b17ef7fca68aa61b45d"
+    }
+  ],
+  "model_or_gpu_used": false
+}

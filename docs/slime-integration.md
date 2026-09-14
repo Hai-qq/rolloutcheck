@@ -10,6 +10,14 @@ and real loopback HTTP with a scripted server, a local Transformers/Qwen3-0.6B
 service, and [native SGLang on CUDA](native-sglang.md). The Anthropic adapter
 shares the base callback but its HTTP route has not been tested here.
 
+## Ready-to-run HTTP workflow
+
+Since v0.1.0a7, [`SlimeHTTPCapture` and the local service](http-capture.md) provide
+a request-specific context resolver and bounded shutdown from explicit client
+metadata. Two interleaved sessions have been verified against native SGLang.
+Use this path when your client can supply public session/branch/turn/parent IDs.
+The lower-level callback example below is for custom controllers.
+
 ## Attach explicitly
 
 In your controller, construct a `TurnContext` for each request, using stable public
@@ -47,8 +55,10 @@ with TraceRecorder("slime-run.jsonl", trace_id="public-run-001",
 ```
 
 `controller`, its lookup and its served-turn count are integration responsibilities,
-not provided slime APIs. The local runners demonstrate an explicit, sequential
-request driver. They do not establish general concurrent ancestry resolution.
+not provided slime APIs. The older `verify_adapter.py` and `verify_sglang.py`
+runners demonstrate an explicit, sequential request driver. For tested interleaved
+HTTP identity, use the [new bounded service](http-capture.md); general concurrent
+ancestry resolution remains outside these examples.
 Branches remain isolated by the offline checker; cross-branch parent links are
 INCONCLUSIVE rather than silently reinterpreted.
 

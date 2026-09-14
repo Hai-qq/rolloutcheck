@@ -3,4 +3,4 @@
 from .history import inspect_case
 
 __all__ = ["inspect_case"]
-__version__ = "0.1.0a6"
+__version__ = "0.1.0a7"

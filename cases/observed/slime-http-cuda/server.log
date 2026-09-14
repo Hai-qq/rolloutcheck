@@ -1,0 +1,19 @@
+{"adapter_url": "http://127.0.0.1:31000", "expected_requests": 4, "scope": "Local opt-in capture; no authentication or training claim"}
+{
+  "status": "FAIL",
+  "capture": {
+    "received": 4,
+    "succeeded": 4,
+    "failed": 0,
+    "active": 0,
+    "callback_invocations": 4,
+    "captured": 4,
+    "finalized": true,
+    "gap_write_failed": false,
+    "scope": "Received non-streaming chat requests; not all intended client requests or engine/training coverage. Identity is client-declared.",
+    "capture_error": null,
+    "token_space": "sha256:aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "evidence_kind": "observed_rollout",
+    "runner_sha256": "e1215e41500c4c9af96389fa72e9d03a5418e407fe72234762e8f53bb85c0c5f"
+  }
+}

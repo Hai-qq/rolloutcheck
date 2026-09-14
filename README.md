@@ -8,17 +8,19 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early prototype · v0.1.0a6.** The offline core has zero runtime dependencies.
+**Early alpha · v0.1.0a7.** The offline core has zero runtime dependencies.
 An optional Transformers collector records actual input/output tensors. The repo
 includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
 trace captured locally on MPS. An opt-in slime debug callback has also been
 tested through its real HTTP adapter with a local Transformers service and a
 [native SGLang/CUDA experiment](docs/native-sglang.md) on an RTX 4070 SUPER.
-This validates one sequential engine configuration, not a training run.
+The latest run also verifies two interleaved HTTP sessions against that engine;
+this is not a training run.
 
-**New capture lifecycle:** newly recorded traces require an explicit completion
-check. A process interrupted between complete JSONL records cannot silently leave
-an aggregate PASS. See [the v2 migration and failure checks](docs/trace-completion.md).
+**Independent HTTP client workflow:** run the local capture service, attach explicit
+turn metadata to requests, and receive a finalized trace, diagnosis and evidence
+bundle automatically. [Run it or inspect the native GPU evidence](docs/http-capture.md).
+Interrupted captures cannot silently become PASS; see [completion checks](docs/trace-completion.md).
 
 ## Why
 
@@ -141,7 +143,9 @@ limits](docs/observed-case.md) and [collector API / trace format](docs/trace-cap
 
 ## Collect from a slime adapter
 
-Use `SlimeDebugCapture` with slime's existing `debug_callback`. Supply explicit
+For a ready-to-run local service and separate client, start with
+[the HTTP workflow](docs/http-capture.md). For a custom controller,
+use `SlimeDebugCapture` with slime's existing `debug_callback`. Supply explicit
 turn/parent context from your controller and check the independently counted
 served turns at shutdown. Missing context or failed capture is recorded as a gap,
 so it cannot silently produce an aggregate PASS.
@@ -181,7 +185,7 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ```sh
 uv sync --locked
 uv run --no-sync pytest -q
-uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/transformers
+uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/slime/serve_capture.py integrations/slime/demo_client.py integrations/slime/test_http_capture.py integrations/transformers
 uv build
 ```
 

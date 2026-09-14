@@ -1,0 +1,53 @@
+{
+  "session_id": "public-session-1",
+  "turns": [
+    {
+      "turn_id": "1",
+      "response": {
+        "id": "chatcmpl_fd8bc1debae12646a0a1e4c9",
+        "object": "chat.completion",
+        "created": 1789380298,
+        "model": "local-pinned-qwen",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "<think>\nOkay, the user is asking what 2 plus 2 is. Let me think. Well, in basic arithmetic, adding two 2s together. So 2 + 2 equals 4. But wait, maybe they're thinking of something else? Like, could there be a trick here? No, in normal math, it's straightforward. Maybe they're testing if I can explain it clearly. I should make sure to state the answer and provide a brief explanation. Let me check if there's any other possible interpretation, but I don't think so. The answer is simple.\n</think>\n\n2 + 2 equals 4. This is a basic arithmetic operation where two numbers are added together.<|im_end|>"
+            },
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 32,
+          "completion_tokens": 145,
+          "total_tokens": 177
+        }
+      }
+    },
+    {
+      "turn_id": "2",
+      "response": {
+        "id": "chatcmpl_be6ba49636f18ba0717e471b",
+        "object": "chat.completion",
+        "created": 1789380301,
+        "model": "local-pinned-qwen",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "<think>\nOkay, the user just asked, \"Reply with one word: done"
+            },
+            "finish_reason": "length"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 71,
+          "completion_tokens": 16,
+          "total_tokens": 87
+        }
+      }
+    }
+  ]
+}

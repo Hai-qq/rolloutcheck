@@ -30,6 +30,11 @@ bytes. Interrupted or unchecked traces cannot aggregate to PASS. The real slime
 HTTP adapter now has six controlled lifecycle scenarios, including omitted health
 checks. Legacy v1 evidence is preserved. See [the regression and migration](trace-completion.md).
 
+The v0.1.0a7 increment adds a bounded local capture service driven by an independent
+HTTP client. Explicit metadata and task-local context support interleaved sessions;
+shutdown checks and evidence export are automatic. A four-request native GPU run
+and an offline Windows handoff validate this path. See [the workflow](http-capture.md).
+
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
 and small-model generation are established. The original large-model run and an
 independent practical advantage are not established. P1's offline core is implemented. This public alpha
@@ -42,9 +47,10 @@ measured overhead on its actual workload, and another developer reproducing or
 using a diagnostic on their own authorized case. Passing the package tests or
 adding a version does not close these gates.
 
-1. Extend beyond the verified sequential SGLang 0.5.9 / Qwen3-0.6B configuration
-   only when a concrete workflow requires it. Concurrent ancestry and other
-   adapters/backends remain unverified; GPU access is now available.
+1. The explicit HTTP workflow now handles two interleaved sessions against
+   SGLang 0.5.9 / Qwen3-0.6B, with one GPU request at a time. Extend batching,
+   streaming, cross-branch parents or other adapters only for a concrete need.
+   General concurrency and framework/training coverage remain unverified.
 2. Obtain another authorized trajectory with a real debugging need, and compare
    the upstream logs/tests against trace extraction and portable evidence on
    that same case. Document which manual steps are actually removed.
