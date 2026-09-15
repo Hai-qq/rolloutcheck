@@ -8,7 +8,7 @@ Compare the IDs a trajectory retained with the next request, identify the first
 changed token, compare captured conversion boundaries, and export local evidence
 that another developer can recheck.
 
-**Early alpha · v0.1.0a8.** The offline core has zero runtime dependencies.
+**Early alpha · v0.1.0a9.** The offline core has zero runtime dependencies.
 An optional Transformers collector records actual input/output tensors. The repo
 includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
 trace captured locally on MPS. An opt-in slime debug callback has also been
@@ -198,6 +198,20 @@ The [separate native run](docs/collector-overhead.md#native-rtx-4070-super-run-2
 retains 20 measured pairs / 80 requests: callback median 0.218 ms on this short
 workload, with total-duration differences unresolved amid timing variability.
 
+## Inspect the training handoff
+
+A drift FAIL alone does not establish corrupted training data: slime can mask or
+split rewritten history while constructing training samples. The new experimental
+[`audit_samples` workflow](docs/training-handoff.md) compares actual emitted Sample
+positions against sampled token contexts and reports retention, ambiguity and
+duplicate training occurrences.
+
+With actual Qwen3-0.6B/MPS generation, the pinned default policy marks 16 of 192
+sampled output tokens trainable; threshold zero retains 192 in two samples. Both
+policies have matching trainable contexts and still show history-prefix FAIL.
+This is a policy/retention observation, **not a training-quality result or universal
+fix**. The full RL training loop and independent practical benefit remain unverified.
+
 ## What this adds today
 
 Existing tools already detect drift. In particular, slime's assertion reports the
@@ -216,7 +230,7 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ```sh
 uv sync --locked
 uv run --no-sync pytest -q
-uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/slime/serve_capture.py integrations/slime/demo_client.py integrations/slime/test_http_capture.py integrations/transformers
+uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/slime/serve_capture.py integrations/slime/demo_client.py integrations/slime/test_http_capture.py integrations/slime/verify_training_handoff.py integrations/slime/verify_training_handoff_mps.py integrations/transformers
 uv build
 ```
 

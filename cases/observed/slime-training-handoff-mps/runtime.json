@@ -1,0 +1,26 @@
+{
+  "engine_implementation": "Transformers service using required /generate fields; NOT SGLang",
+  "device": "mps",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.12",
+  "packages": {
+    "torch": "2.10.0",
+    "transformers": "4.57.6",
+    "aiohttp": "3.14.3",
+    "httpx": "0.28.1"
+  },
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "requests": 4,
+  "optimizer_steps": 0,
+  "source_sha256": {
+    "integrations/slime/verify_training_handoff_mps.py": "8f5665ecf3894dd2abe570df91004ac3ee9d3b79946ba6cd2ec0fcb6b02bfc60",
+    "integrations/slime/verify_training_handoff.py": "22d663eedd109e45d27678231c6ee9d2036be1d624c0e1fd58bf9d0d09de6781",
+    "src/rolloutcheck/sample_audit.py": "a8a237418f2842530d3c00d738c581558af1cb770d4cb7bf223147d8dc6e5913",
+    "src/rolloutcheck/__init__.py": "7420f52ccd458b6ded4070657fbd4046ff69ecc0fcd03abf56324d57e43d1862",
+    "src/rolloutcheck/slime_capture.py": "879da2ccdf3d834a2f0768e31a5ba8e3fe957bac648ae1998526a00cc3230bfc",
+    "src/rolloutcheck/trace.py": "4114c8bb1caab0b258266371442fc19b41913017e08c7e52eb4c10bcce55d821",
+    "src/rolloutcheck/evidence.py": "c4fd2af3a590ee8bc9577980d4c70946937b4cfe34608de1cb60fa6cf543e69a"
+  },
+  "scope": "Actual greedy generation and upstream Sample construction; token/mask audit only."
+}

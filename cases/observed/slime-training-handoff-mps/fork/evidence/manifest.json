@@ -1,0 +1,23 @@
+{
+  "bundle_version": 1,
+  "evidence_mode": "witness_only",
+  "files": {
+    "README.md": {
+      "bytes": 673,
+      "sha256": "8b1f6922172189d1d3a9fa9671887d2c218ff2915c640f7062f48a8d199bfb9a"
+    },
+    "report.json": {
+      "bytes": 1962,
+      "sha256": "447d3889136c39f88c0a59c5c9802d49b9170f350ded7440eba4e1100256b155"
+    },
+    "trace.jsonl": {
+      "bytes": 3857,
+      "sha256": "1f7cf0f00b7bae5178af3c233b8c0430f7595451ba9989f3db54078a74a0f13c"
+    }
+  },
+  "kind": "trace",
+  "producer": {
+    "name": "rolloutcheck",
+    "version": "0.1.0a9"
+  }
+}

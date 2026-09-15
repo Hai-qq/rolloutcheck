@@ -68,6 +68,14 @@ because slime can derive `sid` from a bearer credential. Do not put that value
 into `TurnContext.session_id`; supply your own public alias. Token IDs themselves
 can reconstruct content, so traces still require review before sharing.
 
+## Training samples are a separate boundary
+
+The prefix check applies to the caller-declared append-only contract. The pinned
+slime trajectory manager may intentionally realign or split drifted history when
+`finish_session` emits training samples. A prefix FAIL must not be presented as
+proof of wrong training loss. See the [actual handoff comparison](training-handoff.md)
+for sampled-context matching and retained trainable-token accounting.
+
 ## Capture failures and coverage
 
 The inspected slime implementation catches and logs callback exceptions. Raising

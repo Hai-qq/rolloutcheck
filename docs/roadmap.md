@@ -42,6 +42,13 @@ The HTTP service writes `diagnosis.txt`; JSON and historical reports stay compat
 Saved GPU evidence, controlled lifecycle tests and a fresh Windows offline handoff
 validate this reporting path without claiming another native inference experiment.
 
+The v0.1.0a9 increment inspects actual `finish_session` training-sample construction.
+A real MPS generation comparison shows a retention-policy difference (16 versus
+192 trainable token positions) while both policies retain correct sampled token
+contexts. This corrects the inference that history drift alone implies corrupted
+training samples. Native SGLang handoff and an optimizer run are still pending.
+See [training handoff evidence and interpretation](training-handoff.md).
+
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
 and small-model generation are established. The original large-model run and an
 independent practical advantage are not established. P1's offline core is implemented. This public alpha
@@ -70,6 +77,30 @@ adding a version does not close these gates.
    training throughput. The runner also has a scripted HTTP contract test in CI.
 4. Add conversion replay or shrinking only when a captured case needs it;
    inspecting saved IDs is explicitly witness-only.
+
+## Acceptance gates for day-to-day training use
+
+Do not estimate maturity from feature counts or an invented completion percentage.
+The next four outcomes decide whether this is useful training infrastructure:
+
+1. **Actual training integration:** run an identified supported training job from
+   rollout through emitted samples and at least a short optimizer run. Preserve
+   job configuration, checkpoint/weight identity, sample audits and loss records.
+   A standalone inference request, Sample construction or toy optimizer step is
+   not full slime/RL integration. The available GPU is 12 GB; validate a fitting
+   configuration before proposing a concrete server rental.
+2. **Actionable case:** show an operator-relevant policy/defect diagnosis and a
+   controlled before/after change on that same job. The current MPS handoff case
+   establishes token retention differences, not better loss or model quality.
+3. **Operating envelope:** measure enabled/disabled collection on the actual
+   training workload, with longer contexts, batches and failure/restart handling.
+   The earlier 0.218 ms callback median is not this validation.
+4. **Independent use:** another developer reproduces or diagnoses their own
+   authorized trajectory with the documented workflow. No contact or adoption
+   has occurred merely because the repository and CI are public.
+
+Keep development directed at these gates rather than expanding into dashboards,
+new frameworks or more presentation features without a demonstrated need.
 
 ## Then: independent use
 
