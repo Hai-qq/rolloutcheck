@@ -39,6 +39,26 @@ def test_missing_file_is_structured_error(tmp_path):
     assert json.loads(result.stdout)["status"] == "ERROR"
 
 
+@pytest.mark.parametrize("policy,code", [("default", 1), ("fork", 0)])
+def test_sample_audit_explicit_retention_requirement(policy, code):
+    path = ROOT / "cases/observed/slime-training-handoff-mps" / policy / "handoff.json"
+    ordinary = cli("audit-samples", path)
+    assert ordinary.returncode == 0
+    assert json.loads(ordinary.stdout)["context_status"] == "MATCHED"
+    strict = cli("audit-samples", path, "--require-all-generated", "--format", "text")
+    assert strict.returncode == code
+    assert "Unaccounted generated tokens:" in strict.stdout
+    assert "not a training-correctness verdict" in strict.stdout
+
+
+def test_sample_audit_bad_file_is_error(tmp_path):
+    path = tmp_path / "bad.json"
+    path.write_text('{"turns": [], "samples": [{}]}')
+    result = cli("audit-samples", path)
+    assert result.returncode == 2
+    assert json.loads(result.stdout)["status"] == "ERROR"
+
+
 def test_export_preserves_original_and_refuses_overwrite(tmp_path):
     source = ROOT / "cases/synthetic/drift.json"
     destination = tmp_path / "bundle"

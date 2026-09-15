@@ -46,7 +46,9 @@ The v0.1.0a9 increment inspects actual `finish_session` training-sample construc
 A real MPS generation comparison shows a retention-policy difference (16 versus
 192 trainable token positions) while both policies retain correct sampled token
 contexts. This corrects the inference that history drift alone implies corrupted
-training samples. Native SGLang handoff and an optimizer run are still pending.
+training samples. Native SGLang handoff and an actual downstream HF Trainer/PEFT
+optimizer job are now recorded in [the training job](training-job.md). Full slime
+RL remains pending.
 See [training handoff evidence and interpretation](training-handoff.md).
 
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
@@ -124,3 +126,36 @@ Deferred: a second framework integration, generic plugin execution, dashboards,
 real-time alerts, automatic repair, full training correctness checks, and training
 performance claims. A rented server is an optional resource for a specific future
 experiment, not a substitute for validating the product need.
+
+## Current evidence against the four gates
+
+- **Training integration: partial.** Native SGLang -> actual slime Samples ->
+  HF Trainer/PEFT masked supervised updates runs on the pinned 0.6B model.
+  This is an actual supported Trainer job; it does not close full slime/Megatron
+  RL integration, reward/logprob semantics or online weight synchronization.
+- **Actionable case: controlled evidence.** A real HF language-modeling collator
+  replaces existing masks; the batch guard detects it and preserving those labels
+  removes the mismatch. Retention policy also changes the generated tokens actually
+  consumed by training. Neither result establishes improved model quality or a
+  new upstream defect. Independent operator benefit still needs a field case.
+- **Operating envelope: bounded evidence.** Three native context profiles feed
+  real training with batch size 1/2 and gradient accumulation 1/2. Guard on/off
+  controls and completed-checkpoint stop/resume are compared. These short jobs do
+  not validate total collector overhead, distributed training, long-running
+  reliability, packed batches, power loss or disk-full recovery.
+- **Independent use: pending external input.** A [fresh-install trial](try-your-trajectory.md)
+  and field-report issue form are available. The author/assistant reproducing the
+  public fixture is not independent adoption. No outreach message has been sent.
+
+Continue with a real authorized training-owner case and full framework training
+validation; do not promote this to a production-ready tool based on the above.
+
+The full-framework environment also has a concrete compatibility gap: the pinned
+slime revision's `build_conda.sh` selects SGLang 0.5.15.post1, PyTorch 2.11/cu129
+and Megatron commit `1dcf0dafa884ad52ffb243625717a3471643e087`. The existing
+native capture environment uses SGLang 0.5.9 / PyTorch 2.9.1+cu128. Adapter
+compatibility does not validate that complete stack. The upstream Qwen3-0.6B
+parallel test starts with eight GPUs; this is a reference configuration, not a
+proof that a smaller setup cannot work. Validate a separate single-GPU environment
+and memory plan before claiming full-stack support or requesting paid hardware;
+keep the working inference environment and network configuration intact.

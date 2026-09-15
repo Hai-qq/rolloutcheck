@@ -1,0 +1,191 @@
+{
+  "experiment_version": 1,
+  "device": "mps",
+  "profiles": [
+    {
+      "profile": "short",
+      "pairs": [
+        {
+          "pair": 0,
+          "warmup": true,
+          "on_run": "short-pair-0-on",
+          "off_run": "short-pair-0-off",
+          "on_seconds": 1.9019516249973094,
+          "off_seconds": 1.8986275409988593,
+          "delta_seconds": 0.003324083998450078,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 1,
+          "warmup": false,
+          "on_run": "short-pair-1-on",
+          "off_run": "short-pair-1-off",
+          "on_seconds": 1.8926605000015115,
+          "off_seconds": 1.8599183339974843,
+          "delta_seconds": 0.03274216600402724,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 2,
+          "warmup": false,
+          "on_run": "short-pair-2-on",
+          "off_run": "short-pair-2-off",
+          "on_seconds": 1.8767167499972857,
+          "off_seconds": 1.88418804200046,
+          "delta_seconds": -0.007471292003174312,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 3,
+          "warmup": false,
+          "on_run": "short-pair-3-on",
+          "off_run": "short-pair-3-off",
+          "on_seconds": 1.8945663330014213,
+          "off_seconds": 1.8779334999999264,
+          "delta_seconds": 0.016632833001494873,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        }
+      ],
+      "measured_pairs": 3,
+      "median_delta_seconds": 0.016632833001494873,
+      "delta_range_seconds": [
+        -0.007471292003174312,
+        0.03274216600402724
+      ],
+      "conclusion": "Descriptive timings only; too few pairs for a stable end-to-end overhead or speedup claim."
+    },
+    {
+      "profile": "context-80",
+      "pairs": [
+        {
+          "pair": 0,
+          "warmup": true,
+          "on_run": "context-80-pair-0-on",
+          "off_run": "context-80-pair-0-off",
+          "on_seconds": 8.649770500000159,
+          "off_seconds": 8.758066874994256,
+          "delta_seconds": -0.10829637499409728,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 1,
+          "warmup": false,
+          "on_run": "context-80-pair-1-on",
+          "off_run": "context-80-pair-1-off",
+          "on_seconds": 8.631293625003309,
+          "off_seconds": 8.636010416004865,
+          "delta_seconds": -0.0047167910015559755,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 2,
+          "warmup": false,
+          "on_run": "context-80-pair-2-on",
+          "off_run": "context-80-pair-2-off",
+          "on_seconds": 8.644624291999207,
+          "off_seconds": 8.64231275000202,
+          "delta_seconds": 0.0023115419971873052,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 3,
+          "warmup": false,
+          "on_run": "context-80-pair-3-on",
+          "off_run": "context-80-pair-3-off",
+          "on_seconds": 8.633902749999834,
+          "off_seconds": 8.643193041003542,
+          "delta_seconds": -0.009290291003708262,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        }
+      ],
+      "measured_pairs": 3,
+      "median_delta_seconds": -0.0047167910015559755,
+      "delta_range_seconds": [
+        -0.009290291003708262,
+        0.0023115419971873052
+      ],
+      "conclusion": "Descriptive timings only; too few pairs for a stable end-to-end overhead or speedup claim."
+    },
+    {
+      "profile": "context-160",
+      "pairs": [
+        {
+          "pair": 0,
+          "warmup": true,
+          "on_run": "context-160-pair-0-on",
+          "off_run": "context-160-pair-0-off",
+          "on_seconds": 19.909340749996773,
+          "off_seconds": 19.967286874998535,
+          "delta_seconds": -0.057946125001762994,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 1,
+          "warmup": false,
+          "on_run": "context-160-pair-1-on",
+          "off_run": "context-160-pair-1-off",
+          "on_seconds": 19.893983125002705,
+          "off_seconds": 19.92992100000265,
+          "delta_seconds": -0.03593787499994505,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 2,
+          "warmup": false,
+          "on_run": "context-160-pair-2-on",
+          "off_run": "context-160-pair-2-off",
+          "on_seconds": 19.915785416997096,
+          "off_seconds": 19.91123549999611,
+          "delta_seconds": 0.00454991700098617,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        },
+        {
+          "pair": 3,
+          "warmup": false,
+          "on_run": "context-160-pair-3-on",
+          "off_run": "context-160-pair-3-off",
+          "on_seconds": 19.950242250000883,
+          "off_seconds": 19.933791915995243,
+          "delta_seconds": 0.01645033400563989,
+          "identical_backward_records": true,
+          "identical_parameters": true
+        }
+      ],
+      "measured_pairs": 3,
+      "median_delta_seconds": 0.00454991700098617,
+      "delta_range_seconds": [
+        -0.03593787499994505,
+        0.01645033400563989
+      ],
+      "conclusion": "Descriptive timings only; too few pairs for a stable end-to-end overhead or speedup claim."
+    }
+  ],
+  "resume": {
+    "stopped_at": 2,
+    "resumed_from": 2,
+    "finished_at": 4,
+    "identical_to_continuous": true
+  },
+  "default_policy_supervised_tokens_per_microbatch": [
+    16,
+    16,
+    16,
+    16
+  ],
+  "source_sha256": {
+    "verify_training_job.py": "b8412251fbbfa697b7ee32d7b418ce98483563d7d14a66664fc10c76f5281546",
+    "train_handoff.py": "298753022a08628b7534319a4f487a8f8437fd2a975fd768ec3a43df116cb62a"
+  },
+  "scope": "Actual native SGLang saved rollouts -> slime Samples -> HF Trainer/PEFT. Fixed-rollout masked supervised training, not slime/Megatron RL. Batch guard timings do not measure total rollout capture overhead. No training-quality or adoption claim."
+}

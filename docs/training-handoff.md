@@ -7,15 +7,18 @@ history as context-only tokens or split it into separate samples.
 
 RolloutCheck's experimental `audit_samples` checks this next boundary: which
 sampled tokens appear at trainable positions, and whether their full preceding
-ID context matches what the generator actually saw. It does not run or validate
+ID context matches what the generator actually saw. The audit itself does not validate
 an optimizer, reward function, log probabilities, or a complete training job.
+The [optional training bridge](training-job.md) separately executes actual masked
+supervised Trainer/PEFT updates from the emitted Samples.
 
 ## Observed Qwen3-0.6B result
 
 The [committed run](../cases/observed/slime-training-handoff-mps) uses actual
 Transformers/MPS generation through the unmodified pinned slime OpenAI adapter,
 including its real `finish_session → Sample` path. This is **not native SGLang**.
-Windows GPU resources were occupied; the native handoff comparison remains pending.
+The later [native SGLang comparison](../cases/observed/slime-training-native) is
+now recorded separately; its output tokens differ from this earlier MPS fixture.
 Each policy makes two real model requests. The policies produce identical input
 and output ID arrays, so the comparison isolates this sample-construction setting
 on this particular conversation.
@@ -147,7 +150,9 @@ PYTHONPATH=src .cache/sglang-venv/bin/python integrations/slime/verify_training_
   --sglang-url http://127.0.0.1:30000 --output artifacts/handoff-native
 ```
 
-The native handoff command is available but has not yet been validated against a
-live SGLang engine. The earlier native HTTP/overhead experiments do not validate
-this new sample-construction comparison. Runners refuse existing output folders
-and compare actual generation IDs before accepting a policy comparison.
+The native handoff command has now been validated against SGLang 0.5.9 on an
+RTX 4070 SUPER. Short and two longer context profiles have matching generation
+IDs across retention policies. Runners refuse existing output folders and compare
+actual generation IDs before accepting a policy comparison. The separate
+[training job](training-job.md) consumes these snapshots without claiming a full
+slime/Megatron RL run.

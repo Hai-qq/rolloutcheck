@@ -1,0 +1,182 @@
+{
+  "source_revision": "4c193f1f37509cca70f0e88807a9305b70f63f4e",
+  "scenarios": [
+    {
+      "name": "context-80-default",
+      "history_status": "FAIL",
+      "audit": {
+        "audit_version": 1,
+        "context_status": "MATCHED",
+        "generated_tokens": 326,
+        "trainable_tokens": 16,
+        "unmatched_trainable_tokens": 0,
+        "ambiguous_trainable_tokens": 0,
+        "duplicate_training_occurrences": 0,
+        "unaccounted_generated_tokens": 310,
+        "turns": [
+          {
+            "turn_id": "1",
+            "generated_tokens": 310,
+            "uniquely_represented_tokens": 0,
+            "unaccounted_tokens": 310
+          },
+          {
+            "turn_id": "2",
+            "generated_tokens": 16,
+            "uniquely_represented_tokens": 16,
+            "unaccounted_tokens": 0
+          }
+        ],
+        "samples": [
+          {
+            "sample_index": 0,
+            "tokens": 834,
+            "trainable_tokens": 16
+          }
+        ],
+        "scope": "Exact token and preceding-context accounting within supplied session only. MATCHED does not imply all generated tokens were retained, no duplicates, correct log probabilities/rewards, training benefit, or complete/authentic source capture. Unaccounted tokens can be intentional policy decisions or ambiguous attribution."
+      },
+      "context_repetitions": 80
+    },
+    {
+      "name": "context-80-fork",
+      "history_status": "FAIL",
+      "audit": {
+        "audit_version": 1,
+        "context_status": "MATCHED",
+        "generated_tokens": 326,
+        "trainable_tokens": 326,
+        "unmatched_trainable_tokens": 0,
+        "ambiguous_trainable_tokens": 0,
+        "duplicate_training_occurrences": 0,
+        "unaccounted_generated_tokens": 0,
+        "turns": [
+          {
+            "turn_id": "1",
+            "generated_tokens": 310,
+            "uniquely_represented_tokens": 310,
+            "unaccounted_tokens": 0
+          },
+          {
+            "turn_id": "2",
+            "generated_tokens": 16,
+            "uniquely_represented_tokens": 16,
+            "unaccounted_tokens": 0
+          }
+        ],
+        "samples": [
+          {
+            "sample_index": 0,
+            "tokens": 1068,
+            "trainable_tokens": 310
+          },
+          {
+            "sample_index": 1,
+            "tokens": 834,
+            "trainable_tokens": 16
+          }
+        ],
+        "scope": "Exact token and preceding-context accounting within supplied session only. MATCHED does not imply all generated tokens were retained, no duplicates, correct log probabilities/rewards, training benefit, or complete/authentic source capture. Unaccounted tokens can be intentional policy decisions or ambiguous attribution."
+      },
+      "context_repetitions": 80
+    },
+    {
+      "name": "context-160-default",
+      "history_status": "FAIL",
+      "audit": {
+        "audit_version": 1,
+        "context_status": "MATCHED",
+        "generated_tokens": 282,
+        "trainable_tokens": 16,
+        "unmatched_trainable_tokens": 0,
+        "ambiguous_trainable_tokens": 0,
+        "duplicate_training_occurrences": 0,
+        "unaccounted_generated_tokens": 266,
+        "turns": [
+          {
+            "turn_id": "1",
+            "generated_tokens": 266,
+            "uniquely_represented_tokens": 0,
+            "unaccounted_tokens": 266
+          },
+          {
+            "turn_id": "2",
+            "generated_tokens": 16,
+            "uniquely_represented_tokens": 16,
+            "unaccounted_tokens": 0
+          }
+        ],
+        "samples": [
+          {
+            "sample_index": 0,
+            "tokens": 1575,
+            "trainable_tokens": 16
+          }
+        ],
+        "scope": "Exact token and preceding-context accounting within supplied session only. MATCHED does not imply all generated tokens were retained, no duplicates, correct log probabilities/rewards, training benefit, or complete/authentic source capture. Unaccounted tokens can be intentional policy decisions or ambiguous attribution."
+      },
+      "context_repetitions": 160
+    },
+    {
+      "name": "context-160-fork",
+      "history_status": "FAIL",
+      "audit": {
+        "audit_version": 1,
+        "context_status": "MATCHED",
+        "generated_tokens": 282,
+        "trainable_tokens": 282,
+        "unmatched_trainable_tokens": 0,
+        "ambiguous_trainable_tokens": 0,
+        "duplicate_training_occurrences": 0,
+        "unaccounted_generated_tokens": 0,
+        "turns": [
+          {
+            "turn_id": "1",
+            "generated_tokens": 266,
+            "uniquely_represented_tokens": 266,
+            "unaccounted_tokens": 0
+          },
+          {
+            "turn_id": "2",
+            "generated_tokens": 16,
+            "uniquely_represented_tokens": 16,
+            "unaccounted_tokens": 0
+          }
+        ],
+        "samples": [
+          {
+            "sample_index": 0,
+            "tokens": 1744,
+            "trainable_tokens": 266
+          },
+          {
+            "sample_index": 1,
+            "tokens": 1575,
+            "trainable_tokens": 16
+          }
+        ],
+        "scope": "Exact token and preceding-context accounting within supplied session only. MATCHED does not imply all generated tokens were retained, no duplicates, correct log probabilities/rewards, training benefit, or complete/authentic source capture. Unaccounted tokens can be intentional policy decisions or ambiguous attribution."
+      },
+      "context_repetitions": 160
+    }
+  ],
+  "policy_comparisons": [
+    {
+      "context_repetitions": 80,
+      "same_generation_ids_across_policies": true,
+      "retention_policy_comparison_eligible": true,
+      "reason": "Identical work"
+    },
+    {
+      "context_repetitions": 160,
+      "same_generation_ids_across_policies": true,
+      "retention_policy_comparison_eligible": true,
+      "reason": "Identical work"
+    }
+  ],
+  "source_sha256": {
+    "verify_training_workload.py": "ef9d9d01dd12a0b436ce213ab4f921c2c2d043bcbe3f880c363951c44796ec8c",
+    "verify_training_handoff.py": "28229efc148cc2ba820cc857bf34c2e5c0471cef43bfb6105ca5402b2a499bca"
+  },
+  "scope": "Actual sequential native inference; public repeated-context stress workload. No concurrent engine requests, optimizer, throughput or independent-use claim."
+}

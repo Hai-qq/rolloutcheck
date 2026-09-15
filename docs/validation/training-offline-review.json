@@ -1,0 +1,32 @@
+{
+  "review": "fresh macOS venv; locally built wheel installed with --no-index",
+  "wheel_sha256": "991292700bf71e35b279315e0273d8a650e29f7bccb6b63567afdac931a6f32e",
+  "runs": [
+    {
+      "policy": "default",
+      "require_all_generated": false,
+      "exit_code": 0,
+      "stdout": "Token contexts: MATCHED\nGenerated tokens: 161\nTrainable positions: 16\nUnmatched positions: 0\nAmbiguous positions: 0\nDuplicate training occurrences: 0\nUnaccounted generated tokens: 145\nToken/context accounting only; MATCHED is not a training-correctness verdict.\nUnaccounted tokens can reflect intentional dropping or ambiguous attribution.\n"
+    },
+    {
+      "policy": "default",
+      "require_all_generated": true,
+      "exit_code": 1,
+      "stdout": "Token contexts: MATCHED\nGenerated tokens: 161\nTrainable positions: 16\nUnmatched positions: 0\nAmbiguous positions: 0\nDuplicate training occurrences: 0\nUnaccounted generated tokens: 145\nAll-generated retention requirement: NOT_MET\nToken/context accounting only; MATCHED is not a training-correctness verdict.\nUnaccounted tokens can reflect intentional dropping or ambiguous attribution.\n"
+    },
+    {
+      "policy": "fork",
+      "require_all_generated": false,
+      "exit_code": 0,
+      "stdout": "Token contexts: MATCHED\nGenerated tokens: 161\nTrainable positions: 161\nUnmatched positions: 0\nAmbiguous positions: 0\nDuplicate training occurrences: 0\nUnaccounted generated tokens: 0\nToken/context accounting only; MATCHED is not a training-correctness verdict.\nUnaccounted tokens can reflect intentional dropping or ambiguous attribution.\n"
+    },
+    {
+      "policy": "fork",
+      "require_all_generated": true,
+      "exit_code": 0,
+      "stdout": "Token contexts: MATCHED\nGenerated tokens: 161\nTrainable positions: 161\nUnmatched positions: 0\nAmbiguous positions: 0\nDuplicate training occurrences: 0\nUnaccounted generated tokens: 0\nAll-generated retention requirement: MET\nToken/context accounting only; MATCHED is not a training-correctness verdict.\nUnaccounted tokens can reflect intentional dropping or ambiguous attribution.\n"
+    }
+  ],
+  "core_import_check": "core imports are dependency-free",
+  "scope": "Author-operated offline installation check, not independent use or training replay."
+}

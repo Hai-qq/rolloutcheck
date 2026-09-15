@@ -1,0 +1,37 @@
+{
+  "audit_version": 1,
+  "context_status": "MATCHED",
+  "generated_tokens": 326,
+  "trainable_tokens": 326,
+  "unmatched_trainable_tokens": 0,
+  "ambiguous_trainable_tokens": 0,
+  "duplicate_training_occurrences": 0,
+  "unaccounted_generated_tokens": 0,
+  "turns": [
+    {
+      "turn_id": "1",
+      "generated_tokens": 310,
+      "uniquely_represented_tokens": 310,
+      "unaccounted_tokens": 0
+    },
+    {
+      "turn_id": "2",
+      "generated_tokens": 16,
+      "uniquely_represented_tokens": 16,
+      "unaccounted_tokens": 0
+    }
+  ],
+  "samples": [
+    {
+      "sample_index": 0,
+      "tokens": 1068,
+      "trainable_tokens": 310
+    },
+    {
+      "sample_index": 1,
+      "tokens": 834,
+      "trainable_tokens": 16
+    }
+  ],
+  "scope": "Exact token and preceding-context accounting within supplied session only. MATCHED does not imply all generated tokens were retained, no duplicates, correct log probabilities/rewards, training benefit, or complete/authentic source capture. Unaccounted tokens can be intentional policy decisions or ambiguous attribution."
+}

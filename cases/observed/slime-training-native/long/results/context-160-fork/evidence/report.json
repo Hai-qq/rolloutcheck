@@ -1,0 +1,71 @@
+{
+  "capture_completion": {
+    "expected_generations": 2,
+    "generations": 2,
+    "scope": "Caller-declared count and saved-byte integrity; not engine coverage or authenticity. Missing completion cannot aggregate to PASS.",
+    "state": "complete"
+  },
+  "counts": {
+    "FAIL": 1
+  },
+  "records": 2,
+  "report_version": 1,
+  "reports": [
+    {
+      "boundary_comparisons": [],
+      "case_id": "transition-000001",
+      "check": "RC-HISTORY-DRIFT",
+      "evidence_gaps": [],
+      "evidence_kind": "observed_rollout",
+      "expected_history_tokens": 1744,
+      "first_difference": {
+        "actual_id": 785,
+        "actual_window": [
+          198,
+          151644,
+          77091,
+          198,
+          785,
+          6303,
+          37166,
+          389,
+          279
+        ],
+        "expected_id": 151667,
+        "expected_window": [
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          198,
+          32313,
+          11,
+          1077
+        ],
+        "index": 1478,
+        "kind": "different_token",
+        "region": "previous_output",
+        "window_start": 1474
+      },
+      "localization": {
+        "claim": "observed interval, not a proven root cause or causal link to final drift",
+        "first_observed_interval": {
+          "after": "previous.input_ids + previous.output_ids",
+          "at_or_before": "next.input_ids"
+        }
+      },
+      "next_input_tokens": 1559,
+      "reason": "Next input violates the declared history-prefix contract",
+      "report_version": 1,
+      "scope": "declared history-prefix contract only; not whole-training correctness",
+      "status": "FAIL"
+    }
+  ],
+  "roots": 1,
+  "scope": "Only explicit parent links within the same session/branch are checked; no transitions is INCONCLUSIVE, not PASS.",
+  "status": "FAIL",
+  "trace_id": "context-160-fork",
+  "trace_sha256": "8ff651d7853c6347011fc8592da17c751cfa172cbe572853afd0d9a4707e2159",
+  "transitions": 1
+}

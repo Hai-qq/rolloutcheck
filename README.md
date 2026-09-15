@@ -14,8 +14,9 @@ includes both a controlled tokenizer experiment and a real Qwen3-0.6B generation
 trace captured locally on MPS. An opt-in slime debug callback has also been
 tested through its real HTTP adapter with a local Transformers service and a
 [native SGLang/CUDA experiment](docs/native-sglang.md) on an RTX 4070 SUPER.
-The latest run also verifies two interleaved HTTP sessions against that engine;
-this is not a training run.
+The HTTP capture run also verifies two interleaved sessions against that engine.
+The [new training bridge](docs/training-job.md) feeds native rollout samples into
+actual HF Trainer/PEFT updates, with explicit limits on what this validates.
 
 **Independent HTTP client workflow:** run the local capture service, attach explicit
 turn metadata to requests, and receive a finalized trace, diagnosis and evidence
@@ -212,6 +213,30 @@ policies have matching trainable contexts and still show history-prefix FAIL.
 This is a policy/retention observation, **not a training-quality result or universal
 fix**. The full RL training loop and independent practical benefit remain unverified.
 
+## Train and check the batch boundary
+
+The [optional training bridge](docs/training-job.md) now consumes saved native
+SGLang/slime Samples in actual Hugging Face Trainer/PEFT LoRA jobs. It preserves
+loss masks through batching, verifies parameter updates and binds checkpoints to
+their data/configuration. It uses masked supervised cross entropy, not slime RL.
+A controlled misuse of an HF language-modeling collator is detected before the
+optimizer because that collator replaces the prepared loss labels.
+
+```sh
+rolloutcheck audit-samples \
+  cases/observed/slime-training-native/short/results/default/handoff.json --format text
+# Explicitly require every generated output token to be represented:
+rolloutcheck audit-samples \
+  cases/observed/slime-training-native/short/results/default/handoff.json \
+  --require-all-generated --format text
+```
+
+The second command exits 1 on this policy example. The command does not infer that
+intentional response dropping is a bug. See the [native capture](cases/observed/slime-training-native)
+and [training run](cases/observed/trainer-native-mps) for the measured scope.
+For a first external trial, [use your own authorized trajectory](docs/try-your-trajectory.md).
+There is no verified external adoption yet.
+
 ## What this adds today
 
 Existing tools already detect drift. In particular, slime's assertion reports the
@@ -230,7 +255,7 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ```sh
 uv sync --locked
 uv run --no-sync pytest -q
-uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/slime/serve_capture.py integrations/slime/demo_client.py integrations/slime/test_http_capture.py integrations/slime/verify_training_handoff.py integrations/slime/verify_training_handoff_mps.py integrations/transformers
+uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/slime/serve_capture.py integrations/slime/demo_client.py integrations/slime/test_http_capture.py integrations/slime/verify_training_handoff.py integrations/slime/verify_training_handoff_mps.py integrations/slime/verify_training_workload.py integrations/transformers
 uv build
 ```
 

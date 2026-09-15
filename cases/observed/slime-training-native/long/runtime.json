@@ -1,0 +1,20 @@
+{
+  "started_at": "2026-09-15T13:58:57.639087+00:00",
+  "completed_at": "2026-09-15T13:59:19.774277+00:00",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "packages": {
+    "sglang": "0.5.9",
+    "torch": "2.9.1",
+    "transformers": "4.57.1",
+    "aiohttp": "3.14.3",
+    "httpx": "0.28.1"
+  },
+  "model_weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "runner_sha256": "ef9d9d01dd12a0b436ce213ab4f921c2c2d043bcbe3f880c363951c44796ec8c",
+  "source_base_commit": "670c793d096965a5e1e23a42778dc0533a25f95e",
+  "filesystem": "ext2/ext3",
+  "gpu": "name, driver_version, memory.total [MiB], memory.free [MiB], utilization.gpu [%]\nNVIDIA GeForce RTX 4070 SUPER, 610.60, 12282 MiB, 4927 MiB, 2 %",
+  "returncode": 0
+}

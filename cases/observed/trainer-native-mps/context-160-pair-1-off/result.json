@@ -1,0 +1,201 @@
+{
+  "run_version": 1,
+  "state": "COMPLETED",
+  "global_step": 4,
+  "resume_from_step": 0,
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.12.12",
+  "contract": {
+    "handoff_sha256": "a73c41d0ab0078dc8b49214c988912c4f677aeec467faa34932ec8b4d57ed633",
+    "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "weight_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+    "packages": {
+      "torch": "2.10.0",
+      "transformers": "4.57.6",
+      "peft": "0.18.1",
+      "accelerate": "1.12.0"
+    },
+    "source_sha256": {
+      "integrations/transformers/train_handoff.py": "298753022a08628b7534319a4f487a8f8437fd2a975fd768ec3a43df116cb62a",
+      "src/rolloutcheck/training_batch.py": "bf9f881d520379ec4f589103047b34c4180bf73f57ff151a12dad00560ad30e2",
+      "src/rolloutcheck/sample_audit.py": "a8a237418f2842530d3c00d738c581558af1cb770d4cb7bf223147d8dc6e5913"
+    },
+    "steps": 4,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 1,
+    "max_length": 3072,
+    "seed": 7,
+    "learning_rate": 0.0002,
+    "dtype": "float32",
+    "lora": {
+      "r": 8,
+      "lora_alpha": 16,
+      "target_modules": [
+        "q_proj",
+        "v_proj"
+      ],
+      "lora_dropout": 0.0
+    },
+    "objective": "unshifted masked causal-LM cross entropy; no rewards or RL loss",
+    "device": "mps"
+  },
+  "batch_audit_enabled": false,
+  "sample_audit": {
+    "audit_version": 1,
+    "context_status": "MATCHED",
+    "generated_tokens": 282,
+    "trainable_tokens": 282,
+    "unmatched_trainable_tokens": 0,
+    "ambiguous_trainable_tokens": 0,
+    "duplicate_training_occurrences": 0,
+    "unaccounted_generated_tokens": 0,
+    "turns": [
+      {
+        "turn_id": "1",
+        "generated_tokens": 266,
+        "uniquely_represented_tokens": 266,
+        "unaccounted_tokens": 0
+      },
+      {
+        "turn_id": "2",
+        "generated_tokens": 16,
+        "uniquely_represented_tokens": 16,
+        "unaccounted_tokens": 0
+      }
+    ],
+    "samples": [
+      {
+        "sample_index": 0,
+        "tokens": 1744,
+        "trainable_tokens": 266
+      },
+      {
+        "sample_index": 1,
+        "tokens": 1575,
+        "trainable_tokens": 16
+      }
+    ],
+    "scope": "Exact token and preceding-context accounting within supplied session only. MATCHED does not imply all generated tokens were retained, no duplicates, correct log probabilities/rewards, training benefit, or complete/authentic source capture. Unaccounted tokens can be intentional policy decisions or ambiguous attribution."
+  },
+  "batch_records": [
+    {
+      "rows": 2,
+      "width": 1744,
+      "supervised_tokens": 282,
+      "batch_sha256": "3c75798cda2f6d49d0f1de37d63754cb2574b444a4aac8fcc49396807681ff4d",
+      "audit_ns": 0,
+      "audit": null
+    },
+    {
+      "rows": 2,
+      "width": 1744,
+      "supervised_tokens": 282,
+      "batch_sha256": "3c75798cda2f6d49d0f1de37d63754cb2574b444a4aac8fcc49396807681ff4d",
+      "audit_ns": 0,
+      "audit": null
+    },
+    {
+      "rows": 2,
+      "width": 1744,
+      "supervised_tokens": 282,
+      "batch_sha256": "a474615932cb349f983188e8ab259edfdd9cd33cf64a455d5279f0364d995d8b",
+      "audit_ns": 0,
+      "audit": null
+    },
+    {
+      "rows": 2,
+      "width": 1744,
+      "supervised_tokens": 282,
+      "batch_sha256": "3c75798cda2f6d49d0f1de37d63754cb2574b444a4aac8fcc49396807681ff4d",
+      "audit_ns": 0,
+      "audit": null
+    }
+  ],
+  "consumed_microbatches": [
+    {
+      "optimizer_step": 1,
+      "supervised_tokens": 282,
+      "rows": 2,
+      "width": 1744,
+      "backward_loss": 0.3202023208141327
+    },
+    {
+      "optimizer_step": 2,
+      "supervised_tokens": 282,
+      "rows": 2,
+      "width": 1744,
+      "backward_loss": 0.252676397562027
+    },
+    {
+      "optimizer_step": 3,
+      "supervised_tokens": 282,
+      "rows": 2,
+      "width": 1744,
+      "backward_loss": 0.19727206230163574
+    },
+    {
+      "optimizer_step": 4,
+      "supervised_tokens": 282,
+      "rows": 2,
+      "width": 1744,
+      "backward_loss": 0.15151064097881317
+    }
+  ],
+  "log_history": [
+    {
+      "loss": 0.3202,
+      "grad_norm": 0.9599425196647644,
+      "learning_rate": 0.0002,
+      "epoch": 1.0,
+      "step": 1
+    },
+    {
+      "loss": 0.2527,
+      "grad_norm": 0.7696928977966309,
+      "learning_rate": 0.0002,
+      "epoch": 2.0,
+      "step": 2
+    },
+    {
+      "loss": 0.1973,
+      "grad_norm": 0.6650927662849426,
+      "learning_rate": 0.0002,
+      "epoch": 3.0,
+      "step": 3
+    },
+    {
+      "loss": 0.1515,
+      "grad_norm": 0.5812328457832336,
+      "learning_rate": 0.0002,
+      "epoch": 4.0,
+      "step": 4
+    },
+    {
+      "train_runtime": 19.8814,
+      "train_samples_per_second": 0.402,
+      "train_steps_per_second": 0.201,
+      "total_flos": 36968419295232.0,
+      "train_loss": 0.23041535541415215,
+      "epoch": 4.0,
+      "step": 4
+    }
+  ],
+  "train_metrics": {
+    "train_runtime": 19.8814,
+    "train_samples_per_second": 0.402,
+    "train_steps_per_second": 0.201,
+    "train_loss": 0.23041535541415215,
+    "epoch": 4.0
+  },
+  "elapsed_seconds": 19.92992100000265,
+  "trainable_parameters": 1146880,
+  "changed_parameter_tensors": 112,
+  "max_abs_change_from_initialized_lora": 0.0008023239206522703,
+  "final_adapter_sha256": "60f36f28ee963c72ee2b96fcfa267436ecc474d1855ab8f4227986e4e2d93db4",
+  "source_sha256": {
+    "integrations/transformers/train_handoff.py": "298753022a08628b7534319a4f487a8f8437fd2a975fd768ec3a43df116cb62a",
+    "src/rolloutcheck/training_batch.py": "bf9f881d520379ec4f589103047b34c4180bf73f57ff151a12dad00560ad30e2",
+    "src/rolloutcheck/sample_audit.py": "a8a237418f2842530d3c00d738c581558af1cb770d4cb7bf223147d8dc6e5913"
+  },
+  "scope": "Actual Hugging Face Trainer/PEFT parameter updates on saved generated Samples. Fixed-rollout supervised fit, not full slime RL, online policy sync or quality evidence. Batch records include data-loader prefetch; they are not optimizer consumption counts."
+}

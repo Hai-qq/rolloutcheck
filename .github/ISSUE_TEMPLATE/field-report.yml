@@ -1,0 +1,33 @@
+name: Training workflow field report
+description: Report what RolloutCheck did or did not help diagnose in your own workflow.
+title: "[Field report] "
+body:
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: What did you try?
+      options:
+        - Repository fixture reproduction
+        - My own authorized trajectory
+        - Recurring training regression
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Framework versions and intended history/retention policy
+      description: Include what your existing logs already showed. No credentials or private traces.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result and action
+      description: Summary counts, what you changed, rerun outcome, or why the tool did not apply.
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Practical difference
+      description: Which manual steps were saved or added? Report timing only if measured.

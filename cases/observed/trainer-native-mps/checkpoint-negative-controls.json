@@ -1,0 +1,12 @@
+[
+  {
+    "scenario": "missing actual optimizer file",
+    "outcome": "REJECTED",
+    "reason": "Incomplete Trainer checkpoint; refusing resume"
+  },
+  {
+    "scenario": "wrong input identity",
+    "outcome": "REJECTED",
+    "reason": "Checkpoint data/configuration/file identity mismatch; refusing resume"
+  }
+]

@@ -10,10 +10,44 @@ from . import __version__
 from .case import MAX_CASE_BYTES, CaseError, load_case
 from .evidence import export_bundle, export_trace_details, verify_evidence_details
 from .history import inspect_case
+from .sample_audit import audit_samples
 from .text_report import render_text
 from .trace import inspect_trace
 
 EXIT_CODES = {"PASS": 0, "FAIL": 1, "ERROR": 2, "INCONCLUSIVE": 3, "NOT_APPLICABLE": 4}
+
+
+def _audit_handoff(args):
+    data, digest = load_case(args.handoff)
+    report = audit_samples(data.get("turns"), data.get("samples"))
+    report["snapshot_sha256"] = digest
+    report["require_all_generated"] = args.require_all_generated
+    code = {"MATCHED": 0, "UNMATCHED": 1, "AMBIGUOUS": 3, "NO_TRAINABLE_TOKENS": 3}[
+        report["context_status"]
+    ]
+    if args.require_all_generated and report["unaccounted_generated_tokens"]:
+        code = 1
+    if args.format == "text":
+        print("Token contexts: " + report["context_status"])
+        for label, key in (
+            ("Generated tokens", "generated_tokens"),
+            ("Trainable positions", "trainable_tokens"),
+            ("Unmatched positions", "unmatched_trainable_tokens"),
+            ("Ambiguous positions", "ambiguous_trainable_tokens"),
+            ("Duplicate training occurrences", "duplicate_training_occurrences"),
+            ("Unaccounted generated tokens", "unaccounted_generated_tokens"),
+        ):
+            print(f"{label}: {report[key]}")
+        if args.require_all_generated:
+            print(
+                "All-generated retention requirement: "
+                + ("NOT_MET" if report["unaccounted_generated_tokens"] else "MET")
+            )
+        print("Token/context accounting only; MATCHED is not a training-correctness verdict.")
+        print("Unaccounted tokens can reflect intentional dropping or ambiguous attribution.")
+    else:
+        print(json.dumps(report, indent=2, ensure_ascii=True))
+    return code
 
 
 def _export(source, destination, report):
@@ -46,7 +80,14 @@ def main(argv=None):
     export_trace_parser.add_argument("destination", type=Path)
     verify = sub.add_parser("verify-evidence", help="Verify bundle hashes and recompute its report")
     verify.add_argument("directory", type=Path)
-    for command in (inspect, trace, export, export_trace_parser, verify):
+    samples = sub.add_parser("audit-samples", help="Audit one saved session's training handoff")
+    samples.add_argument("handoff", type=Path)
+    samples.add_argument(
+        "--require-all-generated",
+        action="store_true",
+        help="Explicit policy: exit 1 if any generated token is not uniquely represented",
+    )
+    for command in (inspect, trace, export, export_trace_parser, verify, samples):
         command.add_argument(
             "--format",
             choices=("json", "text"),
@@ -56,7 +97,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     cases = []
     try:
-        if args.command == "verify-evidence":
+        if args.command == "audit-samples":
+            return _audit_handoff(args)
+        elif args.command == "verify-evidence":
             report, cases = verify_evidence_details(args.directory)
         elif args.command == "export-trace-evidence":
             report, cases = export_trace_details(args.trace, args.destination)
