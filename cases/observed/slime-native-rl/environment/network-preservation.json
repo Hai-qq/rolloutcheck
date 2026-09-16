@@ -1,0 +1,26 @@
+{
+  "windows": {
+    "compared_to_pre_experiment_baseline": true,
+    "unchanged_checks": [
+      "default_routes",
+      "dns",
+      "user_proxy",
+      "winhttp_proxy"
+    ]
+  },
+  "wsl": {
+    "compared_to_pre_experiment_baseline": true,
+    "unchanged_checks": [
+      "routes",
+      "resolv.conf",
+      "ipv4_forwarding",
+      "ipv6_forwarding"
+    ]
+  },
+  "cleanup": {
+    "owned_containers_running": 0,
+    "owned_docker_daemon_stopped": true,
+    "models_checkpoints_and_image_retained": true
+  },
+  "scope": "Read-only checks of named fields; no shared VPN/proxy/DNS/route settings were changed by this experiment."
+}

@@ -19,6 +19,12 @@ jobs:
           version: '0.8.22'
       - run: uv sync --locked --python ${{ matrix.python }}
       - run: uv run --no-sync pytest -q
+      # Verifier/reward contracts and saved evidence; native GPU execution is opt-in.
+      - run: uv run --no-sync pytest integrations/slime/test_rl_reward.py integrations/slime/test_rl_verify.py -q
+      - run: uv run --no-sync ruff check integrations/slime/rl_reward.py integrations/slime/rl_hooks.py integrations/slime/rl_checkpoint.py integrations/slime/rl_metadata.py integrations/slime/rl_train_entry.py integrations/slime/rl_verify.py integrations/slime/test_rl_reward.py integrations/slime/test_rl_verify.py
+      - run: uv run --no-sync python integrations/slime/rl_verify.py cases/observed/slime-native-rl --portable --output artifacts/native-rl-recheck
+      - if: runner.os == 'Linux'
+        run: bash -n integrations/slime/full_rl.sh
       - run: uv run --no-sync ruff check src tests integrations/slime/prepare_assets.py integrations/slime/reproduce.py integrations/slime/prepare_adapter.py integrations/slime/verify_adapter.py integrations/slime/capture_local_model.py integrations/slime/verify_sglang.py integrations/slime/test_live_runner.py integrations/slime/benchmark_capture.py integrations/slime/test_benchmark_runner.py integrations/slime/serve_capture.py integrations/slime/demo_client.py integrations/slime/test_http_capture.py integrations/slime/verify_training_handoff.py integrations/slime/verify_training_handoff_mps.py integrations/slime/verify_training_workload.py integrations/transformers
       - run: uv build
   controlled-conversion:

@@ -1,0 +1,18 @@
+{
+  "iter_0000002/common.pt": {
+    "bytes": 53671,
+    "sha256": "2086061b148f3f5037fca5875a9284945412ac58c2eda6fbe785802b6f775124"
+  },
+  "iter_0000002/__0_0.distcp": {
+    "bytes": 7154344245,
+    "sha256": "a42da96c92716b70fb4c3ca5b746e570dca0611c941903b6b1ce72fb7b058dc8"
+  },
+  "iter_0000002/.metadata": {
+    "bytes": 159368,
+    "sha256": "5b20d9d82e9ab4321eca47af70123db6bd943d782229fd243df31fd08e5f0782"
+  },
+  "iter_0000002/metadata.json": {
+    "bytes": 119,
+    "sha256": "9817072de14c715c70e8435a7fee90bac30abaf6885fc53ade6fe88babeef851"
+  }
+}

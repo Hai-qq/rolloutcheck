@@ -1,0 +1,80 @@
+[
+  {
+    "train/loss": 2.60770320892334e-08,
+    "train/pg_loss": 2.60770320892334e-08,
+    "train/entropy_loss": 0.17012879252433777,
+    "train/pg_clipfrac": 0.0,
+    "train/ppo_kl": 0.0,
+    "train/train_rollout_logprob_abs_diff": 0.006065877620130777,
+    "train/grad_norm": 3.0711224679082116,
+    "train/lr-pg_0": 1e-06,
+    "train/lr-pg_1": 1e-06,
+    "train/global_batch_size": 8,
+    "train/step": 0
+  },
+  {
+    "train/loss": 0.0,
+    "train/pg_loss": 0.0,
+    "train/entropy_loss": 0.19583648443222046,
+    "train/pg_clipfrac": 0.0,
+    "train/ppo_kl": 0.0007642479031346738,
+    "train/train_rollout_logprob_abs_diff": 0.00597627367824316,
+    "train/grad_norm": 0.0,
+    "train/lr-pg_0": 1e-06,
+    "train/lr-pg_1": 1e-06,
+    "train/global_batch_size": 8,
+    "train/step": 1
+  },
+  {
+    "train/loss": 0.0,
+    "train/pg_loss": 0.0,
+    "train/entropy_loss": 0.1628040373325348,
+    "train/pg_clipfrac": 0.0,
+    "train/ppo_kl": 0.0,
+    "train/train_rollout_logprob_abs_diff": 0.005346464924514294,
+    "train/grad_norm": 3.604469830472862,
+    "train/lr-pg_0": 1e-06,
+    "train/lr-pg_1": 1e-06,
+    "train/global_batch_size": 8,
+    "train/step": 2
+  },
+  {
+    "train/loss": -0.0004955083131790161,
+    "train/pg_loss": -0.0004955083131790161,
+    "train/entropy_loss": 0.17528633773326874,
+    "train/pg_clipfrac": 0.0,
+    "train/ppo_kl": 0.0015049257781356573,
+    "train/train_rollout_logprob_abs_diff": 0.005375682841986418,
+    "train/grad_norm": 3.6170423573320076,
+    "train/lr-pg_0": 1e-06,
+    "train/lr-pg_1": 1e-06,
+    "train/global_batch_size": 8,
+    "train/step": 3
+  },
+  {
+    "train/loss": 2.2351741790771484e-08,
+    "train/pg_loss": 2.2351741790771484e-08,
+    "train/entropy_loss": 0.13838337361812592,
+    "train/pg_clipfrac": 0.0,
+    "train/ppo_kl": 0.0,
+    "train/train_rollout_logprob_abs_diff": 0.004827592521905899,
+    "train/grad_norm": 3.428932610856107,
+    "train/lr-pg_0": 1e-06,
+    "train/lr-pg_1": 1e-06,
+    "train/global_batch_size": 8,
+    "train/step": 4
+  },
+  {
+    "train/loss": -0.00017209351062774658,
+    "train/pg_loss": -0.00017209351062774658,
+    "train/entropy_loss": 0.1947314590215683,
+    "train/pg_clipfrac": 0.0009727626456879079,
+    "train/ppo_kl": 0.0006005287286825478,
+    "train/train_rollout_logprob_abs_diff": 0.0064413659274578094,
+    "train/grad_norm": 4.885025475083207,
+    "train/lr-pg_0": 1e-06,
+    "train/lr-pg_1": 1e-06,
+    "train/global_batch_size": 8,
+    "train/step": 5
+  }
+]

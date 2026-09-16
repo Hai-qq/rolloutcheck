@@ -1,0 +1,44 @@
+{
+  "versions": {
+    "torch": "2.11.0+cu129",
+    "sglang": "0.5.15.post1",
+    "megatron-core": "0.16.0rc0",
+    "transformer-engine": "2.16.1",
+    "apex": "0.1",
+    "ray": "2.58.0",
+    "torch-memory-saver": "0.0.9.post1+slime",
+    "transformers": "5.12.1"
+  },
+  "sources": {
+    "slime": {
+      "commit": "a3f500977f33b82de6ac0414c0c43abfe656c3e0",
+      "status": "",
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "megatron": {
+      "commit": "1dcf0dafa884ad52ffb243625717a3471643e087",
+      "status": "M  megatron/core/dist_checkpointing/strategies/common.py\nM  megatron/core/dist_checkpointing/strategies/torch.py\nM  megatron/core/distributed/distributed_data_parallel.py\nM  megatron/core/distributed/param_and_grad_buffer.py\nM  megatron/core/extensions/transformer_engine.py\nM  megatron/core/fusions/fused_mla_yarn_rope_apply.py\nM  megatron/core/inference/contexts/dynamic_context.py\nM  megatron/core/models/common/embeddings/rotary_pos_embedding.py\nM  megatron/core/models/gpt/gpt_layer_specs.py\nM  megatron/core/models/gpt/gpt_model.py\nM  megatron/core/optimizer/distrib_optimizer.py\nM  megatron/core/parallel_state.py\nM  megatron/core/pipeline_parallel/p2p_communication.py\nM  megatron/core/transformer/moe/moe_utils.py\nM  megatron/core/transformer/moe/router.py\nM  megatron/core/transformer/multi_token_prediction.py\nM  megatron/core/transformer/transformer_config.py\nM  megatron/core/transformer/transformer_layer.py\nM  megatron/training/arguments.py\nM  megatron/training/tokenizer/tokenizer.py\nM  megatron/training/training.py",
+      "patch_sha256": "89300998f14c54d682fa5dd23c4a897c670dab7b3031d5efd2fbad803f177eda"
+    },
+    "sglang": {
+      "commit": "0b3bb0cbe31873994c9f989fddfe2f87ca839fdd",
+      "status": "M python/pyproject.toml\n M python/sglang/jit_kernel/csrc/gemm/per_token_group_quant_8bit_v2.cuh\n M python/sglang/jit_kernel/utils.py\n M python/sglang/srt/batch_invariant_ops/__init__.py\n M python/sglang/srt/batch_invariant_ops/batch_invariant_ops.py\n M python/sglang/srt/debug_utils/tensor_dump_forward_hook.py\n M python/sglang/srt/disaggregation/decode.py\n M python/sglang/srt/disaggregation/mooncake/conn.py\n M python/sglang/srt/disaggregation/prefill.py\n M python/sglang/srt/disaggregation/utils.py\n M python/sglang/srt/entrypoints/engine.py\n M python/sglang/srt/entrypoints/http_server.py\n M python/sglang/srt/environ.py\n M python/sglang/srt/layers/attention/dsa/dsa_indexer.py\n M python/sglang/srt/layers/attention/dsa/dsa_topk_backend.py\n M python/sglang/srt/layers/attention/dsa_backend.py\n M python/sglang/srt/layers/deep_gemm_wrapper/entrypoint.py\n M python/sglang/srt/layers/logits_processor.py\n M python/sglang/srt/layers/moe/fused_moe_triton/layer.py\n M python/sglang/srt/layers/moe/moe_runner/deep_gemm.py\n M python/sglang/srt/layers/moe/token_dispatcher/deepep.py\n M python/sglang/srt/layers/moe/topk.py\n M python/sglang/srt/layers/quantization/compressed_tensors/compressed_tensors.py\n M python/sglang/srt/layers/sampler.py\n M python/sglang/srt/layers/utils/logprob.py\n M python/sglang/srt/managers/detokenizer_manager.py\n M python/sglang/srt/managers/io_struct.py\n M python/sglang/srt/managers/multi_tokenizer_mixin.py\n M python/sglang/srt/managers/schedule_batch.py\n M python/sglang/srt/managers/scheduler.py\n M python/sglang/srt/managers/scheduler_components/batch_result_processor.py\n M python/sglang/srt/managers/scheduler_components/load_inquirer.py\n M python/sglang/srt/managers/scheduler_components/logprob_result_processor.py\n M python/sglang/srt/managers/scheduler_components/output_streamer.py\n M python/sglang/srt/managers/scheduler_components/profiler_manager.py\n M python/sglang/srt/managers/scheduler_components/weight_updater.py\n M python/sglang/srt/managers/tokenizer_control_mixin.py\n M python/sglang/srt/managers/tokenizer_manager.py\n M python/sglang/srt/managers/tp_worker.py\n M python/sglang/srt/managers/utils.py\n M python/sglang/srt/mem_cache/hi_mamba_radix_cache.py\n M python/sglang/srt/mem_cache/hiradix_cache.py\n M python/sglang/srt/mem_cache/memory_pool.py\n M python/sglang/srt/mem_cache/memory_pool_host.py\n M python/sglang/srt/mem_cache/pool_host/base.py\n M python/sglang/srt/mem_cache/radix_cache.py\n M python/sglang/srt/mem_cache/unified_radix_cache.py\n M python/sglang/srt/model_executor/model_runner.py\n M python/sglang/srt/models/deepseek_v2.py\n M python/sglang/srt/models/glm4v_moe.py\n M python/sglang/srt/models/qwen3_vl.py\n M python/sglang/srt/multimodal/processors/glm4v.py\n M python/sglang/srt/multimodal/processors/qwen_vl.py\n M python/sglang/srt/observability/req_time_stats.py\n M python/sglang/srt/sampling/sampling_batch_info.py\n M python/sglang/srt/server_args.py\n M python/sglang/srt/speculative/eagle_draft_cuda_graph_runner.py\n M python/sglang/srt/speculative/eagle_worker_v2.py\n M python/sglang/srt/speculative/multi_layer_eagle_worker_v2.py\n M python/sglang/srt/speculative/ngram_worker.py\n M python/sglang/srt/utils/common.py\n M python/sglang/test/kits/attention_unittest/attention_methods/dsa_attention.py\n M sgl-kernel/csrc/gemm/per_token_group_quant_8bit_v2.cu\n M sgl-kernel/tests/test_per_token_group_quant_8bit.py\n M test/registered/debug_utils/test_tensor_dump_forward_hook.py\n?? python/sglang/jit_kernel/glm5_router_gemm.py\n?? python/sglang/jit_kernel/tests/test_glm5_router_gemm.py\n?? python/sglang/srt/weight_sync/local_checkpoint.py\n?? test/registered/moe/test_deepep_ll_prefill_staging.py",
+      "patch_sha256": "3ca62aaebcd42139fb598d1fdeb7e47f1855636b450c2ed243344247b2a35adb"
+    }
+  },
+  "cuda": {
+    "available": true,
+    "build": "12.9",
+    "device": "NVIDIA GeForce RTX 4070 SUPER",
+    "capability": [
+      8,
+      9
+    ],
+    "memory_free_total": [
+      11585716224,
+      12878086144
+    ]
+  },
+  "te_backward": true,
+  "imports": "passed"
+}

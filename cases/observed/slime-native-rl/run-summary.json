@@ -1,0 +1,15 @@
+{
+  "attempt": "run-009",
+  "elapsed_seconds_including_startup_and_shutdown": 503.9725,
+  "training_steps": 6,
+  "sampled_gpu_memory_max_mib": 11973.0,
+  "sampled_container_memory_max_gib_rounded": 14.37,
+  "wsl_memory_available_min_gib": 0.8856010437011719,
+  "container_limits": {
+    "memory_gib": 15,
+    "memory_and_swap_gib": 18,
+    "cpus": 8
+  },
+  "checkpoint_adapter": "Synchronous PyTorch FileSystemWriter; original Megatron mapping/planner/loader.",
+  "resource_scope": "Sampled roughly every three seconds. Whole GPU includes Windows desktop; not exact peaks or throughput benchmarks."
+}

@@ -47,8 +47,9 @@ A real MPS generation comparison shows a retention-policy difference (16 versus
 192 trainable token positions) while both policies retain correct sampled token
 contexts. This corrects the inference that history drift alone implies corrupted
 training samples. Native SGLang handoff and an actual downstream HF Trainer/PEFT
-optimizer job are now recorded in [the training job](training-job.md). Full slime
-RL remains pending.
+optimizer job are now recorded in [the training job](training-job.md). A separate
+[native slime GRPO experiment](full-slime-rl.md) now verifies a bounded single-turn
+loop with checkpoint recovery and online weight reuse; broader RL coverage remains open.
 See [training handoff evidence and interpretation](training-handoff.md).
 
 **P0 is partially validated**: local conversion feasibility, fail/pass controls
@@ -131,8 +132,11 @@ experiment, not a substitute for validating the product need.
 
 - **Training integration: partial.** Native SGLang -> actual slime Samples ->
   HF Trainer/PEFT masked supervised updates runs on the pinned 0.6B model.
-  This is an actual supported Trainer job; it does not close full slime/Megatron
-  RL integration, reward/logprob semantics or online weight synchronization.
+  A separate native slime GRPO run now verifies 3 online rounds / 6 optimizer
+  steps, rewards and advantages, Sample-to-trainer logprob preservation, changed
+  weights and checkpoint recovery on one GPU. Its synchronous checkpoint adapter
+  is explicit. Multi-turn RL, independent wire capture during training and broader
+  framework support remain unverified.
 - **Actionable case: controlled evidence.** A real HF language-modeling collator
   replaces existing masks; the batch guard detects it and preserving those labels
   removes the mismatch. Retention policy also changes the generated tokens actually
@@ -147,15 +151,14 @@ experiment, not a substitute for validating the product need.
   and field-report issue form are available. The author/assistant reproducing the
   public fixture is not independent adoption. No outreach message has been sent.
 
-Continue with a real authorized training-owner case and full framework training
+Continue with a real authorized training-owner case and broader training
 validation; do not promote this to a production-ready tool based on the above.
 
-The full-framework environment also has a concrete compatibility gap: the pinned
-slime revision's `build_conda.sh` selects SGLang 0.5.15.post1, PyTorch 2.11/cu129
-and Megatron commit `1dcf0dafa884ad52ffb243625717a3471643e087`. The existing
-native capture environment uses SGLang 0.5.9 / PyTorch 2.9.1+cu128. Adapter
-compatibility does not validate that complete stack. The upstream Qwen3-0.6B
-parallel test starts with eight GPUs; this is a reference configuration, not a
-proof that a smaller setup cannot work. Validate a separate single-GPU environment
-and memory plan before claiming full-stack support or requesting paid hardware;
-keep the working inference environment and network configuration intact.
+The isolated [native slime RL recipe](full-slime-rl.md) now runs the official
+pinned image with SGLang 0.5.15.post1, PyTorch 2.11/cu129 and its bundled Megatron
+patches. It preserves the existing SGLang 0.5.9 / PyTorch 2.9.1+cu128 inference
+environment and network configuration. The observed 0.6B single-GPU loop passes
+its evidence verifier after a local synchronous checkpoint-writer adapter avoids
+whole-state CPU staging. Failed attempts and the narrow memory envelope are
+recorded. This closes the short native-loop execution gap; it does not close
+multi-turn RL diagnosis, long-running reliability or independent practical use.

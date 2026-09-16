@@ -1,0 +1,11 @@
+{
+  "status": "EXACT_ROUND_TRIP",
+  "device": "NVIDIA GeForce RTX 4070 SUPER",
+  "fields": {
+    "model": "torch.bfloat16",
+    "main_param": "torch.float32",
+    "exp_avg": "torch.bfloat16",
+    "exp_avg_sq": "torch.bfloat16"
+  },
+  "scope": "Synthetic checkpoint I/O test; not training execution evidence"
+}

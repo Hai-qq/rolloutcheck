@@ -1,0 +1,4 @@
+{"prompt": [{"role": "user", "content": "Calculate (179 * 246) - 835. Put your final integer answer inside \\boxed{}."}], "label": "43199"}
+{"prompt": [{"role": "user", "content": "Calculate (328 * 157) - 964. Put your final integer answer inside \\boxed{}."}], "label": "50532"}
+{"prompt": [{"role": "user", "content": "Calculate (213 * 389) - 647. Put your final integer answer inside \\boxed{}."}], "label": "82210"}
+{"prompt": [{"role": "user", "content": "Calculate (296 * 183) - 758. Put your final integer answer inside \\boxed{}."}], "label": "53410"}

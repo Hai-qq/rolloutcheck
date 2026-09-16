@@ -8,6 +8,8 @@ synchronization, or evidence of better model quality.
 
 The training dependencies live in the optional `training` extra. The core package
 and `audit-samples` command remain free of runtime dependencies.
+The separate [native slime GRPO experiment](full-slime-rl.md) now records a
+complete short online loop; it uses a different image and checkpoint I/O adapter.
 
 Observed results: [native capture](../cases/observed/slime-training-native),
 [27 Trainer jobs / 104 optimizer steps](../cases/observed/trainer-native-mps),

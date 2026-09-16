@@ -1,0 +1,9 @@
+{
+  "canonical_manifest_digest": "sha256:39be6cbb00f9b6770e664ace0c7b9f5ecff2977a1a205e7926a720f906fbc62c",
+  "image_id": "sha256:855b7c6641275c20bfd352e691ef822988f2efba6129d169e65f86330ae657d0",
+  "tag": "rolloutcheck/slime:verified-cu129",
+  "rootfs_diff_ids_match": true,
+  "compressed_layers": 88,
+  "returncode": 0,
+  "finished": 1789535388.3282063
+}

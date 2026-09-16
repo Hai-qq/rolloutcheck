@@ -1,0 +1,21 @@
+{
+  "returncode": 0,
+  "state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-09-16T05:49:33.546670499Z",
+    "FinishedAt": "2026-09-16T05:57:57.113920832Z"
+  },
+  "container_id": "4efc40558e6a9595b1ed24029113393ba3dd308ea36cc4f316aef5151baf728e",
+  "image": "sha256:855b7c6641275c20bfd352e691ef822988f2efba6129d169e65f86330ae657d0",
+  "started": "2026-09-16T05:49:33.491918+00:00",
+  "finished": "2026-09-16T05:57:57.464418+00:00",
+  "error": null
+}

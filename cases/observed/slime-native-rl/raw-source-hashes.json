@@ -1,0 +1,65 @@
+{
+  "scope": "Original trusted PyTorch dumps and unfiltered log retained on experiment host; portable JSON is exported without changing values.",
+  "files": {
+    "rollout-eval_0.pt": {
+      "sha256": "cbd5a6ea2a5838d35bfcd73318c92270c6dcfe846726ac8ab830dc814ab44639",
+      "bytes": 19607
+    },
+    "train-1.pt": {
+      "sha256": "ae8376353dbe851d7bbf24dc50433ef69a0b32688f7c76a43cfd5644d3457b93",
+      "bytes": 150877
+    },
+    "train-0.pt": {
+      "sha256": "8d217e0974d7b8dff955583d3ce13c5db4e6240cebbf834c80c290a1c8bd4b42",
+      "bytes": 150621
+    },
+    "rollout-2.pt": {
+      "sha256": "92bc84d0e5299b844010cd4b7c99a700b1d448ed5e1eedbd7e1573ce3f21d8f5",
+      "bytes": 76281
+    },
+    "grad-0-1.pt": {
+      "sha256": "09c03d34512201be40a8700544b459cb583d1a959416f7084f7a6e757c1433c6",
+      "bytes": 1267
+    },
+    "grad-1-0.pt": {
+      "sha256": "8fa59ffba9a9e2c08389b04ed8064c1c98ecd08e2c2c38104395fd348333b504",
+      "bytes": 1267
+    },
+    "grad-0-0.pt": {
+      "sha256": "40a1e8c798c573b91cd251be04ae6188eb92d45a0707d0d965afd7f68dfe73ad",
+      "bytes": 1267
+    },
+    "grad-1-1.pt": {
+      "sha256": "e753546afc2cceaef5fb341b56f7e332bb4386819c867052fa2bbae72c72e3d5",
+      "bytes": 1267
+    },
+    "grad-2-1.pt": {
+      "sha256": "29956fec93fe1489b7dc1f9f86d917cc6fb44546d23a8c641541d826af0559db",
+      "bytes": 1267
+    },
+    "grad-2-0.pt": {
+      "sha256": "ee989193d2295789831e819e3a66027265d8bda84b913d83efb75005dcbe8f2c",
+      "bytes": 1267
+    },
+    "rollout-eval_2.pt": {
+      "sha256": "e9d68f5123ee910421ae95ac9cf4ec965c9e49f3043468790f8eed85d87d6edd",
+      "bytes": 20439
+    },
+    "train.log": {
+      "sha256": "f0fcfac02296a7c1209c0d74a6e20a073df18d35f4538281ce479cfd18759d8d",
+      "bytes": 231923
+    },
+    "rollout-1.pt": {
+      "sha256": "886e4b013e8a8a8fb1c96bb95eb15636db5f8ce3b789b0ad77096c4310192783",
+      "bytes": 76537
+    },
+    "rollout-0.pt": {
+      "sha256": "5d65382b34966c904eaa03bb6afac36bb41cc46824f8e02d6b142ec385bc0fb1",
+      "bytes": 76537
+    },
+    "train-2.pt": {
+      "sha256": "f482253c5de9bcb07586166bbf9decefb1bebc5a357f5233b677aaa4db9c0180",
+      "bytes": 150557
+    }
+  }
+}

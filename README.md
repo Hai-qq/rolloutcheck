@@ -211,7 +211,12 @@ With actual Qwen3-0.6B/MPS generation, the pinned default policy marks 16 of 192
 sampled output tokens trainable; threshold zero retains 192 in two samples. Both
 policies have matching trainable contexts and still show history-prefix FAIL.
 This is a policy/retention observation, **not a training-quality result or universal
-fix**. The full RL training loop and independent practical benefit remain unverified.
+fix**. Multi-turn RL behavior and independent practical benefit remain unverified.
+A separate [bounded native slime GRPO experiment](docs/full-slime-rl.md) now completes
+three online rounds, six optimizer steps, checkpoint recovery and final weight
+reload on one 12 GB GPU, with an explicit synchronous checkpoint I/O adapter.
+Its saved token/reward/advantage/weight evidence can be rechecked without a GPU;
+this single-turn experiment does not establish convergence or better model quality.
 
 ## Train and check the batch boundary
 

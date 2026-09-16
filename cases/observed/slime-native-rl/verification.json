@@ -1,0 +1,100 @@
+{
+  "status": "VERIFIED_BOUNDED_RL_LOOP",
+  "optimizer_recovery": {
+    "status": "CONTINUOUS_STEP_COUNTERS",
+    "before_step_counters": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        5,
+        5
+      ]
+    ],
+    "moment_dtype": "torch.bfloat16",
+    "moment_elements_each": 596049920,
+    "scope": "Observed counters and full-model moment storage, not an independent bitwise comparison of an uninterrupted training run."
+  },
+  "verifier_sha256": "9e9338fdcf01574457cff1615d04ba1922259ef62e00ee2a97bbafd6af19f96f",
+  "rounds": [
+    {
+      "rollout_id": 0,
+      "samples": 16,
+      "engine_weight_version": "1",
+      "reward_sum": 8.0,
+      "groups_with_reward_variation": 2,
+      "nonzero_advantage_tokens": 1918,
+      "trainable_tokens": 3603,
+      "sample_to_trainer_context_status": "MATCHED",
+      "rollout_logprob_handoff_status": "MATCHED_FLOAT32",
+      "gradient_norms": [
+        3.0711224679082116,
+        0.0
+      ],
+      "changed_tensor_count": 247
+    },
+    {
+      "rollout_id": 1,
+      "samples": 16,
+      "engine_weight_version": "2",
+      "reward_sum": 9.0,
+      "groups_with_reward_variation": 4,
+      "nonzero_advantage_tokens": 3620,
+      "trainable_tokens": 3620,
+      "sample_to_trainer_context_status": "MATCHED",
+      "rollout_logprob_handoff_status": "MATCHED_FLOAT32",
+      "gradient_norms": [
+        3.604469830472862,
+        3.6170423573320076
+      ],
+      "changed_tensor_count": 243
+    },
+    {
+      "rollout_id": 2,
+      "samples": 16,
+      "engine_weight_version": "3",
+      "reward_sum": 11.0,
+      "groups_with_reward_variation": 4,
+      "nonzero_advantage_tokens": 3602,
+      "trainable_tokens": 3602,
+      "sample_to_trainer_context_status": "MATCHED",
+      "rollout_logprob_handoff_status": "MATCHED_FLOAT32",
+      "gradient_norms": [
+        3.428932610856107,
+        4.885025475083207
+      ],
+      "changed_tensor_count": 244
+    }
+  ],
+  "evaluation": {
+    "before": {
+      "engine_weight_version": "1",
+      "samples": 4,
+      "reward_sum": 2.0
+    },
+    "after": {
+      "engine_weight_version": "4",
+      "samples": 4,
+      "reward_sum": 2.0
+    },
+    "scope": "Four separate arithmetic questions; descriptive smoke evaluation only."
+  },
+  "scope": "Observed native slime loop, finite/nonzero RL signal, exported parameter changes, engine weight versions and Sample-to-trainer token/mask handoff. Not convergence, independent wire capture, or general production readiness."
+}
