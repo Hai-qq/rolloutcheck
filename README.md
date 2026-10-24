@@ -258,8 +258,10 @@ case is small; no artificial padding is used to manufacture a shrink-rate result
 ## Pinned extras and known advisories
 
 The `qwen`, `generation` and `training` extras pin Transformers 4.57.6, PyTorch
-2.10.0 and Accelerate 1.12.0 because the recorded cases and experiments were
-produced with those versions. Published advisories affect these versions: some
+2.10.0 and Accelerate 1.12.0 because the local cases recorded with these extras,
+such as the [first conversion case](docs/first-case.md) and the [MPS generation
+trace](docs/observed-case.md), used those versions; native GPU experiments
+record their own engine images. Published advisories affect these versions: some
 are fixed only in Transformers 5.x or PyTorch 2.13, and one Transformers and one
 Accelerate advisory have no fixed release. The pins stay until those cases are
 re-recorded on newer versions. These extras load tokenizers, models and
